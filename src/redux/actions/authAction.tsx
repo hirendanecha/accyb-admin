@@ -1,4 +1,4 @@
-import userAPI from '@/services/api/auth';
+import authAPI from '@/services/api/auth';
 import { LoginSchema } from '@/utils/validators/login.schema';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -6,7 +6,7 @@ export const logIn = createAsyncThunk(
   'user/login',
   async (data:LoginSchema) => {
     try {
-      const userData = await userAPI({...data});
+      const userData = await authAPI.loginApi({...data});
       console.log('userdata',userData);
       
       return userData;

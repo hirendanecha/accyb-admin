@@ -13,10 +13,11 @@ import { logIn } from '@/redux/actions/authAction';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { routes } from '@/config/routes';
-// const initialValues: LoginSchema = {
-//   email: 'abhi.opsh@gmail.com',
-//   password: 'password@123',
-// };
+import authAPI from '@/services/api/auth';
+const initialValues: LoginSchema = {
+  email: 'admin@gmail.com',
+  password: 'password@123',
+};
 
 export default function SignInForm() {
   const [reset, setReset] = useState({});
@@ -29,8 +30,8 @@ export default function SignInForm() {
       redirect: false,
     });
     if (result?.ok) {
-      // console.log(result, 'ele');
-
+      console.log(result, 'ele');
+      // router.push(routes.module.event);
       window.location.replace(routes.module.event);
     }
   };
@@ -39,10 +40,12 @@ export default function SignInForm() {
     <>
       <Form<LoginSchema>
         validationSchema={loginSchema}
-        resetValues={reset}
-        onSubmit={onSubmit}
+        // resetValues={reset}
+        onSubmit={ (s) =>{
+            console.log(s, 'elesss');
+          onSubmit(s)}}
         useFormProps={{
-          // defaultValues: initialValues,
+          defaultValues: initialValues,
         }}
         className="min-h-screen w-full justify-between"
       >

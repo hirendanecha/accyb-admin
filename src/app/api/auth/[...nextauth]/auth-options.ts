@@ -1,20 +1,24 @@
-import type { NextAuthOptions } from 'next-auth';
+import type { NextAuthOptions, RequestInternal } from 'next-auth';
+import type { NextRequest } from 'next/server';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { env } from '@/env.mjs';
 import isEqual from 'lodash/isEqual';
 import { pagesOptions } from './pages-options';
-import userAPI from '@/services/api/auth';
-
+import axios from 'axios';
+import authAPI from '@/services/api/auth';
+import { headers } from 'next/headers';
 export const authOptions: NextAuthOptions = {
   // debug: true,
   pages: {
     ...pagesOptions,
   },
+
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+
   callbacks: {
     async session({ session, token }: any) {
       // return {
@@ -27,6 +31,7 @@ export const authOptions: NextAuthOptions = {
 
       if (token) {
         session.jwt = token.jwt;
+        session.sessionId = token.sessionId;
       }
 
       return session;
@@ -37,10 +42,12 @@ export const authOptions: NextAuthOptions = {
       //   token.user = user;
       // }
       // return token;
+
       if (user) {
         return {
           ...token,
           jwt: user.jwt,
+          sessionId: user.sessionId,
         };
       }
 
@@ -57,6 +64,7 @@ export const authOptions: NextAuthOptions = {
       return baseUrl;
     },
   },
+
   providers: [
     CredentialsProvider({
       id: 'credentials',
@@ -69,35 +77,44 @@ export const authOptions: NextAuthOptions = {
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid
-        // const user = {
-        //   email: 'abhi.opsh@gmail.com',
-        //   password: 'password@123',
-        // };
+        try {
+          console.log('auth-options.ts', credentials);
 
-        const data = await userAPI({
-          email: credentials?.email,
-          password: credentials?.password,
-        });
+          const response = await authAPI({
+            email: credentials?.email,
+            password: credentials?.password,
+          });
 
-        if (data) {
-          return { ...credentials, jwt: data.token, user: data.data };
+          console.log('response', response.data);
+
+          // // Below Condition is unnecessary
+          if (!response?.data?.success) {
+            // console.log('is called here');
+            throw new Error(response?.data?.message);
+          }
+
+          const jwt = response.data.token;
+          // const session_id = response.data.session_id;
+          // You can make more requests to get other information about the user, e.g., Profile details
+          return {
+            ...credentials,
+            jwt,
+            user: response.data,
+          };
+        } catch (error: any) {
+          console.log(error);
+
+          console.log('auth-options.ts ERR', error?.response?.data?.message);
+          throw new Error(error?.response?.data?.message);
+          // return null;`
         }
-
-        // if (
-        //   isEqual(user, {
-        //     email: credentials?.email,
-        //     password: credentials?.password,
-        //   })
-        // ) {
-        //   return user as any;
-        // }
-        return null;
       },
     }),
-    // GoogleProvider({
-    //   clientId: env.GOOGLE_CLIENT_ID || '',
-    //   clientSecret: env.GOOGLE_CLIENT_SECRET || '',
-    //   allowDangerousEmailAccountLinking: true,
-    // }),
+
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID || '',
+      clientSecret: env.GOOGLE_CLIENT_SECRET || '',
+      allowDangerousEmailAccountLinking: true,
+    }),
   ],
 };

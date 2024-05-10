@@ -9,7 +9,7 @@ export default function AuthProvider({
   children: React.ReactNode;
   session: any;
 }): React.ReactNode {
-  
+
   if (typeof window !== 'undefined') {
     if (session) {
       console.log(session, 'session');
