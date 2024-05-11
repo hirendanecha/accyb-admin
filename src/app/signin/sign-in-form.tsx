@@ -30,18 +30,18 @@ export default function SignInForm() {
       redirect: false,
       // callbackUrl: routes.signIn,
     });
-    // if (result?.ok) {
-    //   console.log(result, 'ele');
-    //   // router.push(routes.module.event);
-    //   window.location.replace(routes.module.event);
-    // }
-    console.log("this is result", result);
-
-    if (result?.error) {
-      window.location.replace(routes.signIn);
-    } else {
+    if (result?.ok) {
+      console.log(result, 'ele');
+      // router.push(routes.module.event);
       window.location.replace(routes.module.event);
     }
+    console.log("this is result", result);
+
+    // if (result?.error) {
+    //   window.location.replace(routes.signIn);
+    // } else {
+    //   window.location.replace(routes.module.event);
+    // }
   };
 
   return (
