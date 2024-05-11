@@ -7,24 +7,24 @@ export default withAuth({
   },
 });
 
-export const config = {
-  // restricted routes
-  matcher: [
-    '/',
-    '/analytics',
-    '/logistics/:path*',
-    '/ecommerce/:path*',
-    '/support/:path*',
-    '/file/:path*',
-    '/file-manager',
-    '/invoice/:path*',
-    '/forms/profile-settings/:path*',
-  ],
-};
-
 // export const config = {
 //   // restricted routes
 //   matcher: [
-//     '/((?!api|static|favicon.ico|auth/forgot-password-5|auth/create-new-password).*)',
+//     '/',
+//     '/analytics',
+//     '/logistics/:path*',
+//     '/ecommerce/:path*',
+//     '/support/:path*',
+//     '/file/:path*',
+//     '/file-manager',
+//     '/invoice/:path*',
+//     '/forms/profile-settings/:path*',
 //   ],
 // };
+
+export const config = {
+  // restricted routes
+  matcher: [
+    '/((?!api|static|favicon.ico|auth/forgot-password-5|auth/create-new-password).*)',
+  ],
+};

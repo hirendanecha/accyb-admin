@@ -4,11 +4,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const logIn = createAsyncThunk(
   'user/login',
-  async (data:LoginSchema) => {
+  async (data: LoginSchema) => {
     try {
-      const userData = await authAPI.loginApi({...data});
-      console.log('userdata',userData);
-      
+      const userData = await authAPI({ ...data });
       return userData;
     } catch (error) {
       // If authentication fails, throw an error
@@ -16,6 +14,5 @@ export const logIn = createAsyncThunk(
     }
   }
 );
-
 
 // Define initial state
