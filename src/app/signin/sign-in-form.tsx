@@ -28,10 +28,18 @@ export default function SignInForm() {
     const result = await signIn('credentials', {
       ...data,
       redirect: false,
+      // callbackUrl: routes.signIn,
     });
-    if (result?.ok) {
-      console.log(result, 'ele');
-      // router.push(routes.module.event);
+    // if (result?.ok) {
+    //   console.log(result, 'ele');
+    //   // router.push(routes.module.event);
+    //   window.location.replace(routes.module.event);
+    // }
+    console.log("this is result", result);
+
+    if (result?.error) {
+      window.location.replace(routes.signIn);
+    } else {
       window.location.replace(routes.module.event);
     }
   };
@@ -41,12 +49,15 @@ export default function SignInForm() {
       <Form<LoginSchema>
         validationSchema={loginSchema}
         // resetValues={reset}
-        onSubmit={ (s) =>{
-            console.log(s, 'elesss');
-          onSubmit(s)}}
-        useFormProps={{
-          // defaultValues: initialValues,
+        onSubmit={(s) => {
+          console.log(s, 'elesss');
+          onSubmit(s);
         }}
+        useFormProps={
+          {
+            // defaultValues: initialValues,
+          }
+        }
         className="min-h-screen w-full justify-between"
       >
         {({ register, formState: { errors } }) => (
