@@ -3,15 +3,15 @@ import './src/env.mjs';
 const nextConfig = {
   // skipTrailingSlashRedirect: true,
   // skipMiddlewareUrlNormalize: true,
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/',
-  //       destination: '/ecommerce',
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/events',
+        permanent: true,
+      },
+    ];
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
