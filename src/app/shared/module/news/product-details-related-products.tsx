@@ -6,8 +6,8 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
   console.log(newsDetails, 'newsDetails');
 
   return (
-    <div className="@container">
-      <FormGroup title="" description="">
+    <div className="@container flex justify-center items-center">
+      <FormGroup title="" description="" className='w-9/12'>
         <Input
           label="Source"
           placeholder="Source"
@@ -50,6 +50,7 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           value={newsDetails?.targetAudience}
           readOnly
         />
+        <img src={newsDetails?.attachment} alt='attachment' style={{borderRadius:'10px'}}/>
       </FormGroup>
     </div>
   );

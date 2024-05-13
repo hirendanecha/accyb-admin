@@ -19,8 +19,8 @@ import SettingsButton from '@/components/settings/settings-button';
 
 function HeaderMenuRight() {
   return (
-    <div className="ms-auto grid shrink-0 grid-cols-4 items-center gap-2 text-gray-700 xs:gap-3 xl:gap-4">
-      <MessagesDropdown>
+    <div className="ms-auto grid shrink-0 grid-cols-1 items-end gap-2 text-gray-700 xs:gap-3 xl:gap-4">
+      {/* <MessagesDropdown>
         <ActionIcon
           aria-label="Messages"
           variant="text"
@@ -50,7 +50,7 @@ function HeaderMenuRight() {
           />
         </ActionIcon>
       </NotificationDropdown>
-      <SettingsButton />
+      <SettingsButton /> */}
       <ProfileMenu />
     </div>
   );
@@ -77,7 +77,7 @@ export default function Header() {
         >
           <Logo iconOnly={true} />
         </Link>
-        <SearchWidget />
+        {/* <SearchWidget /> */}
       </div>
       <HeaderMenuRight />
     </header>

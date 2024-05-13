@@ -26,7 +26,7 @@ const pageHeader = {
   title: 'Edit Event',
   breadcrumb: [
     {
-      href: routes.module.createEvents,
+      href: routes.createEvents,
       name: 'Event',
     },
     {

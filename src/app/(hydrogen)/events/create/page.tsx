@@ -13,10 +13,7 @@ export const metadata = {
 const pageHeader = {
   title: 'Create Events',
   breadcrumb: [
-    {
-      href: routes.eCommerce.dashboard,
-      name: 'Module',
-    },
+   
     {
       href: routes.eCommerce.products,
       name: 'Events',
@@ -32,7 +29,7 @@ export default function CreateProductPage() {
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <Link
-          href={routes.module.createEvents}
+          href={routes.createEvents}
           className="mt-4 w-full @lg:mt-0 @lg:w-auto"
         ></Link>
       </PageHeader>

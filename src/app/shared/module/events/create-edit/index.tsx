@@ -30,7 +30,7 @@ import UploadZone from '@/components/ui/file-upload/upload-zone';
 import { DatePicker } from '@/components/ui/datepicker';
 import QuillEditor from '@/components/ui/quill-editor';
 import FileUpload from './file-upload';
-import { Button } from 'rizzui';
+import { Button, Switch } from 'rizzui';
 import { routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 interface IndexProps {
@@ -48,7 +48,19 @@ export default function CreateEditEvent({
 }: IndexProps) {
   const { layout } = useLayout();
   const [isLoading, setLoading] = useState(false);
+
   const [files, setFiles] = useState<File[]>([]);
+  const [filesError, setFilesError] = useState('');
+  console.log('filesError', filesError);
+
+  useEffect(() => {
+    if (files.length) {
+      setFilesError('');
+    }
+  }, [files]);
+
+  const [docs, setDocs] = useState<File[]>([]);
+
   const router = useRouter();
   // const methods = useForm<CreateEventInput>({
   //   resolver: zodResolver(eventFormSchema),
@@ -56,7 +68,7 @@ export default function CreateEditEvent({
   // });
   console.log(eventsDetails, 'eventsDetailsdldldldldldldl');
 
-  const defaultValues = useMemo(
+  const defaultValues: CreateEventInput = useMemo(
     () => ({
       title: eventsDetails?.title || '',
       description: eventsDetails?.description || '',
@@ -70,7 +82,10 @@ export default function CreateEditEvent({
       access: eventsDetails?.access || '',
       targetAudience: eventsDetails?.targetAudience[0] || '',
       registerLink: eventsDetails?.registerLink || '',
-      pictureLink: eventsDetails?.pictureLink || '',
+      pictureLink: eventsDetails?.pictureLink || [],
+      otherDocument: eventsDetails?.otherDocument || [],
+      eventType: eventsDetails?.eventType || '',
+      isFeatured: eventsDetails?.isFeatured || '',
     }),
     [eventsDetails]
   );
@@ -82,6 +97,7 @@ export default function CreateEditEvent({
     register,
     reset,
     setError,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onChange',
@@ -94,8 +110,11 @@ export default function CreateEditEvent({
   const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit: SubmitHandler<CreateEventInput> = (data: any) => {
-    console.log('eventDataaaaaaaaaaaaaa',data);
-    
+    console.log('eventDataaaaaaaaaaaaaa', data);
+    if (!files[0]) {
+      setFilesError('Please select an image');
+      return;
+    }
     // alert("fdkjsagdfb")
     setLoading(true);
     setTimeout(() => {
@@ -110,18 +129,18 @@ export default function CreateEditEvent({
       formData.append('access', data.access);
       formData.append('targetAudience', data.targetAudience);
       formData.append('registerLink', data.registerLink);
-      // formData.append('pictureLink', data.files);
-      if (!files[0]) {
-        setError('pictureLink', {
-          type: 'custom',
-          message: 'Please select an image',
-        });
-        return;
-      }
+      formData.append('eventType', data.eventType);
+      formData.append('isFeatured', data.isFeatured);
 
       for (const file of files) {
         if (file) {
           formData.append('pictureLink', file);
+        }
+      }
+
+      for (const doc of docs) {
+        if (doc) {
+          formData.append('otherDocument', doc);
         }
       }
 
@@ -130,7 +149,7 @@ export default function CreateEditEvent({
           .unwrap()
           .then((res) => {
             console.log('res', res);
-            router.push(routes.module.event);
+            router.push(routes.event);
           })
           .catch((err) => {
             console.log('err', err);
@@ -141,7 +160,7 @@ export default function CreateEditEvent({
           .then((res) => {
             console.log('res', res);
             // routes.module.event;
-            router.push(routes.module.event);
+            router.push(routes.event);
           })
           .catch((err) => {
             console.log('err', err);
@@ -160,10 +179,11 @@ export default function CreateEditEvent({
   }, [reset, defaultValues]);
 
   return (
-    <div className="@container">
+    <div className="flex items-center justify-center @container">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={cn('[&_label.block>span]:font-medium', className)}
+        style={{ width: '70%' }}
       >
         <FormGroup title="" description="" className={cn(className)}>
           <Input
@@ -196,6 +216,37 @@ export default function CreateEditEvent({
             {...register('speakers')}
             error={errors.speakers?.message as string}
           />
+
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <label style={{ fontWeight: 500 }}>Event Type :</label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <input
+                type="radio"
+                id="free"
+                value="free"
+                defaultChecked
+                {...register('eventType')}
+              />
+              <label htmlFor="free">Free</label>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <input
+                type="radio"
+                id="paid"
+                value="paid"
+                {...register('eventType')}
+              />
+              <label htmlFor="paid">Paid</label>
+            </div>
+          </div>
+
+          <Switch
+            variant="active"
+            label="Is Featured"
+            {...register('isFeatured')}
+            error={errors.isFeatured?.message as string}
+          />
+
           <Controller
             control={control}
             name="description"
@@ -242,15 +293,28 @@ export default function CreateEditEvent({
           <FileUpload
             label="Files"
             accept="all"
-            // name="pictureLink"
-            error={errors.pictureLink?.message as string}
-            multiple
+            multiple={false}
             files={files}
             setFiles={setFiles}
+            error={filesError}
+          />
+          <FileUpload
+            label="Other Documents"
+            accept="all"
+            multiple={false}
+            files={docs}
+            setFiles={setDocs}
           />
         </FormGroup>
         <Button
-          type="submit"
+          type="button"
+          onClick={()=> {
+            if (!files[0]) {
+              setFilesError('Please select an image');
+            }
+            handleSubmit(onSubmit)()
+
+          }}
           isLoading={isLoading}
           className="w-full @xl:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
         >

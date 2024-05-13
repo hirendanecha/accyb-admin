@@ -14,7 +14,7 @@ const pageHeader = {
   title: 'Create News',
   breadcrumb: [
     {
-      href: routes.module.news,
+      href: routes.news,
       name: 'News',
     },
     {

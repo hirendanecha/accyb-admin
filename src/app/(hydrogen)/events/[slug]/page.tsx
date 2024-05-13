@@ -13,7 +13,7 @@ export default function ProductDetailsPage({ params }: any) {
     title: 'View Event',
     breadcrumb: [
       {
-        href: routes.module.event,
+        href: routes.event,
         name: 'Event',
       },
       {

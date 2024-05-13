@@ -129,7 +129,7 @@ export const getColumns = ({ onDeleteItem }: Columns) => [
           placement="top"
           color="invert"
         >
-          <Link href={routes.module.editEvent(row?._id)}>
+          <Link href={routes.editEvent(row?._id)}>
             <ActionIcon size="sm" variant="outline" aria-label={'Edit Event'}>
               <PencilIcon className="h-4 w-4" />
             </ActionIcon>
@@ -141,7 +141,7 @@ export const getColumns = ({ onDeleteItem }: Columns) => [
           placement="top"
           color="invert"
         >
-          <Link href={routes.module.eventDetails(row?._id)}>
+          <Link href={routes.eventDetails(row?._id)}>
             <ActionIcon size="sm" variant="outline" aria-label={'View Event'}>
               <EyeIcon className="h-4 w-4" />
             </ActionIcon>

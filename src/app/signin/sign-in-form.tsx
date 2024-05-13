@@ -33,7 +33,7 @@ export default function SignInForm() {
     if (result?.ok) {
       console.log(result, 'ele');
       // router.push(routes.module.event);
-      window.location.replace(routes.module.event);
+      window.location.replace(routes.event);
     }
     console.log("this is result", result);
 
@@ -46,6 +46,7 @@ export default function SignInForm() {
 
   return (
     <>
+
       <Form<LoginSchema>
         validationSchema={loginSchema}
         // resetValues={reset}

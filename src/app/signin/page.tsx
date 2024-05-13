@@ -1,14 +1,20 @@
-
 import SignInForm from './sign-in-form';
 import AuthWrapperOne from '@/app/shared/auth-layout/auth-wrapper-one';
 import Image from 'next/image';
 import UnderlineShape from '@/components/shape/underline';
 import { metaObject } from '@/config/site.config';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 export const metadata = {
   ...metaObject('Sign In'),
 };
 
-export default function SignIn() {
+export default async function SignIn() {
+  const session = await getServerSession();
+
+  if (session) {
+    redirect('/events');
+  }
   return (
     <AuthWrapperOne
       title={
@@ -42,6 +48,22 @@ export default function SignIn() {
       //   // </div>
       // }
     >
+      <div
+        className="[&>label>span]:font-medium"
+        style={{
+          marginTop: -30,
+          marginBottom: 30,
+        }}
+      >
+        <span
+          style={{
+            fontSize: '18px',
+            fontWeight: 600,
+          }}
+        >
+          Sign In
+        </span>
+      </div>
       <SignInForm />
     </AuthWrapperOne>
   );

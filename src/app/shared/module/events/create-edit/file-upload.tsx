@@ -78,11 +78,11 @@ export default function FileUpload({
         className="mb-6 min-h-[240px] justify-center border-dashed bg-gray-50 dark:bg-transparent"
       />
 
-      {files.length > 1 ? (
+      {files?.length > 1 ? (
         <Text className="mb-2 text-gray-500">{files.length} files</Text>
       ) : null}
 
-      {files.length > 0 && (
+      {files?.length > 0 && (
         <SimpleBar className="max-h-[280px]">
           <div className="grid grid-cols-1 gap-4">
             {files?.map((file: File, index: number) => (
@@ -122,7 +122,7 @@ export default function FileUpload({
       <div className="mt-4 flex justify-end gap-3">
         <Button
           variant="outline"
-          className={cn(!files.length && 'hidden', 'w-full')}
+          className={cn(!files?.length && 'hidden', 'w-full')}
           onClick={() => setFiles([])}
         >
           Reset
