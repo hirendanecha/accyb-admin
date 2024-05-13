@@ -83,7 +83,7 @@ export default function Header() {
         >
           <Logo iconOnly={true} />
         </Link>
-        <SearchWidget className="[&_.search-command]:lg:bg-gray-900 [&_.search-command]:lg:text-gray-0" />
+        {/* <SearchWidget className="[&_.search-command]:lg:bg-gray-900 [&_.search-command]:lg:text-gray-0" /> */}
       </div>
       <HeaderMenuRight />
     </header>

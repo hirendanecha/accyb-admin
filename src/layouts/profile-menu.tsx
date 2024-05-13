@@ -6,27 +6,39 @@ import { Popover } from '@/components/ui/popover';
 import { Title, Text } from '@/components/ui/text';
 import { routes } from '@/config/routes';
 import cn from '@/utils/class-names';
-import { signOut } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const menuItems = [
-  {
-    name: 'My Profile',
-    href: routes.profile,
-  },
-  {
-    name: 'Account Settings',
-    href: routes.forms.profileSettings,
-  },
-  {
-    name: 'Activity Log',
-    href: '#',
-  },
-];
+// const menuItems = [
+//   {
+//     name: 'My Profile',
+//     href: routes.profile,
+//   },
+//   {
+//     name: 'Account Settings',
+//     href: routes.forms.profileSettings,
+//   },
+//   {
+//     name: 'Activity Log',
+//     href: '#',
+//   },
+// ];
+
+
 
 function DropdownMenu() {
+  const { data: session, status } = useSession();
+  console.log("user",session);
+
+  
+const regex = /^([^.]+)/;
+
+const name = session?.user.email?.match(regex);
+  
+  
   return (
     <div className="w-64 text-left rtl:text-right">
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
@@ -37,12 +49,12 @@ function DropdownMenu() {
         />
         <div className="ms-3">
           <Title as="h6" className="font-semibold">
-            Albert Flores
+            {name[1]}
           </Title>
-          <Text className="text-gray-600">flores@doe.io</Text>
+          <Text className="text-gray-600">{session?.user.email}</Text>
         </div>
       </div>
-      <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
+      {/* <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
         {menuItems.map((item) => (
           <Link
             key={item.name}
@@ -52,7 +64,7 @@ function DropdownMenu() {
             {item.name}
           </Link>
         ))}
-      </div>
+      </div> */}
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
         <Button
           className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"

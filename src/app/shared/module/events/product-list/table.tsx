@@ -111,21 +111,21 @@ export default function ProductsTable({ data = [] }: { data: any[] }) {
           current: currentPage,
           onChange: (page: number) => handlePaginate(page),
         }}
-        filterOptions={{
-          searchTerm,
-          onSearchClear: () => {
-            handleSearch('');
-          },
-          onSearchChange: (event) => {
-            handleSearch(event.target.value);
-          },
-          hasSearched: isFiltered,
-          hideIndex: 1,
-          columns,
-          checkedColumns,
-          setCheckedColumns,
-          enableDrawerFilter: true,
-        }}
+        // filterOptions={{
+        //   searchTerm,
+        //   onSearchClear: () => {
+        //     handleSearch('');
+        //   },
+        //   onSearchChange: (event) => {
+        //     handleSearch(event.target.value);
+        //   },
+        //   hasSearched: isFiltered,
+        //   hideIndex: 1,
+        //   columns,
+        //   checkedColumns,
+        //   setCheckedColumns,
+        //   enableDrawerFilter: true,
+        // }}
         tableFooter={
           <TableFooter
             checkedItems={selectedRowKeys}

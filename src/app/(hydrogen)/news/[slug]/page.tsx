@@ -12,7 +12,7 @@ export default function ProductDetailsPage({ params }: any) {
     title: 'News',
     breadcrumb: [
       {
-        href: routes.module.news,
+        href: routes.news,
         name: 'News',
       },
       {

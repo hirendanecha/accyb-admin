@@ -145,7 +145,7 @@ export const getColumns = ({
             placement="top"
             color="invert"
           >
-            <Link href={routes.module.editNews(row?._id)}>
+            <Link href={routes.editNews(row?._id)}>
               <ActionIcon size="sm" variant="outline" aria-label={'Edit News'}>
                 <PencilIcon className="h-4 w-4" />
               </ActionIcon>
@@ -157,7 +157,7 @@ export const getColumns = ({
             placement="top"
             color="invert"
           >
-            <Link href={routes.module.viewNews(row?._id)}>
+            <Link href={routes.viewNews(row?._id)}>
               <ActionIcon size="sm" variant="outline" aria-label={'View News'}>
                 <EyeIcon className="h-4 w-4" />
               </ActionIcon>

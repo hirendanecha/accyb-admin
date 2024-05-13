@@ -38,13 +38,18 @@ import {
   PiMagicWandDuotone,
   PiCalendarPlusDuotone,
 } from 'react-icons/pi';
+import { FaRegNewspaper } from "react-icons/fa6";
+import { MdEvent } from "react-icons/md";
+
+
+
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
   // label start
-  {
-    name: 'Home',
-  },
+  // {
+  //   name: 'Home',
+  // },
   // label end
   // {
   //   name: 'File Manager',
@@ -61,16 +66,6 @@ export const menuItems = [
   //   name: 'E-Commerce',
   //   href: routes.eCommerce.dashboard,
   //   icon: <PiShoppingCartDuotone />,
-  // },
-  // {
-  //   name: 'Analytics',
-  //   href: routes.analytics,
-  //   icon: <PiChartBarDuotone />,
-  // },
-  // {
-  //   name: 'Support',
-  //   href: routes.support.dashboard,
-  //   icon: <PiHeadsetDuotone />,
   // },
   // label start
   // label end
@@ -146,76 +141,88 @@ export const menuItems = [
   //   ],
   // },
   {
-    name: 'Module',
-    href: '#',
-    icon: <PiMagicWandDuotone />,
-    dropdownItems: [
-      // {
-      //   name: 'Products',
-      //   href: routes.eCommerce.products,
-      // },
-      // {
-      //   name: 'Product Details',
-      //   href: routes.eCommerce.productDetails(DUMMY_ID),
-      // },
-      {
-        name: 'News',
-        href: routes.module.news,
-      },
-      {
-        name: 'Events',
-        href: routes.module.event,
-      },
-      // {
-      //   name: 'Edit Product',
-      //   href: routes.eCommerce.ediProduct(DUMMY_ID),
-      // },
-      // {
-      //   name: 'Categories',
-      //   href: routes.eCommerce.categories,
-      // },
-      // {
-      //   name: 'Create Category',
-      //   href: routes.eCommerce.createCategory,
-      // },
-      // {
-      //   name: 'Edit Category',
-      //   href: routes.eCommerce.editCategory(DUMMY_ID),
-      // },
-      // {
-      //   name: 'Orders',
-      //   href: routes.eCommerce.orders,
-      // },
-      // {
-      //   name: 'Order Details',
-      //   href: routes.eCommerce.orderDetails(DUMMY_ID),
-      // },
-      // {
-      //   name: 'Create Order',
-      //   href: routes.eCommerce.createOrder,
-      // },
-      // {
-      //   name: 'Edit Order',
-      //   href: routes.eCommerce.editOrder(DUMMY_ID),
-      // },
-      // {
-      //   name: 'Reviews',
-      //   href: routes.eCommerce.reviews,
-      // },
-      // {
-      //   name: 'Shop',
-      //   href: routes.eCommerce.shop,
-      // },
-      // {
-      //   name: 'Cart',
-      //   href: routes.eCommerce.cart,
-      // },
-      // {
-      //   name: 'Checkout & Payment',
-      //   href: routes.eCommerce.checkout,
-      // },
-    ],
+    name:'Events',
+    href:routes.event,
+    icon:<MdEvent />,
   },
+  {
+    name: 'News',
+    href: routes.news,
+    icon:<FaRegNewspaper />,
+  },
+  
+  // {
+  //   name: 'Module',
+  //   href: '#',
+  //   icon: <PiMagicWandDuotone />,
+  //   dropdownItems: [
+  //     // {
+  //     //   name: 'Products',
+  //     //   href: routes.eCommerce.products,
+  //     // },
+  //     // {
+  //     //   name: 'Product Details',
+  //     //   href: routes.eCommerce.productDetails(DUMMY_ID),
+  //     // },
+  //     {
+  //       name: 'News',
+  //       href: routes.news,
+  //     },
+  //     {
+  //       name: 'Events',
+  //       href: routes.event,
+  //     },
+  //     // {
+  //     //   name: 'Edit Product',
+  //     //   href: routes.eCommerce.ediProduct(DUMMY_ID),
+  //     // },
+  //     // {
+  //     //   name: 'Categories',
+  //     //   href: routes.eCommerce.categories,
+  //     // },
+  //     // {
+  //     //   name: 'Create Category',
+  //     //   href: routes.eCommerce.createCategory,
+  //     // },
+  //     // {
+  //     //   name: 'Edit Category',
+  //     //   href: routes.eCommerce.editCategory(DUMMY_ID),
+  //     // },
+  //     // {
+  //     //   name: 'Orders',
+  //     //   href: routes.eCommerce.orders,
+  //     // },
+  //     // {
+  //     //   name: 'Order Details',
+  //     //   href: routes.eCommerce.orderDetails(DUMMY_ID),
+  //     // },
+  //     // {
+  //     //   name: 'Create Order',
+  //     //   href: routes.eCommerce.createOrder,
+  //     // },
+  //     // {
+  //     //   name: 'Edit Order',
+  //     //   href: routes.eCommerce.editOrder(DUMMY_ID),
+  //     // },
+  //     // {
+  //     //   name: 'Reviews',
+  //     //   href: routes.eCommerce.reviews,
+  //     // },
+  //     // {
+  //     //   name: 'Shop',
+  //     //   href: routes.eCommerce.shop,
+  //     // },
+  //     // {
+  //     //   name: 'Cart',
+  //     //   href: routes.eCommerce.cart,
+  //     // },
+  //     // {
+  //     //   name: 'Checkout & Payment',
+  //     //   href: routes.eCommerce.checkout,
+  //     // },
+  //   ],
+  // },
+  
   // {
   //   name: 'Support',
   //   href: '#',

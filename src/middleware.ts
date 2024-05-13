@@ -11,8 +11,8 @@ export const config = {
   // restricted routes
   matcher: [
     '/',
-    // '/module/events',
-    // '/module/news',
+    '/events',
+    '/news',
     '/analytics',
     '/logistics/:path*',
     '/ecommerce/:path*',

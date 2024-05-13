@@ -128,7 +128,7 @@ export default function CreateEditProduct({
           .unwrap()
           .then((res) => {
             console.log('res', res);
-            router.push(routes.module.news);
+            router.push(routes.news);
           })
           .catch((err) => {
             console.log('err', err);
@@ -139,7 +139,7 @@ export default function CreateEditProduct({
           .then((res) => {
             console.log('res', res);
             // routes.module.event;
-            router.push(routes.module.news);
+            router.push(routes.news);
           })
           .catch((err) => {
             console.log('err', err);
@@ -158,10 +158,11 @@ export default function CreateEditProduct({
   }, [reset, defaultValues]);
 
   return (
-    <div className="@container">
+    <div className="@container flex justify-center items-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={cn('[&_label.block>span]:font-medium', className)}
+        style={{width:'70%'}}
       >
         <FormGroup title="" description="" className={cn(className)}>
           <Input
