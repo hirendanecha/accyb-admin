@@ -7,7 +7,6 @@ import SearchWidget from '@/components/search/search';
 import MessagesDropdown from '@/layouts/messages-dropdown';
 import NotificationDropdown from '@/layouts/notification-dropdown';
 import ProfileMenu from '@/layouts/profile-menu';
-import SettingsButton from '@/components/settings/settings-button';
 import HamburgerButton from '@/layouts/hamburger-button';
 import Logo from '@/components/logo';
 import {
@@ -21,7 +20,6 @@ import Sidebar from '@/layouts/beryllium/beryllium-sidebar-drawer';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
 
-// relative h-[34px] w-[34px] shadow backdrop-blur-md dark:bg-gray-100 md:h-9 md:w-9
 
 function HeaderMenuRight() {
   return (
@@ -60,13 +58,6 @@ function HeaderMenuRight() {
           />
         </ActionIcon>
       </NotificationDropdown>
-      <SettingsButton
-        className={cn(
-          'relative h-[34px] w-[34px] shadow backdrop-blur-md dark:bg-gray-100 md:h-9  md:w-9 3xl:h-10 3xl:w-10'
-        )}
-      >
-        <PiGear className="h-[22px] w-auto animate-spin-slow" />
-      </SettingsButton>
       <ProfileMenu
         buttonClassName="w-auto sm:w-auto"
         avatarClassName="!w-7 !h-7 sm:!h-10 sm:!w-10"

@@ -74,9 +74,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: any) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid
         try {
           console.log('auth-options.ts', credentials);
 
@@ -95,7 +92,6 @@ export const authOptions: NextAuthOptions = {
 
           const jwt = response.data.token;
           // const session_id = response.data.session_id;
-          // You can make more requests to get other information about the user, e.g., Profile details
           return {
             ...credentials,
             jwt,

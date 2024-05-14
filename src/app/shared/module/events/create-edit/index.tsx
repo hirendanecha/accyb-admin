@@ -47,7 +47,7 @@ export default function CreateEditEvent({
   className,
 }: IndexProps) {
   const { layout } = useLayout();
-  const [isLoading, setLoading] = useState(false);
+  // const [isLoading, setLoading] = useState(false);
 
   const [files, setFiles] = useState<File[]>([]);
   const [filesError, setFilesError] = useState('');
@@ -109,69 +109,76 @@ export default function CreateEditEvent({
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit: SubmitHandler<CreateEventInput> = (data: any) => {
+  const onSubmit: SubmitHandler<CreateEventInput> = async(data: any) => {
     console.log('eventDataaaaaaaaaaaaaa', data);
     if (!files[0]) {
       setFilesError('Please select an image');
       return;
     }
-    // alert("fdkjsagdfb")
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      console.log('event_data', data);
-      const formData = new FormData() as any;
-      formData.append('title', data.title);
-      formData.append('description', data.description);
-      formData.append('startDate', data.startDate);
-      formData.append('endDate', data.endDate);
-      formData.append('speakers', data.speakers);
-      formData.append('access', data.access);
-      formData.append('targetAudience', data.targetAudience);
-      formData.append('registerLink', data.registerLink);
-      formData.append('eventType', data.eventType);
-      formData.append('isFeatured', data.isFeatured);
+    console.log('event_data', data);
+    const formData = new FormData() as any;
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('startDate', data.startDate);
+    formData.append('endDate', data.endDate);
+    formData.append('speakers', data.speakers);
+    formData.append('access', data.access);
+    formData.append('targetAudience', data.targetAudience);
+    formData.append('registerLink', data.registerLink);
+    formData.append('eventType', data.eventType);
+    formData.append('isFeatured', data.isFeatured);
 
-      for (const file of files) {
-        if (file) {
-          formData.append('pictureLink', file);
-        }
+    for (const file of files) {
+      if (file) {
+        formData.append('pictureLink', file);
       }
+    }
 
-      for (const doc of docs) {
-        if (doc) {
-          formData.append('otherDocument', doc);
-        }
+    for (const doc of docs) {
+      if (doc) {
+        formData.append('otherDocument', doc);
       }
+    }
 
-      if (slug) {
-        dispatch(updateEvent({ id: slug, data: formData }))
-          .unwrap()
-          .then((res) => {
-            console.log('res', res);
+    if (slug) {
+      await dispatch(updateEvent({ id: slug, data: formData }))
+        .unwrap()
+        .then((res) => {
+          console.log('res', res);
+          router.push(routes.event);
+          if (res?.success) {
+            toast.success(
+              <Text as="b">
+                Event successfully {slug ? 'updated' : 'created'}
+              </Text>
+            );
             router.push(routes.event);
-          })
-          .catch((err) => {
-            console.log('err', err);
-          });
-      } else {
-        dispatch(createEvent(formData))
-          .unwrap()
-          .then((res) => {
-            console.log('res', res);
-            // routes.module.event;
+          }
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    } else {
+      dispatch(createEvent(formData))
+        .unwrap()
+        .then((res) => {
+          console.log('res', res);
+          if (res?.success) {
+            toast.success(
+              <Text as="b">
+                Event successfully {slug ? 'updated' : 'created'}
+              </Text>
+            );
             router.push(routes.event);
-          })
-          .catch((err) => {
-            console.log('err', err);
-          });
-      }
+          }
+          // routes.module.event;
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    }
 
-      toast.success(
-        <Text as="b">Event successfully {slug ? 'updated' : 'created'}</Text>
-      );
-      // methods.reset();
-    }, 600);
+    // methods.reset();
   };
 
   useEffect(() => {
@@ -241,8 +248,8 @@ export default function CreateEditEvent({
           </div>
 
           <Switch
-            variant="active"
             label="Is Featured"
+            variant="active"
             {...register('isFeatured')}
             error={errors.isFeatured?.message as string}
           />
@@ -308,14 +315,13 @@ export default function CreateEditEvent({
         </FormGroup>
         <Button
           type="button"
-          onClick={()=> {
+          onClick={() => {
             if (!files[0]) {
               setFilesError('Please select an image');
             }
-            handleSubmit(onSubmit)()
-
+            handleSubmit(onSubmit)();
           }}
-          isLoading={isLoading}
+          isLoading={isSubmitting}
           className="w-full @xl:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
         >
           {slug ? 'Update Event' : 'Create Event'}

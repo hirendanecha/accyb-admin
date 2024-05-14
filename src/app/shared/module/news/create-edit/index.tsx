@@ -31,6 +31,8 @@ import FileUpload from '../../events/create-edit/file-upload';
 import { createNews, updateNews } from '@/redux/actions/newsActions';
 import { routes } from '@/config/routes';
 import { NumberInput, Switch, Text } from 'rizzui';
+import Image from 'next/image';
+import { MdFileUpload } from "react-icons/md";
 
 
 interface IndexProps {
@@ -73,8 +75,7 @@ export default function CreateEditProduct({
     [newsDetails]
   );
 
-  console.log('defaultvalues',defaultValues);
-  
+  console.log('defaultvalues', defaultValues);
 
   const {
     control,
@@ -83,6 +84,7 @@ export default function CreateEditProduct({
     register,
     reset,
     setError,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onChange',
@@ -92,6 +94,7 @@ export default function CreateEditProduct({
 
   console.log('errors', errors);
 
+  const fileWatch = watch("attachment");
   const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit: SubmitHandler<NewsEventInput> = (data: any) => {
@@ -158,11 +161,11 @@ export default function CreateEditProduct({
   }, [reset, defaultValues]);
 
   return (
-    <div className="@container flex justify-center items-center">
+    <div className="flex items-center justify-center @container">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={cn('[&_label.block>span]:font-medium', className)}
-        style={{width:'70%'}}
+        style={{ width: '70%' }}
       >
         <FormGroup title="" description="" className={cn(className)}>
           <Input
@@ -236,6 +239,53 @@ export default function CreateEditProduct({
             files={files}
             setFiles={setFiles}
           />
+
+          {/* <div
+            className={merger}
+            
+          >
+            <input
+              {...register('attachment')}
+              id="documents"
+              type="file"
+              accept="application/pdf"
+              multiple={false}
+            />
+            <label
+              htmlFor="documents"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                setValue('attachment', e.dataTransfer.files);
+              }}
+            >
+              {fileWatch && fileWatch?.item(0) ? (
+                <div
+                  direction={'row'}
+                  alignItems={'center'}
+                  gap={1.5}
+                  maxWidth={'100%'}
+                >
+                  <Image src={FileThumbnail} alt='' />
+                  <div className='flex flex-col'>
+                    <p className="file-name" title={fileWatch?.item(0)?.name}>
+                      {fileWatch?.item(0)?.name}
+                    </p>
+                    <p className="file-helper-text">
+                      {`Size: ${(fileWatch?.item(0)?.size || 0) / 1000} KB`}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <MdFileUpload />
+                  <p className="file-name">Drag & Drop PDF Here</p>
+                  <p className="file-helper-text">Maximum 80 MB</p>
+                </>
+              )}
+            </label>
+          </div>
+          {errors.attachment && <p>{errors?.attachment.message}</p>} */}
         </FormGroup>
         <FormFooter
           isLoading={isLoading}

@@ -15,7 +15,7 @@ const pageHeader = {
   breadcrumb: [
    
     {
-      href: routes.eCommerce.products,
+      href: routes.event,
       name: 'Events',
     },
     {

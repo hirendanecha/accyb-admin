@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Title } from '@/components/ui/text';
 import { Button } from '@/components/ui/button';
-import LoggedInDevices from './logged-in-devices/table';
+// import LoggedInDevices from './logged-in-devices/table';
 import HorizontalFormBlockWrapper from './horiozontal-block';
 import GithubIcon from '@/components/icons/github';
 import TeamsIcon from '@/components/icons/teams';
@@ -104,10 +104,10 @@ export default function TeamSettingsView() {
         descriptionClassName="max-w-[352px]"
         className="border-0 pb-0"
       >
-        <LoggedInDevices
+        {/* <LoggedInDevices
           data={loggedInDeviceData}
           className="@xs:col-span-full"
-        />
+        /> */}
       </HorizontalFormBlockWrapper>
     </>
   );
