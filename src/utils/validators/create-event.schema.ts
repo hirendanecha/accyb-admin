@@ -5,10 +5,10 @@ import { fileSchema } from '@/utils/validators/common-rules';
 export const eventFormSchema = z.object({
   title: z.string().min(1, { message: 'Event name is required' }),
   description: z.string().min(1, { message: 'Event description is required' }),
-  targetAudience: z.string().min(1, { message: 'required' }),
-  speakers: z.string().min(1, { message: 'required' }),
-  registerLink: z.string().min(1, { message: 'required' }),
-  access: z.string().min(1, { message: 'required' }),
+  targetAudience: z.string().min(1, { message: 'Targeted audience is required' }),
+  speakers: z.array(z.string()).min(1, { message: 'speaker is required' }),
+  registerLink: z.string().min(1, { message: 'Register link is required' }),
+  access: z.string().min(1, { message: 'Access is required' }),
   // pictureLink: z
   //   .instanceof(FileList)
   //   .refine((data) => data && data.length > 0, {
@@ -17,7 +17,8 @@ export const eventFormSchema = z.object({
   startDate: z.date().min(new Date('1900-01-01')).optional(),
   endDate: z.date().min(new Date('1900-01-02')).optional(),
   eventType: z.string().min(1, { message: 'Select event type' }),
-  isFeatured: z.boolean().optional(),
+  isFeatured: z.boolean({message:'required'}).optional(),
+  location:z.string({message:'required'}),
   // otherDocument: z
   //   .instanceof(FileList)
   //   .refine((data) => data && data.length > 0, {

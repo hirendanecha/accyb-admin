@@ -33,6 +33,7 @@ import FileUpload from './file-upload';
 import { Button, Switch } from 'rizzui';
 import { routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
+import { isArray } from 'lodash';
 interface IndexProps {
   slug?: string;
   className?: string;
@@ -78,7 +79,7 @@ export default function CreateEditEvent({
       endDate: eventsDetails?.endDate
         ? new Date(eventsDetails.endDate)
         : new Date(),
-      speakers: eventsDetails?.speakers[0] || '',
+      speakers: eventsDetails?.speakers || [],
       access: eventsDetails?.access || '',
       targetAudience: eventsDetails?.targetAudience[0] || '',
       registerLink: eventsDetails?.registerLink || '',
@@ -86,6 +87,7 @@ export default function CreateEditEvent({
       otherDocument: eventsDetails?.otherDocument || [],
       eventType: eventsDetails?.eventType || '',
       isFeatured: eventsDetails?.isFeatured || '',
+      location: eventsDetails?.location || '',
     }),
     [eventsDetails]
   );
@@ -108,8 +110,27 @@ export default function CreateEditEvent({
   console.log('errors', errors);
 
   const dispatch = useDispatch<AppDispatch>();
+  const speakers = watch('speakers') || [];
+  console.log(speakers,"speakers")
 
-  const onSubmit: SubmitHandler<CreateEventInput> = async(data: any) => {
+  const addSpeaker = () => {
+    setValue('speakers', speakers.concat(''));
+  };
+
+  const removeSpeaker = (index: number) => {
+    const updatedSpeakers = [...speakers];
+    updatedSpeakers.splice(index, 1);
+
+    setValue('speakers', updatedSpeakers);
+  };
+
+  const handleSpeakerChange = (index: number, value: string) => {
+    const updatedSpeakers = [...speakers];
+    updatedSpeakers[index] = value;
+    setValue('speakers', updatedSpeakers);
+  };
+
+  const onSubmit: SubmitHandler<CreateEventInput> = async (data) => {
     console.log('eventDataaaaaaaaaaaaaa', data);
     if (!files[0]) {
       setFilesError('Please select an image');
@@ -127,6 +148,9 @@ export default function CreateEditEvent({
     formData.append('registerLink', data.registerLink);
     formData.append('eventType', data.eventType);
     formData.append('isFeatured', data.isFeatured);
+    formData.append('location', data.location);
+
+    console.log('FORMDATA', formData);
 
     for (const file of files) {
       if (file) {
@@ -159,7 +183,7 @@ export default function CreateEditEvent({
           console.log('err', err);
         });
     } else {
-      dispatch(createEvent(formData))
+      await dispatch(createEvent(formData))
         .unwrap()
         .then((res) => {
           console.log('res', res);
@@ -171,14 +195,11 @@ export default function CreateEditEvent({
             );
             router.push(routes.event);
           }
-          // routes.module.event;
         })
         .catch((err) => {
           console.log('err', err);
         });
     }
-
-    // methods.reset();
   };
 
   useEffect(() => {
@@ -217,12 +238,36 @@ export default function CreateEditEvent({
             {...register('registerLink')}
             error={errors.registerLink?.message as string}
           />
-          <Input
+
+          <div>
+            { isArray(speakers)  &&speakers.length > 0 &&  speakers?.map((speaker, index) => {
+              return (
+                <div key={index}>
+                  <Input
+                    label={`Speaker ${index + 1}`}
+                    placeholder="Speaker"
+                    value={speaker}
+                    onChange={(e) => handleSpeakerChange(index, e.target.value)}
+                  />
+                  {index > 0 && (
+                    <button type="button" onClick={() => removeSpeaker(index)}>
+                      Remove Speaker
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+            <button type="button" onClick={addSpeaker}>
+              Add Speaker
+            </button>
+          </div>
+
+          {/* <Input
             label="Speakers"
             placeholder="Speakers"
             {...register('speakers')}
             error={errors.speakers?.message as string}
-          />
+          /> */}
 
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
             <label style={{ fontWeight: 500 }}>Event Type :</label>
@@ -254,6 +299,15 @@ export default function CreateEditEvent({
             error={errors.isFeatured?.message as string}
           />
 
+          <Input
+            label="Location"
+            // inputClassName="w-24 h-9"
+            placeholder="location"
+            // type="number"
+            {...register('location')}
+            error={errors.location?.message as string}
+          />
+
           <Controller
             control={control}
             name="description"
@@ -276,10 +330,11 @@ export default function CreateEditEvent({
               <DatePicker
                 inputProps={{ label: 'Start date' }}
                 placeholderText="Start Date"
-                dateFormat="dd/MM/yyyy"
+                dateFormat="dd MMMM yyyy hh:mm"
                 onChange={onChange}
                 onBlur={onBlur}
                 selected={value}
+                showTimeSelect
               />
             )}
           />
@@ -290,10 +345,11 @@ export default function CreateEditEvent({
               <DatePicker
                 inputProps={{ label: 'End date' }}
                 placeholderText="End Date"
-                dateFormat="dd/MM/yyyy"
+                dateFormat="dd MMMM yyyy hh:mm"
                 onChange={onChange}
                 onBlur={onBlur}
                 selected={value}
+                showTimeSelect
               />
             )}
           />

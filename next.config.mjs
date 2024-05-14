@@ -73,6 +73,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'isomorphic-furyroad.s3.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'accybpublic.s3.amazonaws.com',
+      },
     ],
   },
   reactStrictMode: false,

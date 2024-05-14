@@ -1,15 +1,14 @@
 import { Button } from '@/components/ui/button';
 import FormGroup from '../../form-group';
 import { Input } from 'rizzui';
+import Image from 'next/image';
 
 export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
   console.log(eventsDetails, 'eventsDetails');
 
-  
-
   return (
-    <div className="@container flex justify-center items-center">
-      <FormGroup title="" description="" className='w-9/12'>
+    <div className="flex items-center justify-center @container">
+      <FormGroup title="" description="" className="w-9/12">
         <Input
           label="Title"
           placeholder="Event title"
@@ -59,19 +58,27 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           value={eventsDetails?.endDate}
           readOnly
         />
-       
+        <Input
+          label="IsFeatured"
+          placeholder="isFeatured"
+          value={eventsDetails?.isFeatured}
+          readOnly
+        />
+        <Input
+          label="Location"
+          placeholder="location"
+          value={eventsDetails?.location}
+          readOnly
+        />
+
+
+
         <div>
           <label>Description</label>
           <div
             dangerouslySetInnerHTML={{ __html: eventsDetails?.description }}
-            style={{
-              marginTop:20,
-              // border:'1px solid rgb(var(--gray-300) / var(--tw-border-opacity));'
-              border:'1px solid #DEDEDE',
-              padding:20,
-              borderRadius:'5px',
-            }}
-            className="hover-effect"
+            
+            className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
           />
         </div>
         {/* <textarea
@@ -91,7 +98,16 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
         /> */}
 
-        <img src={eventsDetails?.pictureLink} alt='Event' />
+        <div className='flex flex-col gap-2'>
+          <label>Event Image :</label>
+          <Image
+            src={eventsDetails?.pictureLink}
+            alt="Event"
+            style={{ borderRadius: '10px' }}
+            width={500}
+            height={100}
+          />
+        </div>
       </FormGroup>
     </div>
   );
