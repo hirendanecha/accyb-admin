@@ -7,7 +7,6 @@ import SearchWidget from '@/components/search/search';
 import MessagesDropdown from '@/layouts/messages-dropdown';
 import NotificationDropdown from '@/layouts/notification-dropdown';
 import ProfileMenu from '@/layouts/profile-menu';
-import SettingsButton from '@/components/settings/settings-button';
 import HamburgerButton from '@/layouts/hamburger-button';
 import Logo from '@/components/logo';
 import {
@@ -85,9 +84,6 @@ function HeaderMenuRight() {
           />
         </ActionIcon>
       </NotificationDropdown> */}
-      {/* <SettingsButton className="rounded-full text-gray-700 shadow-none backdrop-blur-none hover:text-gray-1000 dark:bg-gray-100/0 3xl:h-10 3xl:w-10">
-        <PiGearDuotone className="h-[22px] w-auto animate-spin-slow" />
-      </SettingsButton> */}
       <ProfileMenu
         buttonClassName="w-auto sm:w-auto p-1 border border-gray-300"
         avatarClassName="!w-7 !h-7 sm:!h-8 sm:!w-8"

@@ -34,7 +34,7 @@ function DropdownMenu() {
   console.log("user",session);
 
   
-const regex = /^([^.]+)/;
+const regex = /^([^@]+)/;
 
 const name = session?.user.email?.match(regex);
   
@@ -49,7 +49,7 @@ const name = session?.user.email?.match(regex);
         />
         <div className="ms-3">
           <Title as="h6" className="font-semibold">
-            {name[1]}
+            {name[0]}
           </Title>
           <Text className="text-gray-600">{session?.user.email}</Text>
         </div>

@@ -4,10 +4,20 @@ import { Input } from 'rizzui';
 
 export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
   console.log(newsDetails, 'newsDetails');
+ 
 
   return (
-    <div className="@container flex justify-center items-center">
-      <FormGroup title="" description="" className='w-9/12'>
+    <div className="flex items-center justify-center @container">
+      <FormGroup title="" description="" className="w-9/12">
+      <div>
+        <label>Image</label>
+      <img
+          src={newsDetails?.attachment}
+          alt="attachment"
+          style={{ borderRadius: '10px',marginTop:5 }}
+        />
+      </div>
+        
         <Input
           label="Source"
           placeholder="Source"
@@ -20,12 +30,21 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           value={newsDetails?.title}
           readOnly
         />
-        <Input
+        {/* <Input
           label="Description"
           placeholder="description"
           value={newsDetails?.description}
           readOnly
-        />
+        /> */}
+
+        <div>
+          <label>Description</label>
+          <div
+            dangerouslySetInnerHTML={{ __html: newsDetails?.description }}
+           className="mt-2 border border-gray-300 p-4 rounded transition duration-300 hover:border-black"
+          />
+        </div>
+
         <Input
           label="Published Date"
           placeholder="Published Date"
@@ -50,7 +69,7 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           value={newsDetails?.targetAudience}
           readOnly
         />
-        <img src={newsDetails?.attachment} alt='attachment' style={{borderRadius:'10px'}}/>
+        
       </FormGroup>
     </div>
   );
