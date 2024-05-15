@@ -41,7 +41,7 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           <label>Description</label>
           <div
             dangerouslySetInnerHTML={{ __html: newsDetails?.description }}
-           className="mt-2 border border-gray-300 p-4 rounded transition duration-300 hover:border-black"
+           className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
           />
         </div>
 
