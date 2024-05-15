@@ -14,6 +14,8 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { routes } from '@/config/routes';
 import authAPI from '@/services/api/auth';
+import toast from 'react-hot-toast';
+import { Text } from 'rizzui';
 const initialValues: LoginSchema = {
   email: 'admin@gmail.com',
   password: 'password@123',
@@ -22,9 +24,11 @@ const initialValues: LoginSchema = {
 export default function SignInForm() {
   const [reset, setReset] = useState({});
   const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data: LoginSchema) => {
+    setLoading(true);
     const result = await signIn('credentials', {
       ...data,
       redirect: false,
@@ -32,16 +36,24 @@ export default function SignInForm() {
     });
     if (result?.ok) {
       console.log(result, 'ele');
+      
       // router.push(routes.module.event);
       window.location.replace(routes.event);
+      toast.success(
+        <Text as="b">
+          LogIn successfull
+        </Text>
+      );
+      setLoading(false);
     }
     console.log("this is result", result);
 
-    // if (result?.error) {
-    //   window.location.replace(routes.signIn);
-    // } else {
-    //   window.location.replace(routes.module.event);
-    // }
+    if (result?.error) {
+      toast.error(
+        <Text as="b">Please enter valid credentials</Text>
+      )
+      setLoading(false);
+    } 
   };
 
   return (
@@ -84,7 +96,7 @@ export default function SignInForm() {
               {...register('password')}
               error={errors.password?.message}
             />
-            <Button className="w-full" type="submit" size="lg" color="info">
+            <Button className="w-full" type="submit" size="lg" color="info" isLoading={isLoading}>
               <span>Log in</span>{' '}
               <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
             </Button>

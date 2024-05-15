@@ -194,7 +194,7 @@ function Upload(
                 >
                   browse
                 </span>{' '}
-                thorough your machine
+                Through your machine
               </p>
             </div>
           )}

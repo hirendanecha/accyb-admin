@@ -27,18 +27,7 @@ export default function CreateProductPage() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <Link
-          href={routes.eCommerce.createProduct}
-          className="mt-4 w-full @lg:mt-0 @lg:w-auto"
-        >
-          <Button
-            tag="span"
-            className="w-full @lg:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
-          >
-            <PiPlusBold className="me-1.5 h-[17px] w-[17px]" />
-            Add News
-          </Button>
-        </Link>
+       
       </PageHeader>
 
       <CreateEditProduct />

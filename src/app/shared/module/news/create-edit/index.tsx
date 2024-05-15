@@ -32,8 +32,7 @@ import { createNews, updateNews } from '@/redux/actions/newsActions';
 import { routes } from '@/config/routes';
 import { NumberInput, Switch, Text } from 'rizzui';
 import Image from 'next/image';
-import { MdFileUpload } from "react-icons/md";
-
+import { MdFileUpload } from 'react-icons/md';
 
 interface IndexProps {
   slug?: string;
@@ -68,7 +67,7 @@ export default function CreateEditProduct({
         ? new Date(newsDetails.publishedDate)
         : new Date(),
       isPublished: newsDetails?.isPublished || '',
-      rate: newsDetails?.rate.toString() || '',
+      rate: newsDetails?.rate || '',
       targetAudience: newsDetails?.targetAudience[0] || '',
       attachment: newsDetails?.attachment[0] || '',
     }),
@@ -94,7 +93,7 @@ export default function CreateEditProduct({
 
   console.log('errors', errors);
 
-  const fileWatch = watch("attachment");
+  const fileWatch = watch('attachment');
   const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit: SubmitHandler<NewsEventInput> = (data: any) => {
@@ -109,8 +108,7 @@ export default function CreateEditProduct({
       formData.append('description', data.description);
       formData.append('publishedDate', data.publishedDate);
       formData.append('isPublished', data.isPublished);
-      formData.append('speakers', data.speakers);
-      formData.append('rate', Number(data.rate));
+      formData.append('rate', data.rate);
       formData.append('targetAudience', data.targetAudience);
       if (!files[0]) {
         setError('attachment', {
@@ -132,6 +130,11 @@ export default function CreateEditProduct({
           .then((res) => {
             console.log('res', res);
             router.push(routes.news);
+            toast.success(
+              <Text as="b">
+                News successfully {slug ? 'updated' : 'created'}
+              </Text>
+            );
           })
           .catch((err) => {
             console.log('err', err);
@@ -143,15 +146,17 @@ export default function CreateEditProduct({
             console.log('res', res);
             // routes.module.event;
             router.push(routes.news);
+            toast.success(
+              <Text as="b">
+                News successfully {slug ? 'updated' : 'created'}
+              </Text>
+            );
           })
           .catch((err) => {
             console.log('err', err);
           });
       }
 
-      toast.success(
-        <Text as="b">Event successfully {slug ? 'updated' : 'created'}</Text>
-      );
       // methods.reset();
     }, 600);
   };
@@ -199,19 +204,24 @@ export default function CreateEditProduct({
             variant="active"
             label="Is Published"
             {...register('isPublished')}
-            error={errors.isPublished?.message as string}
+            // error={errors.isPublished?.message as string}
           />
+
+
           <Input
             label="Rate"
-            inputClassName="w-24 h-9"
-            placeholder="100.00"
-            // type="number"
-            {...register('rate')}
+            placeholder="Rate"
+            {...register('rate',{
+              valueAsNumber:true
+            })}
             error={errors.rate?.message as string}
+            type="number"
+
           />
+
           <Input
             label="Targeted Audience"
-            placeholder="Speakers"
+            placeholder="Targeted audience"
             {...register('targetAudience')}
             error={errors.targetAudience?.message as string}
           />

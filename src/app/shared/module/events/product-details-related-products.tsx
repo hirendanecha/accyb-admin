@@ -46,6 +46,14 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           value={eventsDetails?.speakers}
           readOnly
         />
+        
+        <Input
+          label="Program Type"
+          placeholder="program type"
+          value={eventsDetails?.programType}
+          readOnly
+        />
+        
         <Input
           label="Start Date"
           placeholder="startDate"

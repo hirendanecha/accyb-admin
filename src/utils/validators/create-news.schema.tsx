@@ -1,14 +1,13 @@
 import { z } from 'zod';
-import { messages } from '@/config/messages';
 import { fileSchema } from '@/utils/validators/common-rules';
 
 export const newsFormSchema = z.object({
-  title: z.string().min(1, { message: 'Event name is required' }),
-  description: z.string().min(1, { message: 'Event description is required' }),
-  targetAudience: z.string().min(1, { message: 'required' }),
-  source: z.string().min(1, { message: 'required' }),
+  title: z.string().min(1, { message: 'news title is required' }),
+  description: z.string().min(1, { message: 'news description is required' }),
+  targetAudience: z.string().min(1, { message: 'Tergeted audience required' }),
+  source: z.string().min(1, { message: 'Source required' }),
   isPublished: z.boolean().optional(),
-  rate: z.string().min(1, { message: 'required' }),
+  rate: z.number().int().min(1, { message: 'rate should be minimum 1' }).max(5, { message: 'rate should be maximum 5' }),
   // eventImages: z.array(fileSchema).min(1, { message: 'required' }),
   publishedDate: z.date().min(new Date('1900-01-01')).optional(),
   endDate: z.date().min(new Date('1900-01-02')).optional(),

@@ -34,6 +34,9 @@ import { Button, Switch } from 'rizzui';
 import { routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import { isArray } from 'lodash';
+import FormFooter from '@/components/form-footer';
+import { CiSquareRemove } from "react-icons/ci";
+
 interface IndexProps {
   slug?: string;
   className?: string;
@@ -80,6 +83,7 @@ export default function CreateEditEvent({
         ? new Date(eventsDetails.endDate)
         : new Date(),
       speakers: eventsDetails?.speakers || [],
+      programType: eventsDetails?.programType || [],
       access: eventsDetails?.access || '',
       targetAudience: eventsDetails?.targetAudience[0] || '',
       registerLink: eventsDetails?.registerLink || '',
@@ -112,6 +116,10 @@ export default function CreateEditEvent({
   const dispatch = useDispatch<AppDispatch>();
   const speakers = watch('speakers') || [];
   console.log(speakers,"speakers")
+  
+  const ProgramTypes = watch('programType') || [];
+
+  //handleSpeakerChange
 
   const addSpeaker = () => {
     setValue('speakers', speakers.concat(''));
@@ -130,6 +138,25 @@ export default function CreateEditEvent({
     setValue('speakers', updatedSpeakers);
   };
 
+  //handleProgramChange
+
+  const addProgram = () => {
+    setValue('programType', ProgramTypes.concat(''));
+  };
+
+  const removeProgram = (index: number) => {
+    const updatedProgramTypes = [...ProgramTypes];
+    updatedProgramTypes.splice(index, 1);
+
+    setValue('programType', updatedProgramTypes);
+  };
+
+  const handleProgramChange = (index: number, value: string) => {
+    const updatedProgramTypes = [...ProgramTypes];
+    updatedProgramTypes[index] = value;
+    setValue('programType', updatedProgramTypes);
+  };
+
   const onSubmit: SubmitHandler<CreateEventInput> = async (data) => {
     console.log('eventDataaaaaaaaaaaaaa', data);
     if (!files[0]) {
@@ -137,12 +164,15 @@ export default function CreateEditEvent({
       return;
     }
     console.log('event_data', data);
+    console.log('speakersData',data.speakers);
+    
     const formData = new FormData() as any;
     formData.append('title', data.title);
     formData.append('description', data.description);
     formData.append('startDate', data.startDate);
     formData.append('endDate', data.endDate);
-    formData.append('speakers', data.speakers);
+    formData.append('speakers', JSON.stringify(data.speakers));
+    formData.append('programType', JSON.stringify(data.programType));
     formData.append('access', data.access);
     formData.append('targetAudience', data.targetAudience);
     formData.append('registerLink', data.registerLink);
@@ -239,27 +269,58 @@ export default function CreateEditEvent({
             error={errors.registerLink?.message as string}
           />
 
+          {/* speaker */}
+
           <div>
-            { isArray(speakers)  &&speakers.length > 0 &&  speakers?.map((speaker, index) => {
+            { isArray(speakers)  && speakers.length > 0 &&  speakers?.map((speaker, index) => {
               return (
-                <div key={index}>
+                <div key={index} className='flex items-end w-full flex-grow '>
                   <Input
                     label={`Speaker ${index + 1}`}
                     placeholder="Speaker"
                     value={speaker}
+                    className='flex-grow'
                     onChange={(e) => handleSpeakerChange(index, e.target.value)}
                   />
                   {index > 0 && (
-                    <button type="button" onClick={() => removeSpeaker(index)}>
-                      Remove Speaker
-                    </button>
+                    <Button type="button" onClick={() => removeSpeaker(index)} variant='text' className='p-0'>
+                      <CiSquareRemove className='w-12 h-12' />
+                    </Button>
+                    
                   )}
                 </div>
               );
             })}
-            <button type="button" onClick={addSpeaker}>
+            <Button type="button" onClick={addSpeaker} className='mt-4'>
               Add Speaker
-            </button>
+            </Button>
+          </div>
+
+          {/* ProgramType */}
+
+          <div>
+            { isArray(ProgramTypes)  &&ProgramTypes.length > 0 &&  ProgramTypes?.map((programType, index) => {
+              return (
+                <div key={index} className='flex items-end w-full flex-grow '>
+                  <Input
+                    label={`Program Type ${index + 1}`}
+                    placeholder="programType"
+                    value={programType}
+                    className='flex-grow'
+                    onChange={(e) => handleProgramChange(index, e.target.value)}
+                  />
+                  {index > 0 && (
+                    <Button type="button" onClick={() => removeProgram(index)} variant='text' className='p-0'>
+                      <CiSquareRemove className='w-12 h-12' />
+                    </Button>
+                    
+                  )}
+                </div>
+              );
+            })}
+            <Button type="button" onClick={addProgram} className='mt-4'>
+              Add Program Type
+            </Button>
           </div>
 
           {/* <Input
@@ -269,7 +330,7 @@ export default function CreateEditEvent({
             error={errors.speakers?.message as string}
           /> */}
 
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'start' }}>
             <label style={{ fontWeight: 500 }}>Event Type :</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <input
@@ -369,7 +430,11 @@ export default function CreateEditEvent({
             setFiles={setDocs}
           />
         </FormGroup>
-        <Button
+        <FormFooter
+          isLoading={isSubmitting}
+          submitBtnText={slug ? 'Update Event' : 'Create Event'}
+        />
+        {/* <Button
           type="button"
           onClick={() => {
             if (!files[0]) {
@@ -381,7 +446,7 @@ export default function CreateEditEvent({
           className="w-full @xl:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
         >
           {slug ? 'Update Event' : 'Create Event'}
-        </Button>
+        </Button> */}
       </form>
     </div>
   );
