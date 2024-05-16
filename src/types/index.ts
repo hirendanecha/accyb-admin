@@ -19,18 +19,18 @@ export interface Address {
   street?: string;
 }
 
-export interface GoogleMapLocation {
-  lat?: number;
-  lng?: number;
-  street_number?: string;
-  route?: string;
-  street_address?: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  zip?: string;
-  formattedAddress?: string;
-}
+// export interface GoogleMapLocation {
+//   lat?: number;
+//   lng?: number;
+//   street_number?: string;
+//   route?: string;
+//   street_address?: string;
+//   city?: string;
+//   state?: string;
+//   country?: string;
+//   zip?: string;
+//   formattedAddress?: string;
+// }
 
 export type ProductColor = {
   name?: string;

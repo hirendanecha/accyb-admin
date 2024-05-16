@@ -38,6 +38,7 @@ export default function FileUpload({
   accept = 'all',
   files,
   setFiles,
+  isEdit = false,
 }: {
   label?: string;
   fieldLabel?: string;
@@ -47,6 +48,7 @@ export default function FileUpload({
   accept?: AcceptedFiles;
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  isEdit?: boolean;
 }) {
   // const [files, setFiles] = useState<Array<File>>([]);
   const imageRef = useRef<HTMLInputElement>(null);
@@ -64,19 +66,23 @@ export default function FileUpload({
   function handleImageDelete(index: number) {
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
-    (imageRef.current as HTMLInputElement).value = '';
+    if (imageRef.current) {
+      (imageRef.current as HTMLInputElement).value = '';
+    }
   }
 
   return (
     <div className="w-full">
-      <Upload
-        label={label}
-        ref={imageRef}
-        accept={accept}
-        multiple={multiple}
-        onChange={(event) => handleFileDrop(event)}
-        className="mb-6 min-h-[240px] justify-center border-dashed bg-gray-50 dark:bg-transparent"
-      />
+      {files.length === 0 && (
+        <Upload
+          label={label}
+          ref={imageRef}
+          accept={accept}
+          multiple={multiple}
+          onChange={(event) => handleFileDrop(event)}
+          className="mb-6 min-h-[240px] justify-center border-dashed bg-gray-50 dark:bg-transparent"
+        />
+      )}
 
       {files?.length > 1 ? (
         <Text className="mb-2 text-gray-500">{files.length} files</Text>
@@ -84,18 +90,17 @@ export default function FileUpload({
 
       {files?.length > 0 && (
         <SimpleBar className="max-h-[280px]">
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid w-full grid-cols-1 gap-4">
             {files?.map((file: File, index: number) => (
               <div
-                className="flex min-h-[58px] w-full items-center rounded-xl border border-gray-200 px-3 dark:border-gray-300"
+                className="flex min-h-[58px] w-full items-center rounded-xl border px-3 py-3 dark:border-gray-300"
                 key={file.name}
               >
-                <div className="relative flex h-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 object-cover px-2 py-1.5 dark:bg-transparent">
+                <div className="flex-shrink- relative flex h-52 w-1/2 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 object-cover px-2 py-1.5 dark:bg-transparent">
                   {file.type.includes('image') ? (
                     <Image
                       src={URL.createObjectURL(file)}
                       fill
-                      className=" object-contain"
                       priority
                       alt={file.name}
                       sizes="(max-width: 768px) 100vw"
@@ -104,16 +109,18 @@ export default function FileUpload({
                     <>{fileType[file.type]}</>
                   )}
                 </div>
-                <div className="truncate px-2.5">{file.name}</div>
-                <ActionIcon
-                  onClick={() => handleImageDelete(index)}
-                  size="sm"
-                  variant="flat"
-                  color="danger"
-                  className="ms-auto flex-shrink-0 p-0 dark:bg-red-dark/20"
-                >
-                  <PiTrashBold className="w-6" />
-                </ActionIcon>
+                <div className="flex flex-col items-center gap-4 w-1/2 align-middle">
+                  <div className="mt-2 truncate px-2.5">{file.name}</div>
+                  <ActionIcon
+                    onClick={() => handleImageDelete(index)}
+                    size="sm"
+                    variant="flat"
+                    color="danger"
+                    className=" flex-shrink-0 p-0 dark:bg-red-dark/20"
+                  >
+                    <PiTrashBold className="w-6" />
+                  </ActionIcon>
+                </div>
               </div>
             ))}
           </div>

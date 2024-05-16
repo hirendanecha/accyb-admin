@@ -7,7 +7,7 @@ export const eventFormSchema = z.object({
   description: z.string().min(1, { message: 'Event description is required' }),
   targetAudience: z.string().min(1, { message: 'Targeted audience is required' }),
   speakers: z.array(z.string()).min(1, { message: 'speaker is required' }),
-  programType: z.array(z.string()).min(1, { message: 'programType is required' }),
+  programType: z.string().min(1, { message: 'programType is required' }),
   registerLink: z.string().url({ message: 'URL is invalid' }),
   access: z.string().min(1, { message: 'Access is required' }),
   // pictureLink: z

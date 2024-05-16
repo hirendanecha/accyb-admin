@@ -110,7 +110,7 @@ export default function CreateEditProduct({
       formData.append('isPublished', data.isPublished);
       formData.append('rate', data.rate);
       formData.append('targetAudience', data.targetAudience);
-      if (!files[0]) {
+      if (!slug && !files[0]) {
         setError('attachment', {
           type: 'custom',
           message: 'Please select an image',
@@ -240,10 +240,10 @@ export default function CreateEditProduct({
               />
             )}
           />
+          
           <FileUpload
             label="Files"
             accept="all"
-            // name="pictureLink"
             error={errors.attachment?.message as string}
             multiple
             files={files}

@@ -35,7 +35,8 @@ import { routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import { isArray } from 'lodash';
 import FormFooter from '@/components/form-footer';
-import { CiSquareRemove } from "react-icons/ci";
+import { CiSquareRemove } from 'react-icons/ci';
+import Image from 'next/image';
 
 interface IndexProps {
   slug?: string;
@@ -115,8 +116,8 @@ export default function CreateEditEvent({
 
   const dispatch = useDispatch<AppDispatch>();
   const speakers = watch('speakers') || [];
-  console.log(speakers,"speakers")
-  
+  console.log(speakers, 'speakers');
+
   const ProgramTypes = watch('programType') || [];
 
   //handleSpeakerChange
@@ -138,41 +139,25 @@ export default function CreateEditEvent({
     setValue('speakers', updatedSpeakers);
   };
 
-  //handleProgramChange
-
-  const addProgram = () => {
-    setValue('programType', ProgramTypes.concat(''));
-  };
-
-  const removeProgram = (index: number) => {
-    const updatedProgramTypes = [...ProgramTypes];
-    updatedProgramTypes.splice(index, 1);
-
-    setValue('programType', updatedProgramTypes);
-  };
-
-  const handleProgramChange = (index: number, value: string) => {
-    const updatedProgramTypes = [...ProgramTypes];
-    updatedProgramTypes[index] = value;
-    setValue('programType', updatedProgramTypes);
-  };
+  
 
   const onSubmit: SubmitHandler<CreateEventInput> = async (data) => {
     console.log('eventDataaaaaaaaaaaaaa', data);
-    if (!files[0]) {
+   
+    if (!slug && !files[0]) {
       setFilesError('Please select an image');
       return;
     }
     console.log('event_data', data);
-    console.log('speakersData',data.speakers);
-    
+    console.log('speakersData', data.speakers);
+
     const formData = new FormData() as any;
     formData.append('title', data.title);
     formData.append('description', data.description);
     formData.append('startDate', data.startDate);
     formData.append('endDate', data.endDate);
     formData.append('speakers', JSON.stringify(data.speakers));
-    formData.append('programType', JSON.stringify(data.programType));
+    formData.append('programType', data.programType);
     formData.append('access', data.access);
     formData.append('targetAudience', data.targetAudience);
     formData.append('registerLink', data.registerLink);
@@ -272,63 +257,53 @@ export default function CreateEditEvent({
           {/* speaker */}
 
           <div>
-            { isArray(speakers)  && speakers.length > 0 &&  speakers?.map((speaker, index) => {
-              return (
-                <div key={index} className='flex items-end w-full flex-grow '>
-                  <Input
-                    label={`Speaker ${index + 1}`}
-                    placeholder="Speaker"
-                    value={speaker}
-                    className='flex-grow'
-                    onChange={(e) => handleSpeakerChange(index, e.target.value)}
-                  />
-                  {index > 0 && (
-                    <Button type="button" onClick={() => removeSpeaker(index)} variant='text' className='p-0'>
-                      <CiSquareRemove className='w-12 h-12' />
-                    </Button>
-                    
-                  )}
-                </div>
-              );
-            })}
-            <Button type="button" onClick={addSpeaker} className='mt-4'>
+            {isArray(speakers) &&
+              speakers.length > 0 &&
+              speakers?.map((speaker, index) => {
+                return (
+                  <div key={index} className="flex w-full flex-grow items-end ">
+                    <Input
+                      label={`Speaker ${index + 1}`}
+                      placeholder="Speaker"
+                      value={speaker}
+                      className="flex-grow"
+                      onChange={(e) =>
+                        handleSpeakerChange(index, e.target.value)
+                      }
+                    />
+                    {index > 0 && (
+                      <Button
+                        type="button"
+                        onClick={() => removeSpeaker(index)}
+                        variant="text"
+                        className="p-0"
+                      >
+                        <CiSquareRemove className="h-12 w-12" />
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
+            <Button type="button" onClick={addSpeaker} className="mt-4">
               Add Speaker
             </Button>
           </div>
 
-          {/* ProgramType */}
-
-          <div>
-            { isArray(ProgramTypes)  &&ProgramTypes.length > 0 &&  ProgramTypes?.map((programType, index) => {
-              return (
-                <div key={index} className='flex items-end w-full flex-grow '>
-                  <Input
-                    label={`Program Type ${index + 1}`}
-                    placeholder="programType"
-                    value={programType}
-                    className='flex-grow'
-                    onChange={(e) => handleProgramChange(index, e.target.value)}
-                  />
-                  {index > 0 && (
-                    <Button type="button" onClick={() => removeProgram(index)} variant='text' className='p-0'>
-                      <CiSquareRemove className='w-12 h-12' />
-                    </Button>
-                    
-                  )}
-                </div>
-              );
-            })}
-            <Button type="button" onClick={addProgram} className='mt-4'>
-              Add Program Type
-            </Button>
-          </div>
-
-          {/* <Input
-            label="Speakers"
-            placeholder="Speakers"
-            {...register('speakers')}
-            error={errors.speakers?.message as string}
-          /> */}
+          <Controller
+            control={control}
+            name="programType"
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <QuillEditor
+                value={value}
+                onChange={onChange}
+                error={errors.programType?.message as string}
+                label="Program Type"
+                className="col-span-full [&_.ql-editor]:min-h-[100px]"
+                labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
+              />
+            )}
+          />
 
           <div style={{ display: 'flex', gap: 10, alignItems: 'start' }}>
             <label style={{ fontWeight: 500 }}>Event Type :</label>
@@ -414,6 +389,7 @@ export default function CreateEditEvent({
               />
             )}
           />
+
           <FileUpload
             label="Files"
             accept="all"
@@ -422,6 +398,7 @@ export default function CreateEditEvent({
             setFiles={setFiles}
             error={filesError}
           />
+
           <FileUpload
             label="Other Documents"
             accept="all"
@@ -434,19 +411,6 @@ export default function CreateEditEvent({
           isLoading={isSubmitting}
           submitBtnText={slug ? 'Update Event' : 'Create Event'}
         />
-        {/* <Button
-          type="button"
-          onClick={() => {
-            if (!files[0]) {
-              setFilesError('Please select an image');
-            }
-            handleSubmit(onSubmit)();
-          }}
-          isLoading={isSubmitting}
-          className="w-full @xl:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
-        >
-          {slug ? 'Update Event' : 'Create Event'}
-        </Button> */}
       </form>
     </div>
   );
