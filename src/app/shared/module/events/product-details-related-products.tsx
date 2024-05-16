@@ -47,12 +47,23 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           readOnly
         />
         
-        <Input
-          label="Program Type"
-          placeholder="program type"
-          value={eventsDetails?.programType}
-          readOnly
-        />
+        <div>
+          <label>Program Type</label>
+          <div
+            dangerouslySetInnerHTML={{ __html: eventsDetails?.programType }}
+            
+            className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
+          />
+        </div>
+
+        <div>
+          <label>Description</label>
+          <div
+            dangerouslySetInnerHTML={{ __html: eventsDetails?.description }}
+            
+            className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
+          />
+        </div>
         
         <Input
           label="Start Date"
@@ -81,14 +92,7 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
 
 
 
-        <div>
-          <label>Description</label>
-          <div
-            dangerouslySetInnerHTML={{ __html: eventsDetails?.description }}
-            
-            className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
-          />
-        </div>
+        
         {/* <textarea
           readOnly
           className="col-span-full [&_.ql-editor]:min-h-[100px]"

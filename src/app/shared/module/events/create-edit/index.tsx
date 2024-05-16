@@ -289,6 +289,16 @@ export default function CreateEditEvent({
             </Button>
           </div>
 
+
+          <Input
+            label="Location"
+            // inputClassName="w-24 h-9"
+            placeholder="location"
+            // type="number"
+            {...register('location')}
+            error={errors.location?.message as string}
+          />
+
           <Controller
             control={control}
             name="programType"
@@ -335,14 +345,7 @@ export default function CreateEditEvent({
             error={errors.isFeatured?.message as string}
           />
 
-          <Input
-            label="Location"
-            // inputClassName="w-24 h-9"
-            placeholder="location"
-            // type="number"
-            {...register('location')}
-            error={errors.location?.message as string}
-          />
+          
 
           <Controller
             control={control}
