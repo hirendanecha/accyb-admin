@@ -30,7 +30,7 @@ const fileType = {
   'application/msword': <PiFileDoc className="h-5 w-5" />,
 } as { [key: string]: React.ReactElement };
 
-export default function FileUpload({
+export default function EditFileUpload({
   label = 'Upload Files',
   btnLabel = 'Upload',
   fieldLabel,
@@ -40,8 +40,8 @@ export default function FileUpload({
   files,
   setFiles,
   isEdit = false,
-  // fileUrl,
-  // setFileUrl,
+  fileUrl,
+  setFileUrl,
   // docUrl,
   // setDocUrl
 }: {
@@ -54,11 +54,12 @@ export default function FileUpload({
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
   isEdit?: boolean;
-  // fileUrl: string;
-  // setFileUrl: React.Dispatch<React.SetStateAction<string>>;
+  fileUrl: string;
+  setFileUrl: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const imageRef = useRef<HTMLInputElement>(null);
 
+  console.log(fileUrl, 'fileUrl');
   
 
   function handleFileDrop(event: React.ChangeEvent<HTMLInputElement>) {
@@ -79,12 +80,19 @@ export default function FileUpload({
     }
   }
 
- 
+  const handleFileDelete = () => {
+    setFileUrl('');
+    if (imageRef.current) {
+      (imageRef.current as HTMLInputElement).value = '';
+    }
+    console.log(fileUrl, 'fileUrl');
+  };
+
 
 
   return (
     <div className="w-full">
-      { files.length === 0  && (
+      {fileUrl===''   && files?.length === 0 && (
         <Upload
           label={label}
           ref={imageRef}
@@ -98,17 +106,50 @@ export default function FileUpload({
       {files?.length > 1 ? (
         <Text className="mb-2 text-gray-500">{files.length} files</Text>
       ) : null}
-    
+
+      {fileUrl && (
+         <div
+         className="flex flex-col min-h-[58px] w-full items-center rounded-xl border px-3 py-3 dark:border-gray-300"
+         key={fileUrl}
+       >
+         <div className="flex-shrink- relative flex h-52 w-1/2 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 object-cover px-2 py-1.5 dark:bg-transparent">
+          
+             <Image
+               src={fileUrl}
+               fill
+               priority
+               alt={fileUrl}
+               sizes="(max-width: 768px) 100vw"
+             />
+          
+         </div>
+         <div className="flex flex-col items-center gap-4 w-1/2 align-middle">
+           <div className="mt-2 truncate px-2.5">
+             {fileUrl ? new URL(fileUrl).pathname.split('/').pop() : ''}
+           </div>
+           <ActionIcon
+             onClick={handleFileDelete}
+             size="sm"
+             variant="flat"
+             color="danger"
+             className=" flex-shrink-0 p-0 dark:bg-red-dark/20"
+           >
+             <PiTrashBold className="w-6" />
+           </ActionIcon>
+         </div>
+       </div>
+      )}
+
 
       {files?.length > 0 && (
         <SimpleBar className="max-h-[280px]">
           <div className="grid w-full grid-cols-1 gap-4">
             {files?.map((file: File, index: number) => (
               <div
-                className="flexflex-col min-h-[58px] w-full items-center rounded-xl border px-3 py-3 dark:border-gray-300"
+                className="flex flex-col min-h-[58px] w-full items-center rounded-xl border px-3 py-3 dark:border-gray-300"
                 key={file.name}
               >
-                <div className="flex-shrink- relative flex h-52 w-full items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 object-cover px-2 py-1.5 dark:bg-transparent">
+                <div className="flex-shrink- relative flex h-52 w-1/2 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 object-cover px-2 py-1.5 dark:bg-transparent">
                   {file.type.includes('image') ? (
                     <Image
                       src={URL.createObjectURL(file)}
@@ -121,7 +162,7 @@ export default function FileUpload({
                     <>{fileType[file.type]}</>
                   )}
                 </div>
-                <div className="flex flex-col items-center gap-4 w-full align-middle">
+                <div className="flex flex-col items-center gap-4 w-1/2 align-middle">
                   <div className="mt-2 truncate px-2.5">{file.name}</div>
                   <ActionIcon
                     onClick={() => handleImageDelete(index)}

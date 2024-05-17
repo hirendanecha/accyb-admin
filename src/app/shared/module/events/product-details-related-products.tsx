@@ -9,6 +9,9 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
   return (
     <div className="flex items-center justify-center @container">
       <FormGroup title="" description="" className="w-9/12">
+
+      
+
         <Input
           label="Title"
           placeholder="Event title"
@@ -46,12 +49,11 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           value={eventsDetails?.speakers}
           readOnly
         />
-        
+
         <div>
           <label>Program Type</label>
           <div
-            dangerouslySetInnerHTML={{ __html: eventsDetails?.programType }}
-            
+            dangerouslySetInnerHTML={{ __html: eventsDetails?.programType }}  
             className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
           />
         </div>
@@ -60,7 +62,6 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           <label>Description</label>
           <div
             dangerouslySetInnerHTML={{ __html: eventsDetails?.description }}
-            
             className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
           />
         </div>

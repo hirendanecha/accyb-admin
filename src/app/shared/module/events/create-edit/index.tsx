@@ -30,13 +30,14 @@ import UploadZone from '@/components/ui/file-upload/upload-zone';
 import { DatePicker } from '@/components/ui/datepicker';
 import QuillEditor from '@/components/ui/quill-editor';
 import FileUpload from './file-upload';
-import { Button, Switch } from 'rizzui';
+import { Button, FileInput, Switch } from 'rizzui';
 import { routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import { isArray } from 'lodash';
 import FormFooter from '@/components/form-footer';
 import { CiSquareRemove } from 'react-icons/ci';
 import Image from 'next/image';
+import EditFileUpload from './edit-file-upload';
 
 interface IndexProps {
   slug?: string;
@@ -55,6 +56,7 @@ export default function CreateEditEvent({
   // const [isLoading, setLoading] = useState(false);
 
   const [files, setFiles] = useState<File[]>([]);
+  const [fileUrl, setFileUrl] = useState<string>('');
   const [filesError, setFilesError] = useState('');
   console.log('filesError', filesError);
 
@@ -65,6 +67,7 @@ export default function CreateEditEvent({
   }, [files]);
 
   const [docs, setDocs] = useState<File[]>([]);
+  const [docUrl, setDocUrl] = useState<string[]>([]);
 
   const router = useRouter();
   // const methods = useForm<CreateEventInput>({
@@ -126,6 +129,8 @@ export default function CreateEditEvent({
     setValue('speakers', speakers.concat(''));
   };
 
+  console.log(eventsDetails?.pictureLink, 'eventsDetails?.pictureLink');
+
   const removeSpeaker = (index: number) => {
     const updatedSpeakers = [...speakers];
     updatedSpeakers.splice(index, 1);
@@ -139,11 +144,9 @@ export default function CreateEditEvent({
     setValue('speakers', updatedSpeakers);
   };
 
-  
-
   const onSubmit: SubmitHandler<CreateEventInput> = async (data) => {
     console.log('eventDataaaaaaaaaaaaaa', data);
-   
+
     if (!slug && !files[0]) {
       setFilesError('Please select an image');
       return;
@@ -218,8 +221,17 @@ export default function CreateEditEvent({
   };
 
   useEffect(() => {
+    setFileUrl(eventsDetails?.pictureLink || '');
+    // setDocs(eventsDetails?.otherDocument[0] || []);
     reset(defaultValues);
-  }, [reset, defaultValues]);
+  }, [
+    reset,
+    defaultValues,
+    setFileUrl,
+    eventsDetails?.pictureLink,
+    setDocs,
+    eventsDetails?.otherDocument,
+  ]);
 
   return (
     <div className="flex items-center justify-center @container">
@@ -254,7 +266,7 @@ export default function CreateEditEvent({
             error={errors.registerLink?.message as string}
           />
 
-          {/* speaker */}
+          {/* {/ speaker /} */}
 
           <div>
             {isArray(speakers) &&
@@ -288,7 +300,6 @@ export default function CreateEditEvent({
               Add Speaker
             </Button>
           </div>
-
 
           <Input
             label="Location"
@@ -345,8 +356,6 @@ export default function CreateEditEvent({
             error={errors.isFeatured?.message as string}
           />
 
-          
-
           <Controller
             control={control}
             name="description"
@@ -393,14 +402,27 @@ export default function CreateEditEvent({
             )}
           />
 
-          <FileUpload
-            label="Files"
-            accept="all"
-            multiple={false}
-            files={files}
-            setFiles={setFiles}
-            error={filesError}
-          />
+          {slug ? (
+            <EditFileUpload
+              label="Files"
+              accept="all"
+              multiple={false}
+              files={files}
+              setFiles={setFiles}
+              error={filesError}
+              fileUrl={fileUrl}
+              setFileUrl={setFileUrl}
+            />
+          ) : (
+            <FileUpload
+              label="Files"
+              accept="all"
+              multiple={false}
+              files={files}
+              setFiles={setFiles}
+              error={filesError}
+            />
+          )}
 
           <FileUpload
             label="Other Documents"
@@ -409,6 +431,7 @@ export default function CreateEditEvent({
             files={docs}
             setFiles={setDocs}
           />
+          
         </FormGroup>
         <FormFooter
           isLoading={isSubmitting}

@@ -33,6 +33,7 @@ import { routes } from '@/config/routes';
 import { NumberInput, Switch, Text } from 'rizzui';
 import Image from 'next/image';
 import { MdFileUpload } from 'react-icons/md';
+import EditFileUpload from '../../events/create-edit/edit-file-upload';
 
 interface IndexProps {
   slug?: string;
@@ -50,6 +51,7 @@ export default function CreateEditProduct({
   const { layout } = useLayout();
   const [isLoading, setLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  const [fileUrl,setFileUrl] = useState<string>('');
   const router = useRouter();
   // const methods = useForm<CreateEventInput>({
   //   resolver: zodResolver(newsFormSchema),
@@ -162,8 +164,9 @@ export default function CreateEditProduct({
   };
 
   useEffect(() => {
+    setFileUrl(newsDetails?.attachment[0] || '');
     reset(defaultValues);
-  }, [reset, defaultValues]);
+  }, [reset, defaultValues,setFileUrl,newsDetails?.attachment[0]]);
 
   return (
     <div className="flex items-center justify-center @container">
@@ -241,7 +244,19 @@ export default function CreateEditProduct({
             )}
           />
           
-          <FileUpload
+          {slug ? (
+            <EditFileUpload
+            label="Files"
+            accept="all"
+            error={errors.attachment?.message as string}
+            multiple
+            files={files}
+            setFiles={setFiles}
+            fileUrl={fileUrl}
+            setFileUrl={setFileUrl}
+            />
+          ): (
+            <FileUpload
             label="Files"
             accept="all"
             error={errors.attachment?.message as string}
@@ -249,6 +264,7 @@ export default function CreateEditProduct({
             files={files}
             setFiles={setFiles}
           />
+          )}
 
           {/* <div
             className={merger}
