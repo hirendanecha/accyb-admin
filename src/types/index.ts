@@ -9,15 +9,15 @@ export interface Coupon {
   code?: string;
 }
 
-export interface Address {
-  customerName?: string;
-  phoneNumber?: string;
-  country?: string;
-  state?: string;
-  city?: string;
-  zip?: string;
-  street?: string;
-}
+// export interface Address {
+//   customerName?: string;
+//   phoneNumber?: string;
+//   country?: string;
+//   state?: string;
+//   city?: string;
+//   zip?: string;
+//   street?: string;
+// }
 
 // export interface GoogleMapLocation {
 //   lat?: number;

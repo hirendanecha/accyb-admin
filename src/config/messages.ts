@@ -11,7 +11,7 @@ export const messages = {
   passwordsDidNotMatch: "Passwords don't match",
   nameIsRequired: 'Name is required',
   firstNameRequired: 'First name is required',
-  phoneNumberIsRequired: 'Phone Number is required',
+  // phoneNumberIsRequired: 'Phone Number is required',
   customerNameIsRequired: 'Customer name is required',
   lastNameRequired: 'Last name is required',
   streetIsRequired: 'Street Address is required',
