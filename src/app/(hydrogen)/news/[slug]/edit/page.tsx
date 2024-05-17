@@ -55,13 +55,13 @@ export default function EditProductPage({
           href={routes.eCommerce.createProduct}
           className="mt-4 w-full @lg:mt-0 @lg:w-auto"
         >
-          <Button
+          {/* <Button
             tag="span"
             className="w-full @lg:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
           >
             <PiPlusBold className="me-1.5 h-[17px] w-[17px]" />
             Add Product
-          </Button>
+          </Button> */}
         </Link>
       </PageHeader>
 

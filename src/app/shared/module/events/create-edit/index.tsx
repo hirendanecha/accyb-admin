@@ -38,6 +38,7 @@ import FormFooter from '@/components/form-footer';
 import { CiSquareRemove } from 'react-icons/ci';
 import Image from 'next/image';
 import EditFileUpload from './edit-file-upload';
+import EditDocUpload from './edit-doc-upload';
 
 interface IndexProps {
   slug?: string;
@@ -67,7 +68,9 @@ export default function CreateEditEvent({
   }, [files]);
 
   const [docs, setDocs] = useState<File[]>([]);
-  const [docUrl, setDocUrl] = useState<string[]>([]);
+  const [docUrl, setDocUrl] = useState<string>('');
+  console.log(docUrl, 'docUrl');
+  
 
   const router = useRouter();
   // const methods = useForm<CreateEventInput>({
@@ -222,15 +225,15 @@ export default function CreateEditEvent({
 
   useEffect(() => {
     setFileUrl(eventsDetails?.pictureLink || '');
-    // setDocs(eventsDetails?.otherDocument[0] || []);
+    setDocUrl(eventsDetails?.otherDocument || '');
     reset(defaultValues);
   }, [
     reset,
     defaultValues,
     setFileUrl,
     eventsDetails?.pictureLink,
-    setDocs,
-    eventsDetails?.otherDocument,
+    setDocUrl,
+    eventsDetails?.otherDocument[0],
   ]);
 
   return (
@@ -424,13 +427,25 @@ export default function CreateEditEvent({
             />
           )}
 
-          <FileUpload
+          {slug ? (
+            <EditDocUpload
+            label="Other Documents"
+            accept="all"
+            multiple={false}
+            files={docs}
+            setFiles={setDocs}
+            docUrl={docUrl}
+            setDocUrl={setDocUrl}
+          />
+          ) : (
+            <FileUpload
             label="Other Documents"
             accept="all"
             multiple={false}
             files={docs}
             setFiles={setDocs}
           />
+          )}
           
         </FormGroup>
         <FormFooter

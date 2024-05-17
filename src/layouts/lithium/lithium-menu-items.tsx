@@ -3,7 +3,7 @@ import { DUMMY_ID } from '@/config/constants';
 import FilesIcon from '@/components/icons/files';
 import TruckIcon from '@/components/icons/truck';
 import ShopIcon from '@/components/icons/shop';
-import AnalyticsCircularIcon from '@/components/icons/analytics-circular';
+// import AnalyticsCircularIcon from '@/components/icons/analytics-circular';
 import WalkmanIcon from '@/components/icons/walkman';
 import UserPlusIcon from '@/components/icons/user-plus';
 import UserLockIcon from '@/components/icons/user-lock';
@@ -413,100 +413,100 @@ export const menuItems: MenuItemsType[] = [
     popoverContentClassName: 'w-[710px] min-h-[280px]',
     type: 'enhance',
     dropdownItems: [
-      {
-        name: 'Sign Up',
-        icon: (
-          <span>
-            <UserPlusIcon className="h-5 w-5" />
-          </span>
-        ),
-        description: '"Shop Smart, Click Quick: Your One-Stop Solution!"',
-        subMenuItems: [
-          {
-            name: 'Modern Sign Up',
-            href: routes.auth.signUp1,
-          },
-          {
-            name: 'Vintage Sign Up',
-            href: routes.auth.signUp2,
-          },
-          {
-            name: 'Trendy Sign Up',
-            href: routes.auth.signUp3,
-          },
-          {
-            name: 'Elegant Sign Up',
-            href: routes.auth.signUp4,
-          },
-          {
-            name: 'Classic Sign Up',
-            href: routes.auth.signUp5,
-          },
-        ],
-      },
-      {
-        name: 'Sign In',
-        icon: (
-          <span>
-            <UserLockIcon className="h-5 w-5" />
-          </span>
-        ),
-        description: '"Effortless Assistance at your Fingertips!"',
-        subMenuItems: [
-          {
-            name: 'Modern Sign In',
-            href: routes.auth.signIn1,
-          },
-          {
-            name: 'Vintage Sign In',
-            href: routes.auth.signIn2,
-          },
-          {
-            name: 'Trendy Sign In',
-            href: routes.auth.signIn3,
-          },
-          {
-            name: 'Elegant Sign In',
-            href: routes.auth.signIn4,
-          },
-          {
-            name: 'Classic Sign In',
-            href: routes.auth.signIn5,
-          },
-        ],
-      },
-      {
-        name: 'Forgot Password',
-        icon: (
-          <span>
-            <LockExclamationIcon className="h-5 w-5" />
-          </span>
-        ),
-        description:
-          '"Streamline Shipments: Discover Efficiency with our Logistics!"',
-        subMenuItems: [
-          {
-            name: 'Modern Forgot Password',
-            href: routes.auth.forgotPassword1,
-          },
-          {
-            name: 'Vintage Forgot Password',
-            href: routes.auth.forgotPassword2,
-          },
-          {
-            name: 'Trendy Forgot Password',
-            href: routes.auth.forgotPassword3,
-          },
-          {
-            name: 'Elegant Forgot Password',
-            href: routes.auth.forgotPassword4,
-          },
-          {
-            name: 'Classic Forgot Password',
-            href: routes.auth.forgotPassword5,
-          },
-        ],
-      },
+      // {
+      //   name: 'Sign Up',
+      //   icon: (
+      //     <span>
+      //       <UserPlusIcon className="h-5 w-5" />
+      //     </span>
+      //   ),
+      //   description: '"Shop Smart, Click Quick: Your One-Stop Solution!"',
+      //   subMenuItems: [
+      //     {
+      //       name: 'Modern Sign Up',
+      //       href: routes.auth.signUp1,
+      //     },
+      //     {
+      //       name: 'Vintage Sign Up',
+      //       href: routes.auth.signUp2,
+      //     },
+      //     {
+      //       name: 'Trendy Sign Up',
+      //       href: routes.auth.signUp3,
+      //     },
+      //     {
+      //       name: 'Elegant Sign Up',
+      //       href: routes.auth.signUp4,
+      //     },
+      //     {
+      //       name: 'Classic Sign Up',
+      //       href: routes.auth.signUp5,
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'Sign In',
+      //   icon: (
+      //     <span>
+      //       <UserLockIcon className="h-5 w-5" />
+      //     </span>
+      //   ),
+      //   description: '"Effortless Assistance at your Fingertips!"',
+      //   subMenuItems: [
+      //     {
+      //       name: 'Modern Sign In',
+      //       href: routes.auth.signIn1,
+      //     },
+      //     {
+      //       name: 'Vintage Sign In',
+      //       href: routes.auth.signIn2,
+      //     },
+      //     {
+      //       name: 'Trendy Sign In',
+      //       href: routes.auth.signIn3,
+      //     },
+      //     {
+      //       name: 'Elegant Sign In',
+      //       href: routes.auth.signIn4,
+      //     },
+      //     {
+      //       name: 'Classic Sign In',
+      //       href: routes.auth.signIn5,
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'Forgot Password',
+      //   icon: (
+      //     <span>
+      //       <LockExclamationIcon className="h-5 w-5" />
+      //     </span>
+      //   ),
+      //   description:
+      //     '"Streamline Shipments: Discover Efficiency with our Logistics!"',
+      //   subMenuItems: [
+      //     {
+      //       name: 'Modern Forgot Password',
+      //       href: routes.auth.forgotPassword1,
+      //     },
+      //     {
+      //       name: 'Vintage Forgot Password',
+      //       href: routes.auth.forgotPassword2,
+      //     },
+      //     {
+      //       name: 'Trendy Forgot Password',
+      //       href: routes.auth.forgotPassword3,
+      //     },
+      //     {
+      //       name: 'Elegant Forgot Password',
+      //       href: routes.auth.forgotPassword4,
+      //     },
+      //     {
+      //       name: 'Classic Forgot Password',
+      //       href: routes.auth.forgotPassword5,
+      //     },
+      //   ],
+      // },
       {
         name: 'OTP Pages',
         icon: (
