@@ -51,7 +51,7 @@ export default function CreateEditProduct({
   const { layout } = useLayout();
   const [isLoading, setLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const [fileUrl,setFileUrl] = useState<string>('');
+  const [fileUrl, setFileUrl] = useState<string>('');
   const router = useRouter();
   // const methods = useForm<CreateEventInput>({
   //   resolver: zodResolver(newsFormSchema),
@@ -72,6 +72,7 @@ export default function CreateEditProduct({
       rate: newsDetails?.rate || '',
       targetAudience: newsDetails?.targetAudience[0] || '',
       attachment: newsDetails?.attachment[0] || '',
+      videoLink: newsDetails?.videoLink || '',
     }),
     [newsDetails]
   );
@@ -103,7 +104,7 @@ export default function CreateEditProduct({
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      console.log('event_data', data);
+      console.log('news_data', data);
       const formData = new FormData() as any;
       formData.append('source', data.source);
       formData.append('title', data.title);
@@ -112,6 +113,8 @@ export default function CreateEditProduct({
       formData.append('isPublished', data.isPublished);
       formData.append('rate', data.rate);
       formData.append('targetAudience', data.targetAudience);
+      formData.append('videoLink', data.videoLink);
+
       if (!slug && !files[0]) {
         setError('attachment', {
           type: 'custom',
@@ -166,7 +169,7 @@ export default function CreateEditProduct({
   useEffect(() => {
     setFileUrl(newsDetails?.attachment[0] || '');
     reset(defaultValues);
-  }, [reset, defaultValues,setFileUrl,newsDetails?.attachment[0]]);
+  }, [reset, defaultValues, setFileUrl, newsDetails?.attachment[0]]);
 
   return (
     <div className="flex items-center justify-center @container">
@@ -210,16 +213,14 @@ export default function CreateEditProduct({
             // error={errors.isPublished?.message as string}
           />
 
-
           <Input
             label="Rate"
             placeholder="Rate"
-            {...register('rate',{
-              valueAsNumber:true
+            {...register('rate', {
+              valueAsNumber: true,
             })}
             error={errors.rate?.message as string}
             type="number"
-
           />
 
           <Input
@@ -228,6 +229,16 @@ export default function CreateEditProduct({
             {...register('targetAudience')}
             error={errors.targetAudience?.message as string}
           />
+
+          <Input
+            label="Video Link"
+            placeholder="video link"
+            {...register('videoLink')}
+            error={errors.videoLink?.message as string}
+          />
+
+       
+
           <Controller
             control={control}
             name="description"
@@ -243,27 +254,27 @@ export default function CreateEditProduct({
               />
             )}
           />
-          
+
           {slug ? (
             <EditFileUpload
-            label="Files"
-            accept="all"
-            error={errors.attachment?.message as string}
-            multiple
-            files={files}
-            setFiles={setFiles}
-            fileUrl={fileUrl}
-            setFileUrl={setFileUrl}
+              label="Files"
+              accept="all"
+              error={errors.attachment?.message as string}
+              multiple
+              files={files}
+              setFiles={setFiles}
+              fileUrl={fileUrl}
+              setFileUrl={setFileUrl}
             />
-          ): (
+          ) : (
             <FileUpload
-            label="Files"
-            accept="all"
-            error={errors.attachment?.message as string}
-            multiple
-            files={files}
-            setFiles={setFiles}
-          />
+              label="Files"
+              accept="all"
+              error={errors.attachment?.message as string}
+              multiple
+              files={files}
+              setFiles={setFiles}
+            />
           )}
 
           {/* <div

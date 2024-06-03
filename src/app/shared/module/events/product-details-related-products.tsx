@@ -121,6 +121,22 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
             height={100}
           />
         </div>
+
+        {eventsDetails?.videolink ? (
+          <div className="relative" style={{ paddingBottom: '56.25%', overflow: 'hidden',width: '100%' }}>
+            <iframe
+              src={`https://www.youtube.com/embed/${eventsDetails?.videolink.split('v=')[1]}`}
+              // style={{width: '100%', height: '100%' }}
+              title={eventsDetails?.videolink}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        ) : (
+          <div className="p-4 rounded border border-gray-300 text-center">
+            Video not available
+          </div>
+        )}
       </FormGroup>
     </div>
   );

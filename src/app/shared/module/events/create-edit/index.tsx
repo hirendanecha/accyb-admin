@@ -70,7 +70,6 @@ export default function CreateEditEvent({
   const [docs, setDocs] = useState<File[]>([]);
   const [docUrl, setDocUrl] = useState<string>('');
   console.log(docUrl, 'docUrl');
-  
 
   const router = useRouter();
   // const methods = useForm<CreateEventInput>({
@@ -99,6 +98,7 @@ export default function CreateEditEvent({
       eventType: eventsDetails?.eventType || '',
       isFeatured: eventsDetails?.isFeatured || '',
       location: eventsDetails?.location || '',
+      videolink: eventsDetails?.videolink || '',
     }),
     [eventsDetails]
   );
@@ -170,6 +170,7 @@ export default function CreateEditEvent({
     formData.append('eventType', data.eventType);
     formData.append('isFeatured', data.isFeatured);
     formData.append('location', data.location);
+    formData.append('videolink', data.videolink);
 
     console.log('FORMDATA', formData);
 
@@ -233,7 +234,7 @@ export default function CreateEditEvent({
     setFileUrl,
     eventsDetails?.pictureLink,
     setDocUrl,
-    eventsDetails?.otherDocument[0],
+    eventsDetails?.otherDocument,
   ]);
 
   return (
@@ -359,6 +360,13 @@ export default function CreateEditEvent({
             error={errors.isFeatured?.message as string}
           />
 
+          <Input
+            label="Video Link"
+            placeholder="video link"
+            {...register('videolink')}
+            error={errors.videolink?.message as string}
+          />
+
           <Controller
             control={control}
             name="description"
@@ -429,24 +437,23 @@ export default function CreateEditEvent({
 
           {slug ? (
             <EditDocUpload
-            label="Other Documents"
-            accept="all"
-            multiple={false}
-            files={docs}
-            setFiles={setDocs}
-            docUrl={docUrl}
-            setDocUrl={setDocUrl}
-          />
+              label="Other Documents"
+              accept="all"
+              multiple={false}
+              files={docs}
+              setFiles={setDocs}
+              docUrl={docUrl}
+              setDocUrl={setDocUrl}
+            />
           ) : (
             <FileUpload
-            label="Other Documents"
-            accept="all"
-            multiple={false}
-            files={docs}
-            setFiles={setDocs}
-          />
+              label="Other Documents"
+              accept="all"
+              multiple={false}
+              files={docs}
+              setFiles={setDocs}
+            />
           )}
-          
         </FormGroup>
         <FormFooter
           isLoading={isSubmitting}
