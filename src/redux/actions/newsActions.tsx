@@ -1,5 +1,6 @@
 import {
   createNewsAPI,
+  deleteAlertAPI,
   deleteNewsAPI,
   getAllNewsAPI,
   getNewsByIdAPI,
@@ -78,3 +79,18 @@ export const updateNews = createAsyncThunk(
     }
   }
 );
+
+export const deleteAlertByIdAPI = createAsyncThunk(
+  'user/deleteAlertByIdAPI',
+  async (id: any) => {
+    try {
+      const alert = await deleteAlertAPI(id);
+      console.log('event', alert);
+      return alert;
+    } catch (error) {
+      // If authentication fails, throw an error
+      throw new Error('Failed to Delete security alert');
+    }
+  }
+);
+

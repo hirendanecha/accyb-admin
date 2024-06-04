@@ -9,8 +9,24 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
   return (
     <div className="flex items-center justify-center @container">
       <FormGroup title="" description="" className="w-9/12">
+        <div className="flex flex-col gap-2">
+          <label>Event Image :</label>
+          <Image
+            src={eventsDetails?.pictureLink}
+            alt="Event"
+            style={{ borderRadius: '10px' }}
+            width={500}
+            height={100}
+          />
+        </div>
 
-      
+        <div>
+          <label>Description</label>
+          <div
+            dangerouslySetInnerHTML={{ __html: eventsDetails?.description }}
+            className="mt-2 h-52 overflow-auto rounded border border-gray-300 p-4 transition duration-200 hover:border-black"
+          />
+        </div>
 
         <Input
           label="Title"
@@ -50,22 +66,6 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           readOnly
         />
 
-        <div>
-          <label>Program Type</label>
-          <div
-            dangerouslySetInnerHTML={{ __html: eventsDetails?.programType }}  
-            className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
-          />
-        </div>
-
-        <div>
-          <label>Description</label>
-          <div
-            dangerouslySetInnerHTML={{ __html: eventsDetails?.description }}
-            className="mt-2 border border-gray-300 p-4 rounded transition duration-200 hover:border-black h-52 overflow-auto"
-          />
-        </div>
-        
         <Input
           label="Start Date"
           placeholder="startDate"
@@ -91,9 +91,6 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           readOnly
         />
 
-
-
-        
         {/* <textarea
           readOnly
           className="col-span-full [&_.ql-editor]:min-h-[100px]"
@@ -111,30 +108,43 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
         /> */}
 
-        <div className='flex flex-col gap-2'>
-          <label>Event Image :</label>
-          <Image
-            src={eventsDetails?.pictureLink}
-            alt="Event"
-            style={{ borderRadius: '10px' }}
-            width={500}
-            height={100}
+        <div>
+          <label>Program Type</label>
+          <div
+            dangerouslySetInnerHTML={{ __html: eventsDetails?.programType }}
+            className="mt-2 h-52 overflow-auto rounded border border-gray-300 p-4 transition duration-200 hover:border-black"
           />
         </div>
 
-        {eventsDetails?.videolink ? (
-          <div className="relative" style={{ paddingBottom: '56.25%', overflow: 'hidden',width: '100%' }}>
+        {eventsDetails?.MediaType === "video" ? (
+          <div
+            className="relative"
+            style={{
+              paddingBottom: '56.25%',
+              overflow: 'hidden',
+              width: '100%',
+            }}
+          >
             <iframe
-              src={`https://www.youtube.com/embed/${eventsDetails?.videolink.split('v=')[1]}`}
+              src={`https://www.youtube.com/embed/${eventsDetails?.videolink.split(
+                'v='
+              )[1]}`}
               // style={{width: '100%', height: '100%' }}
               title={eventsDetails?.videolink}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+              }}
             ></iframe>
           </div>
         ) : (
-          <div className="p-4 rounded border border-gray-300 text-center">
-            Video not available
+          <div className="rounded border border-gray-300 p-4 text-center">
+            <img src={eventsDetails?.videolink} alt="image not found" />
           </div>
         )}
       </FormGroup>

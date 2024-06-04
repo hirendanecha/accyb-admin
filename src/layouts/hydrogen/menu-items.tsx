@@ -57,6 +57,11 @@ export const menuItems = [
     href: routes.news,
     icon:<FaRegNewspaper />,
   },
+  {
+    name:'Security Alerts',
+    href:routes.securityAlerts,
+    icon:<PiShieldCheckDuotone />,
+  }
   
  
 ];

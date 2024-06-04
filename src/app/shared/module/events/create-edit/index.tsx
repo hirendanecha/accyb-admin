@@ -61,6 +61,10 @@ export default function CreateEditEvent({
   const [filesError, setFilesError] = useState('');
   console.log('filesError', filesError);
 
+  const [thumb, setThumb] = useState<File[]>([]);
+  const [thumbUrl, setThumbUrl] = useState<string>('');
+  const [thumbError, setThumbError] = useState('');
+
   useEffect(() => {
     if (files.length) {
       setFilesError('');
@@ -99,6 +103,7 @@ export default function CreateEditEvent({
       isFeatured: eventsDetails?.isFeatured || '',
       location: eventsDetails?.location || '',
       videolink: eventsDetails?.videolink || '',
+      thumbnail: eventsDetails?.thumbnail || [],
     }),
     [eventsDetails]
   );
@@ -183,6 +188,12 @@ export default function CreateEditEvent({
     for (const doc of docs) {
       if (doc) {
         formData.append('otherDocument', doc);
+      }
+    }
+
+    for (const thum of thumb) {
+      if (thum) {
+        formData.append('thumbnail', thum);
       }
     }
 
@@ -367,6 +378,28 @@ export default function CreateEditEvent({
             error={errors.videolink?.message as string}
           />
 
+          {/* {slug ? (
+            <EditFileUpload
+              label="Thumbnail"
+              accept="all"
+              multiple={false}
+              files={thumb}
+              setFiles={setThumb}
+              error={thumbError}
+              thumbUrl={thumbUrl}
+              setThumbUrl={setThumbUrl}
+            />
+          ) : (
+            <FileUpload
+              label="Thumbnail"
+              accept="all"
+              multiple={false}
+              files={thumb}
+              setFiles={setThumb}
+              error={thumbError}
+            />
+          )} */}
+
           <Controller
             control={control}
             name="description"
@@ -411,6 +444,15 @@ export default function CreateEditEvent({
                 showTimeSelect
               />
             )}
+          />
+
+          <FileUpload
+            label="Thumbnail"
+            accept="all"
+            multiple={false}
+            files={thumb}
+            setFiles={setThumb}
+            error={thumbError}
           />
 
           {slug ? (
