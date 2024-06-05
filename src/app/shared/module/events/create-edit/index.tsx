@@ -371,12 +371,7 @@ export default function CreateEditEvent({
             error={errors.isFeatured?.message as string}
           />
 
-          <Input
-            label="Video Link"
-            placeholder="video link"
-            {...register('videolink')}
-            error={errors.videolink?.message as string}
-          />
+        
 
           {/* {slug ? (
             <EditFileUpload
@@ -446,14 +441,6 @@ export default function CreateEditEvent({
             )}
           />
 
-          <FileUpload
-            label="Thumbnail"
-            accept="all"
-            multiple={false}
-            files={thumb}
-            setFiles={setThumb}
-            error={thumbError}
-          />
 
           {slug ? (
             <EditFileUpload

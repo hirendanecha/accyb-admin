@@ -18,11 +18,16 @@ import {
   SecurityAlertInput,
   securityAlertFormSchema,
 } from '@/utils/validators/create-security-alerts.schema';
-import { createSecurityAlert } from '@/redux/actions/securityAlertsAction';
+import {
+  createSecurityAlert,
+  updateSecurityAlert,
+} from '@/redux/actions/securityAlertsAction';
 import { routes } from '@/config/routes';
 import { Button, Text } from 'rizzui';
 import { CiSquareRemove } from 'react-icons/ci';
 import { isArray } from 'lodash';
+import EditDocUpload from '../../events/create-edit/edit-doc-upload';
+import FileUpload from '../../events/create-edit/file-upload';
 
 interface IndexProps {
   slug?: string;
@@ -40,14 +45,19 @@ export default function CreateEditProduct({
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
 
+  const [docs, setDocs] = useState<File[]>([]);
+  const [docUrl, setDocUrl] = useState<string>('');
+  console.log(docUrl, 'docUrl');
+
   console.log(alertDetails, 'newsDetails');
 
   const defaultValues = useMemo(
     () => ({
       title: alertDetails?.title || '',
       description: alertDetails?.description || '',
-      Date: alertDetails?.Date ? new Date(alertDetails.Date) : new Date(),
-      Heading: alertDetails?.Heading || [''],
+      date: alertDetails?.date ? new Date(alertDetails.date) : new Date(),
+      Heading: alertDetails?.Heading || [],
+      document: alertDetails?.document || [],
     }),
     [alertDetails]
   );
@@ -95,27 +105,60 @@ export default function CreateEditProduct({
     setLoading(true);
     console.log('security_Alert_data', data);
 
-    
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('date', data.date);
+    formData.append('Heading', JSON.stringify(data.Heading));
 
-    try {
-      await dispatch(createSecurityAlert({ data })).unwrap();
-      setLoading(false);
-      router.push(routes.securityAlerts);
-      toast.success(
-        <Text as="b">
-          Security Alert successfully {slug ? 'updated' : 'created'}
-        </Text>
-      );
-    } catch (err) {
-      console.log('err', err);
-      setLoading(false);
+    // console.log(
+    //   'formdata',
+    //   formData.forEach((s) => {
+    //     console.log(s);
+    //   })
+    // );
+
+    for (const file of docs) {
+      if (file) { 
+        formData.append('document', file);
+      }
+    }
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1],'formdata'); 
+  }
+
+    if (slug) {
+      await dispatch(updateSecurityAlert({ id: slug, data: formData }))
+        .unwrap()
+        .then((res) => {
+          console.log('res', res);
+          setLoading(false);
+          router.push(routes.securityAlerts);
+          toast.success(
+            <Text as="b">
+              Security Alert successfully {slug ? 'updated' : 'created'}
+            </Text>
+          );
+        });
+    } else {
+      await dispatch(createSecurityAlert(formData))
+        .unwrap()
+        .then((res) => {
+          console.log('res', res);
+          setLoading(false);
+          router.push(routes.securityAlerts);
+          toast.success(
+            <Text as="b">
+              Security Alert successfully {slug ? 'updated' : 'created'}
+            </Text>
+          );
+        });
     }
   };
 
-  
-
   useEffect(() => {
     reset(defaultValues);
+    setDocUrl(alertDetails?.document || '');
   }, [reset, defaultValues]);
 
   return (
@@ -192,9 +235,30 @@ export default function CreateEditProduct({
               Add Heading
             </Button>
           </div>
+
+          {slug ? (
+            <EditDocUpload
+              label="Documents"
+              accept="all"
+              multiple={false}
+              files={docs}
+              setFiles={setDocs}
+              docUrl={docUrl}
+              setDocUrl={setDocUrl}
+              
+            />
+          ) : (
+            <FileUpload
+              label="Documents"
+              accept="all"
+              multiple={false}
+              files={docs}
+              setFiles={setDocs}
+            />
+          )}
         </FormGroup>
         <FormFooter
-          isLoading={isLoading}
+          // isLoading={isLoading}
           submitBtnText={
             slug ? 'Update Security Alert' : 'Create Security Alert'
           }

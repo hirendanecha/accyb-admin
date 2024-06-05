@@ -1,3 +1,5 @@
+import { createVideo } from "@/redux/actions/videoAction";
+
 export const routes = {
   eCommerce: {
     dashboard: '/ecommerce',
@@ -30,9 +32,14 @@ export const routes = {
   //   editNews: (id: string) => `/news/${id}/edit`,
   //   viewNews: (id: string) => `/news/${id}`,
   // },
+  videos:'/videos',
+  createVideos: '/videos/create',
+  editVideos: (id: string) => `/videos/${id}/edit`,
+  viewVideos: (id: string) => `/videos/${id}`,
   securityAlerts: '/securityAlerts',
   createSecurityAlerts: '/securityAlerts/create',
   editSecurityAlerts: (id: string) => `/securityAlerts/${id}/edit`,
+  viewSecurityAlerts: (id: string) => `/securityAlerts/${id}`,
   event:'/events',
   news: '/news',
   createEvents: '/events/create',

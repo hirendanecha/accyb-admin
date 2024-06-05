@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { PiPlusBold } from 'react-icons/pi';
-import CreateEditProduct from '@/app/shared/module/news/create-edit';
+import CreateEditProduct from '@/app/shared/module/videos/create-edit';
 import PageHeader from '@/app/shared/page-header';
 import { metaObject } from '@/config/site.config';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { getNewsById } from '@/redux/actions/newsActions';
 import { useEffect } from 'react';
+import { getAlertById } from '@/redux/actions/securityAlertsAction';
+import { getVideoById } from '@/redux/actions/videoAction';
 
 type Props = {
   params: { slug: string };
@@ -22,11 +24,11 @@ type Props = {
  */
 
 const pageHeader = {
-  title: 'Edit News',
+  title: 'Edit Video',
   breadcrumb: [
     {
-      href: routes.news,
-      name: 'News',
+      href: routes.videos,
+      name: 'Videos',
     },
     {
       name: 'Edit',
@@ -39,22 +41,32 @@ export default function EditProductPage({
 }: {
   params: { slug: string };
 }) {
-  const { newsDetails } = useSelector((state: any) => state.news);
+  const videoDetails = useSelector((state: any) => state.video.video);
+  console.log(videoDetails, 'videoDetails');
+
+  // const  alertDetails= useSelector((state: any) =>{
+  //   console.log(state.securityAlerts.securityAlert, 'state');
+
+  // })
+
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(getNewsById(params.slug))
+    dispatch(getVideoById(params.slug))
       .unwrap()
       .then((res) => {
         console.log(res, 'res');
-      });
+      }).catch((err) => {
+        console.log(err, 'err');
+      })
   }, []);
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-       
-      </PageHeader>
+      <PageHeader
+        title={pageHeader.title}
+        breadcrumb={pageHeader.breadcrumb}
+      ></PageHeader>
 
-      <CreateEditProduct slug={params.slug} newsDetails={newsDetails} />
+      <CreateEditProduct slug={params.slug} videoDetails={videoDetails} />
     </>
   );
 }

@@ -42,12 +42,6 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           value={newsDetails?.title}
           readOnly
         />
-        {/* <Input
-          label="Description"
-          placeholder="description"
-          value={newsDetails?.description}
-          readOnly
-        /> */}
 
         <Input
           label="Published Date"
@@ -74,36 +68,7 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           readOnly
         />
 
-        {newsDetails?.newsType === 'video' ? (
-          <div
-            className="relative"
-            style={{
-              paddingBottom: '56.25%',
-              overflow: 'hidden',
-              width: '100%',
-            }}
-          >
-            <iframe
-              src={`https://www.youtube.com/embed/${newsDetails?.videoLink.split(
-                'v='
-              )[1]}`}
-              title={newsDetails?.videoLink}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-              }}
-            ></iframe>
-          </div>
-        ) : (
-          <div className="rounded border border-gray-300 p-4 text-center">
-            <img src={newsDetails?.videoLink} alt={newsDetails?.videoLink} />
-          </div>
-        )}
+        
       </FormGroup>
     </div>
   );

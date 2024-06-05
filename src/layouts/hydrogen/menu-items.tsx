@@ -61,6 +61,11 @@ export const menuItems = [
     name:'Security Alerts',
     href:routes.securityAlerts,
     icon:<PiShieldCheckDuotone />,
+  },
+  {
+    name:'Videos',
+    href:routes.videos,
+    icon:<PiFileImageDuotone />,
   }
   
  

@@ -116,37 +116,7 @@ export default function ProductDetailsRelatedProducts({ eventsDetails }: any) {
           />
         </div>
 
-        {eventsDetails?.MediaType === "video" ? (
-          <div
-            className="relative"
-            style={{
-              paddingBottom: '56.25%',
-              overflow: 'hidden',
-              width: '100%',
-            }}
-          >
-            <iframe
-              src={`https://www.youtube.com/embed/${eventsDetails?.videolink.split(
-                'v='
-              )[1]}`}
-              // style={{width: '100%', height: '100%' }}
-              title={eventsDetails?.videolink}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-              }}
-            ></iframe>
-          </div>
-        ) : (
-          <div className="rounded border border-gray-300 p-4 text-center">
-            <img src={eventsDetails?.videolink} alt="image not found" />
-          </div>
-        )}
+       
       </FormGroup>
     </div>
   );

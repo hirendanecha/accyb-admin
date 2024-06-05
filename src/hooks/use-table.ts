@@ -131,14 +131,14 @@ export function useTable<T extends AnyObject>(
 
   function applyFilters() {
     const searchTermLower = searchTerm.toLowerCase();
-
+    console.log(sortedData, 'sortedDataaaaaaaaaaa');
     return (
       sortedData
         ?.filter((item) => {
-          const isMatchingItem = Object.entries(filters).some(
+          const isMatchingItem = Object?.entries(filters)?.some(
             ([columnId, filterValue]) => {
               if (
-                Array.isArray(filterValue) &&
+                Array?.isArray(filterValue) &&
                 typeof filterValue[1] === 'object'
               ) {
                 const itemValue = new Date(item[columnId]);

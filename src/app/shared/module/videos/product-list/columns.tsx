@@ -26,10 +26,10 @@ type Columns = {
 
 type ProductType = {
   _id: string;
-  title: string;
-  description: string;
-  Heading: String;
-  Date: String;
+  name: string;
+  link: string;
+  thumbnail: string;
+  updatedAt:Date;
 };
 
 export const getColumns = ({
@@ -84,9 +84,16 @@ export const getColumns = ({
     //   ),
     // },
     {
-      title: <HeaderCell title="Title" />,
-      dataIndex: 'title',
-      key: 'title',
+      title: <HeaderCell title="Thumbnail" />,
+      dataIndex: 'thumbnail',
+      key: 'thumbnail',
+      width: 150,
+      render: (thumbnail: string) => <img className="text-sm" src={thumbnail} alt={''} style={{ width: '80px', height: '80px',borderRadius: '50%' }}>{}</img>,
+    },
+    {
+      title: <HeaderCell title="Name" />,
+      dataIndex: 'name',
+      key: 'name',
       width: 150,
       render: (title: string) => <Text className="text-sm">{title}</Text>,
     },
@@ -109,21 +116,21 @@ export const getColumns = ({
     //   ,
     // },
     {
-      title: <HeaderCell title="Heading" />,
-      dataIndex: 'Heading',
-      key: 'Heading',
+      title: <HeaderCell title="Link" />,
+      dataIndex: 'link',
+      key: 'link',
       width: 150,
       render: (Heading: String) => 
         <Text className="text-sm">{Heading}</Text>
       ,
     },
     {
-      title: <HeaderCell title="Date" />,
-      dataIndex: 'Date',
-      key: 'Date',
+      title: <HeaderCell title="Updated At" />,
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
       width: 150,
-      render: (Date: Date) => 
-        <Text className="text-sm">{dayjs(Date).format('DD/MM/YYYY')}</Text>
+      render: (updatedAt: Date) => 
+        <Text className="text-sm">{dayjs(updatedAt).format('DD/MM/YYYY')}</Text>
       ,
     },
     // {
@@ -156,11 +163,11 @@ export const getColumns = ({
         <div className="flex items-center justify-end gap-3 pe-4">
           <Tooltip
             size="sm"
-            content={() => 'Edit Security Alert'}
+            content={() => 'Edit Video Details'}
             placement="top"
             color="invert"
           >
-            <Link href={routes.editSecurityAlerts(row?._id)}>
+            <Link href={routes.editVideos(row?._id)}>
               <ActionIcon size="sm" variant="outline" aria-label={'Edit News'}>
                 <PencilIcon className="h-4 w-4" />
               </ActionIcon>
@@ -172,8 +179,8 @@ export const getColumns = ({
             placement="top"
             color="invert"
           >
-            <Link href={routes.viewSecurityAlerts(row?._id)}>
-              <ActionIcon size="sm" variant="outline" aria-label={'View News'}>
+            <Link href={routes.viewVideos(row?._id)}>
+              <ActionIcon size="sm" variant="outline" aria-label={'View Video Details'}>
                 <EyeIcon className="h-4 w-4" />
               </ActionIcon>
             </Link>

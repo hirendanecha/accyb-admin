@@ -230,13 +230,7 @@ export default function CreateEditProduct({
             error={errors.targetAudience?.message as string}
           />
 
-          <Input
-            label="Video Link"
-            placeholder="video link"
-            {...register('videoLink')}
-            error={errors.videoLink?.message as string}
-          />
-
+        
        
 
           <Controller

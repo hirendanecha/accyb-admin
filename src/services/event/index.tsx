@@ -160,3 +160,15 @@ export const getAlertByIdAPI = async (id: any) => {
     throw new Error('Failed to get security alert by ID...');
   }
 }
+
+export const updateSecurityAlertAPI = async ({ id, data }: { id: any; data: any }) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/securityAlerts/update/${id}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to update security alert...');
+  }
+}
