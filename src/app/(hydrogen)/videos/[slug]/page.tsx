@@ -2,7 +2,7 @@
 import { routes } from '@/config/routes';
 import PageHeader from '@/app/shared/page-header';
 
-import ProductDetailsRelatedProducts from '@/app/shared/module/securityAlerts/product-details-related-products';
+import ProductDetailsRelatedProducts from '@/app/shared/module/videos/product-details-related-products';
 import { AppDispatch } from '@/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';

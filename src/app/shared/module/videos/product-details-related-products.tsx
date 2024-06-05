@@ -3,45 +3,30 @@ import FormGroup from '../../form-group';
 import { Input } from 'rizzui';
 import dayjs from 'dayjs';
 
-export default function ProductDetailsRelatedProducts({ alertDetails }: any) {
-  console.log(alertDetails, 'newsDetails');
+export default function ProductDetailsRelatedProducts({ videoDetails }: any) {
+  console.log(videoDetails, 'videoDetails');
 
   return (
     <div className="flex items-center justify-center @container">
       <FormGroup title="" description="" className="w-9/12">
+      <Input
+          label="Name"
+          placeholder="name"
+          value={videoDetails?.name}
+          readOnly
+        />
+
         <Input
-          label="Title"
-          placeholder="Title"
-          value={alertDetails?.title}
+          label="Link"
+          placeholder="link"
+          value={videoDetails?.link}
           readOnly
         />
 
         <div>
-          <label>Description</label>
-          <div
-            dangerouslySetInnerHTML={{ __html: alertDetails?.description }}
-            className="mt-2 h-52 overflow-auto rounded border border-gray-300 p-4 transition duration-200 hover:border-black"
-          />
-        </div>
-
-        <Input
-          label="Date"
-          placeholder="date"
-          value={dayjs(alertDetails?.date).format('DD/MM/YYYY')}
-          readOnly
-        />
-
-        <Input
-          label="Heading"
-          placeholder="heading"
-          value={alertDetails?.Heading}
-          readOnly
-        />
-
-        <div>
-          <label>Document</label>
+          <label>Thumbnail</label>
           <div className="rounded border border-gray-300 p-4 text-center">
-            <img src={alertDetails?.document} alt={alertDetails?.document} />
+            <img src={videoDetails?.thumbnail} alt={videoDetails?.thumbnail} />
           </div>
         </div>
       </FormGroup>

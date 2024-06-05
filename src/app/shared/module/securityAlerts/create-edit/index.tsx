@@ -258,7 +258,7 @@ export default function CreateEditProduct({
           )}
         </FormGroup>
         <FormFooter
-          // isLoading={isLoading}
+          isLoading={isLoading}
           submitBtnText={
             slug ? 'Update Security Alert' : 'Create Security Alert'
           }
