@@ -119,7 +119,7 @@ export const updateNewsAPI = async ({ id, data }: { id: any; data: any }) => {
 export const getAllSecurityAlerts = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/securityAlerts`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/securityAlerts`
     );
     return response.data;
   } catch (error) {
