@@ -66,6 +66,16 @@ export const menuItems = [
     name:'Videos',
     href:routes.videos,
     icon:<PiFileImageDuotone />,
+  },
+  {
+    name:'Case Studies',
+    href:routes.caseStudies,
+    icon:<PiFolderLockDuotone />,
+  },
+  {
+    name:'Formations',
+    href:routes.formations,
+    icon:<PiRocketLaunchDuotone />,
   }
   
  

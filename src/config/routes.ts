@@ -32,14 +32,26 @@ export const routes = {
   //   editNews: (id: string) => `/news/${id}/edit`,
   //   viewNews: (id: string) => `/news/${id}`,
   // },
+  formations:'/formations',
+  createFormations: '/formations/create',
+  editFormations: (id: string) => `/formations/${id}/edit`,
+  viewFormation: (id: string) => `/formations/${id}`,
+
+  caseStudies:'/caseStudies',
+  createCaseStudies: '/caseStudies/create',
+  editCaseStudies: (id: string) => `/caseStudies/${id}/edit`,
+  viewCaseStudies: (id: string) => `/caseStudies/${id}`,
+
   videos:'/videos',
   createVideos: '/videos/create',
   editVideos: (id: string) => `/videos/${id}/edit`,
   viewVideos: (id: string) => `/videos/${id}`,
+
   securityAlerts: '/securityAlerts',
   createSecurityAlerts: '/securityAlerts/create',
   editSecurityAlerts: (id: string) => `/securityAlerts/${id}/edit`,
   viewSecurityAlerts: (id: string) => `/securityAlerts/${id}`,
+
   event:'/events',
   news: '/news',
   createEvents: '/events/create',

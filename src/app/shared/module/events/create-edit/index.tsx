@@ -102,8 +102,6 @@ export default function CreateEditEvent({
       eventType: eventsDetails?.eventType || '',
       isFeatured: eventsDetails?.isFeatured || '',
       location: eventsDetails?.location || '',
-      videolink: eventsDetails?.videolink || '',
-      thumbnail: eventsDetails?.thumbnail || [],
     }),
     [eventsDetails]
   );
@@ -175,7 +173,6 @@ export default function CreateEditEvent({
     formData.append('eventType', data.eventType);
     formData.append('isFeatured', data.isFeatured);
     formData.append('location', data.location);
-    formData.append('videolink', data.videolink);
 
     console.log('FORMDATA', formData);
 

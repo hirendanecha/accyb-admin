@@ -10,7 +10,6 @@ export const newsFormSchema = z.object({
   rate: z.number().int().min(1, { message: 'rate should be minimum 1' }).max(5, { message: 'rate should be maximum 5' }),
   publishedDate: z.date().min(new Date('1900-01-01')).optional(),
   endDate: z.date().min(new Date('1900-01-02')).optional(),
-  videoLink: z.string().url({ message: 'URL is invalid' }),
 });
 
 export type NewsEventInput = z.infer<typeof newsFormSchema>;

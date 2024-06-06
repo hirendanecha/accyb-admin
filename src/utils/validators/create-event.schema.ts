@@ -20,7 +20,6 @@ export const eventFormSchema = z.object({
   eventType: z.string().min(1, { message: 'Select event type' }),
   isFeatured: z.boolean({message:'required'}).optional(),
   location:z.string({message:'required'}),
-  videolink: z.string().url({ message: 'URL is invalid' }),
   // otherDocument: z
   //   .instanceof(FileList)
   //   .refine((data) => data && data.length > 0, {

@@ -24,9 +24,9 @@ import QuillEditor from '@/components/ui/quill-editor';
 import { useRouter } from 'next/navigation';
 import FormFooter from '@/components/form-footer';
 import {
-  NewsEventInput,
-  newsFormSchema,
-} from '@/utils/validators/create-news.schema';
+  caseStudiesInput,
+  caseStudiesFormSchema,
+} from '@/utils/validators/create-caseStudies.schema';
 import FileUpload from '../../events/create-edit/file-upload';
 import { createNews, updateNews } from '@/redux/actions/newsActions';
 import { routes } from '@/config/routes';
@@ -38,14 +38,14 @@ import EditFileUpload from '../../events/create-edit/edit-file-upload';
 interface IndexProps {
   slug?: string;
   className?: string;
-  newsDetails?: any;
-  event?: CreateEventInput;
+  caseStudiesDetails?: any;
+  caseStudies?: caseStudiesInput;
 }
 
 export default function CreateEditProduct({
-  newsDetails,
+  caseStudiesDetails,
   slug,
-  event,
+  caseStudies,
   className,
 }: IndexProps) {
   const { layout } = useLayout();
@@ -58,22 +58,19 @@ export default function CreateEditProduct({
   //   defaultValues: defaultValues(event),
   // });
 
-  console.log(newsDetails, 'newsDetails');
+  console.log(caseStudiesDetails, 'caseStudiesDetails');
 
   const defaultValues = useMemo(
     () => ({
-      source: newsDetails?.source[0] || '',
-      title: newsDetails?.title || '',
-      description: newsDetails?.description || '',
-      publishedDate: newsDetails?.publishedDate
-        ? new Date(newsDetails.publishedDate)
+      title: caseStudiesDetails?.title || '',
+      description: caseStudiesDetails?.description || '',
+      date: caseStudiesDetails?.date
+        ? new Date(caseStudiesDetails.date)
         : new Date(),
-      isPublished: newsDetails?.isPublished || '',
-      rate: newsDetails?.rate || '',
-      targetAudience: newsDetails?.targetAudience[0] || '',
-      attachment: newsDetails?.attachment[0] || '',
+      publishedBy: caseStudiesDetails?.publishedBy || '',
+      image: caseStudiesDetails?.image[0] || '',
     }),
-    [newsDetails]
+    [caseStudiesDetails]
   );
 
   console.log('defaultvalues', defaultValues);
@@ -90,31 +87,28 @@ export default function CreateEditProduct({
   } = useForm({
     mode: 'onChange',
     defaultValues,
-    resolver: zodResolver(newsFormSchema),
+    resolver: zodResolver(caseStudiesFormSchema),
   });
 
   console.log('errors', errors);
 
-  const fileWatch = watch('attachment');
+  const fileWatch = watch('image');
   const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit: SubmitHandler<NewsEventInput> = (data: any) => {
+  const onSubmit: SubmitHandler<caseStudiesInput> = (data: any) => {
     // alert("fdkjsagdfb")
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       console.log('news_data', data);
       const formData = new FormData() as any;
-      formData.append('source', data.source);
       formData.append('title', data.title);
       formData.append('description', data.description);
-      formData.append('publishedDate', data.publishedDate);
-      formData.append('isPublished', data.isPublished);
-      formData.append('rate', data.rate);
-      formData.append('targetAudience', data.targetAudience);
+      formData.append('publishedBy', data.publishedBy);
+      formData.append('date', data.date);
 
       if (!slug && !files[0]) {
-        setError('attachment', {
+        setError('image', {
           type: 'custom',
           message: 'Please select an image',
         });
@@ -123,7 +117,7 @@ export default function CreateEditProduct({
 
       for (const file of files) {
         if (file) {
-          formData.append('attachment', file);
+          formData.append('image', file);
         }
       }
 
@@ -135,7 +129,7 @@ export default function CreateEditProduct({
             router.push(routes.news);
             toast.success(
               <Text as="b">
-                News successfully {slug ? 'updated' : 'created'}
+                Case Study successfully {slug ? 'updated' : 'created'}
               </Text>
             );
           })
@@ -151,7 +145,7 @@ export default function CreateEditProduct({
             router.push(routes.news);
             toast.success(
               <Text as="b">
-                News successfully {slug ? 'updated' : 'created'}
+                Case Study successfully {slug ? 'updated' : 'created'}
               </Text>
             );
           })
@@ -165,9 +159,9 @@ export default function CreateEditProduct({
   };
 
   useEffect(() => {
-    setFileUrl(newsDetails?.attachment[0] || '');
+    setFileUrl(caseStudiesDetails?.image[0] || '');
     reset(defaultValues);
-  }, [reset, defaultValues, setFileUrl, newsDetails?.attachment[0]]);
+  }, [reset, defaultValues, setFileUrl, caseStudiesDetails?.image[0]]);
 
   return (
     <div className="flex items-center justify-center @container">
@@ -177,12 +171,6 @@ export default function CreateEditProduct({
         style={{ width: '70%' }}
       >
         <FormGroup title="" description="" className={cn(className)}>
-          <Input
-            label="Source"
-            placeholder="Source"
-            {...register('source')}
-            error={errors.source?.message as string}
-          />
 
           <Input
             label="Title"
@@ -191,12 +179,12 @@ export default function CreateEditProduct({
             error={errors.title?.message as string}
           />
           <Controller
-            name="publishedDate"
+            name="date"
             control={control}
             render={({ field: { value, onChange, onBlur } }) => (
               <DatePicker
-                inputProps={{ label: 'Published Date' }}
-                placeholderText="Published Date"
+                inputProps={{ label: 'Date' }}
+                placeholderText="Date"
                 dateFormat="dd/MM/yyyy"
                 onChange={onChange}
                 onBlur={onBlur}
@@ -204,32 +192,16 @@ export default function CreateEditProduct({
               />
             )}
           />
-          <Switch
-            variant="active"
-            label="Is Published"
-            {...register('isPublished')}
-            // error={errors.isPublished?.message as string}
-          />
 
           <Input
-            label="Rate"
+            label="Published By"
             placeholder="Rate"
-            {...register('rate', {
+            {...register('publishedBy', {
               valueAsNumber: true,
             })}
-            error={errors.rate?.message as string}
+            error={errors.publishedBy?.message as string}
             type="number"
           />
-
-          <Input
-            label="Targeted Audience"
-            placeholder="Targeted audience"
-            {...register('targetAudience')}
-            error={errors.targetAudience?.message as string}
-          />
-
-        
-       
 
           <Controller
             control={control}
@@ -249,9 +221,9 @@ export default function CreateEditProduct({
 
           {slug ? (
             <EditFileUpload
-              label="Files"
+              label="Image"
               accept="all"
-              error={errors.attachment?.message as string}
+              error={errors.image?.message as string}
               multiple
               files={files}
               setFiles={setFiles}
@@ -260,61 +232,14 @@ export default function CreateEditProduct({
             />
           ) : (
             <FileUpload
-              label="Files"
+              label="Image"
               accept="all"
-              error={errors.attachment?.message as string}
+              error={errors.image?.message as string}
               multiple
               files={files}
               setFiles={setFiles}
             />
           )}
-
-          {/* <div
-            className={merger}
-            
-          >
-            <input
-              {...register('attachment')}
-              id="documents"
-              type="file"
-              accept="application/pdf"
-              multiple={false}
-            />
-            <label
-              htmlFor="documents"
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                e.preventDefault();
-                setValue('attachment', e.dataTransfer.files);
-              }}
-            >
-              {fileWatch && fileWatch?.item(0) ? (
-                <div
-                  direction={'row'}
-                  alignItems={'center'}
-                  gap={1.5}
-                  maxWidth={'100%'}
-                >
-                  <Image src={FileThumbnail} alt='' />
-                  <div className='flex flex-col'>
-                    <p className="file-name" title={fileWatch?.item(0)?.name}>
-                      {fileWatch?.item(0)?.name}
-                    </p>
-                    <p className="file-helper-text">
-                      {`Size: ${(fileWatch?.item(0)?.size || 0) / 1000} KB`}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <MdFileUpload />
-                  <p className="file-name">Drag & Drop PDF Here</p>
-                  <p className="file-helper-text">Maximum 80 MB</p>
-                </>
-              )}
-            </label>
-          </div>
-          {errors.attachment && <p>{errors?.attachment.message}</p>} */}
         </FormGroup>
         <FormFooter
           isLoading={isLoading}
