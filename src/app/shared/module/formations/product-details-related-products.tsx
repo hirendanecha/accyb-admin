@@ -2,71 +2,98 @@ import { Button } from '@/components/ui/button';
 import FormGroup from '../../form-group';
 import { Input } from 'rizzui';
 
-export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
-  console.log(newsDetails, 'newsDetails');
+export default function ProductDetailsRelatedProducts({ formationDetails }: any) {
+  console.log(formationDetails, 'formationDetails');
 
   return (
     <div className="flex items-center justify-center @container">
       <FormGroup title="" description="" className="w-9/12">
-        <div>
-          <label>Image</label>
-          <img
-            src={newsDetails?.attachment}
-            alt="attachment"
-            style={{
-              borderRadius: '10px',
-              marginTop: 5,
-              width: '100%',
-              height: '300px',
-            }}
-          />
-        </div>
+        
 
+    
+        <Input
+          label="Title"
+          placeholder="Title"
+          value={formationDetails?.title}
+          readOnly
+        />
+      
         <div>
           <label>Description</label>
           <div
-            dangerouslySetInnerHTML={{ __html: newsDetails?.description }}
+            dangerouslySetInnerHTML={{ __html: formationDetails?.description }}
             className="mt-2 h-52 overflow-auto rounded border border-gray-300 p-4 transition duration-200 hover:border-black"
           />
         </div>
 
+     
         <Input
-          label="Source"
-          placeholder="Source"
-          value={newsDetails?.source}
+          label="Heading"
+          placeholder="heading"
+          value={formationDetails?.heading}
           readOnly
         />
         <Input
-          label="Title"
-          placeholder="Title"
-          value={newsDetails?.title}
-          readOnly
-        />
-
-        <Input
-          label="Published Date"
-          placeholder="Published Date"
-          value={newsDetails?.publishedDate}
+          label="Cost"
+          placeholder="cost"
+          value={formationDetails?.cost}
           readOnly
         />
         <Input
-          label="Is Published"
-          placeholder="Is Published"
-          value={newsDetails?.isPublished}
+          label="Duration"
+          placeholder="duration"
+          value={formationDetails?.duration}
           readOnly
         />
         <Input
-          label="Rate"
-          placeholder="Rate"
-          value={newsDetails?.rate}
+          label="Domain"
+          placeholder="domain"
+          value={formationDetails?.domain}
           readOnly
         />
         <Input
-          label="Target Audience"
-          placeholder="target Audience"
-          value={newsDetails?.targetAudience}
+          label="Type of Formation"
+          placeholder="type of formation"
+          value={formationDetails?.typeOfFormation}
           readOnly
         />
+        <Input
+          label="Territory"
+          placeholder="territory"
+          value={formationDetails?.territory}
+          readOnly
+        />
+        <Input
+          label="Training Site"
+          placeholder="training site"
+          value={formationDetails?.trainingSite}
+          readOnly
+        />
+        <Input
+          label="Targeted Level"
+          placeholder="Targeted Level"
+          value={formationDetails?.targetedLevel}
+          readOnly
+        />
+        <Input
+          label="Title Obtained"
+          placeholder="title obtained"
+          value={formationDetails?.titleObtained}
+          readOnly
+        />
+        <Input
+          label="Financing Solution"
+          placeholder="financing solution"
+          value={formationDetails?.financingSolution}
+          readOnly
+        />
+        <Input
+          label="Targeted Professions"
+          placeholder="targeted professions"
+          value={formationDetails?.targetedProfessions}
+          readOnly
+        />
+        
 
         
       </FormGroup>

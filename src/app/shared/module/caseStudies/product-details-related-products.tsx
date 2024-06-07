@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import FormGroup from '../../form-group';
 import { Input } from 'rizzui';
+import dayjs from 'dayjs';
 
-export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
-  console.log(newsDetails, 'newsDetails');
+export default function ProductDetailsRelatedProducts({ caseStudiesDetails }: any) {
+  console.log(caseStudiesDetails, 'newsDetails');
 
   return (
     <div className="flex items-center justify-center @container">
@@ -11,8 +12,8 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
         <div>
           <label>Image</label>
           <img
-            src={newsDetails?.attachment}
-            alt="attachment"
+            src={caseStudiesDetails?.image}
+            alt="image"
             style={{
               borderRadius: '10px',
               marginTop: 5,
@@ -25,49 +26,32 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
         <div>
           <label>Description</label>
           <div
-            dangerouslySetInnerHTML={{ __html: newsDetails?.description }}
+            dangerouslySetInnerHTML={{ __html: caseStudiesDetails?.description }}
             className="mt-2 h-52 overflow-auto rounded border border-gray-300 p-4 transition duration-200 hover:border-black"
           />
         </div>
 
-        <Input
-          label="Source"
-          placeholder="Source"
-          value={newsDetails?.source}
-          readOnly
-        />
+        
         <Input
           label="Title"
           placeholder="Title"
-          value={newsDetails?.title}
+          value={caseStudiesDetails?.title}
           readOnly
         />
 
         <Input
-          label="Published Date"
-          placeholder="Published Date"
-          value={newsDetails?.publishedDate}
+          label="Date"
+          placeholder="Date"
+          value={dayjs(caseStudiesDetails?.date).format('DD/MM/YYYY')}
           readOnly
         />
         <Input
-          label="Is Published"
-          placeholder="Is Published"
-          value={newsDetails?.isPublished}
+          label="Published By"
+          placeholder="PublishedBy"
+          value={caseStudiesDetails?.publishedBy}
           readOnly
         />
-        <Input
-          label="Rate"
-          placeholder="Rate"
-          value={newsDetails?.rate}
-          readOnly
-        />
-        <Input
-          label="Target Audience"
-          placeholder="target Audience"
-          value={newsDetails?.targetAudience}
-          readOnly
-        />
-
+        
         
       </FormGroup>
     </div>

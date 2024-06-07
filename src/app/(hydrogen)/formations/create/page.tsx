@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { PiPlusBold } from 'react-icons/pi';
-import CreateEditProduct from '@/app/shared/module/news/create-edit';
+import CreateEditProduct from '@/app/shared/module/formations/create-edit';
 import { metaObject } from '@/config/site.config';
 import PageHeader from '@/app/shared/page-header';
 import { Button } from '@/components/ui/button';
@@ -11,11 +11,11 @@ export const metadata = {
 };
 
 const pageHeader = {
-  title: 'Create News',
+  title: 'Create Formation',
   breadcrumb: [
     {
-      href: routes.news,
-      name: 'News',
+      href: routes.formations,
+      name: 'Formation',
     },
     {
       name: 'Create',

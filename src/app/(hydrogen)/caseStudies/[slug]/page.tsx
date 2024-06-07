@@ -2,39 +2,43 @@
 import { routes } from '@/config/routes';
 import PageHeader from '@/app/shared/page-header';
 
-import ProductDetailsRelatedProducts from '@/app/shared/module/news/product-details-related-products';
+import ProductDetailsRelatedProducts from '@/app/shared/module/caseStudies/product-details-related-products';
 import { AppDispatch } from '@/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNewsById } from '@/redux/actions/newsActions';
 import { useEffect } from 'react';
+import { getCaseStudiesById } from '@/redux/actions/caseStudiesAction';
 export default function ProductDetailsPage({ params }: any) {
   const pageHeader = {
-    title: 'News',
+    title: 'Case Studies',
     breadcrumb: [
       {
-        href: routes.news,
-        name: 'News',
+        href: routes.caseStudies,
+        name: 'Case Studies',
       },
       {
         name: params.slug,
       },
     ],
   };
-  const { newsDetails } = useSelector((state: any) => state.news);
-  console.log(newsDetails, 'newsDetails');
+  const { caseStudyByID } = useSelector((state: any) => state.caseStudies);
+  console.log(caseStudyByID, 'caseStudyByID');
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(getNewsById(params.slug))
+    dispatch(getCaseStudiesById(params.slug))
       .unwrap()
       .then((res) => {
         console.log(res, 'res');
+      })
+      .catch((err) => {
+        console.log(err, 'err');
       });
   }, []);
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <ProductDetailsRelatedProducts newsDetails={newsDetails} />
+      <ProductDetailsRelatedProducts caseStudiesDetails={caseStudyByID} />
     </>
   );
 }

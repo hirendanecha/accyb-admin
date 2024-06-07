@@ -49,13 +49,13 @@ export default function ProductsPage() {
             fileName="product_data"
             header="ID,Name,Category,Product Thumbnail,SKU,Stock,Price,Status,Rating"
           /> */}
-          <Link href={routes.createNews} className="w-full @lg:w-auto">
+          <Link href={routes.createFormations} className="w-full @lg:w-auto">
             <Button
               tag="span"
               className="w-full @lg:w-auto dark:bg-gray-100 dark:text-white dark:active:bg-gray-100"
             >
               <PiPlusBold className="me-1.5 h-[17px] w-[17px]" />
-              Add Case Studies
+              Add Formation
             </Button>
           </Link>
         </div>

@@ -74,7 +74,7 @@ export const getColumns = ({
       hidden: 'customer',
       render: (_: string, row: any) => (
         <AvatarCard
-          src={row?.image[0]}
+          src={row?.image}
           name={row?.title}
           avatarProps={{
             name: row?.image[0],
@@ -96,9 +96,23 @@ export const getColumns = ({
       dataIndex: 'description',
       key: 'description',
       width: 150,
-      render: (description: string) => (
-        <Text className="text-sm">{description}</Text>
-      ),
+      render: (description: string) => {
+        const DescriptionData = description
+        .split("\n")
+        .slice(0, 4)
+        .map((line, index) => {
+          if (index === 0) {
+            return line.substring(0, 150) + "...";
+          } else {
+            return line;
+          }
+        })
+        .join("\n");
+        return(
+        <div dangerouslySetInnerHTML={{ __html: DescriptionData }}></div>
+
+        )
+      },
     },
     {
       title: <HeaderCell title="Date" />,

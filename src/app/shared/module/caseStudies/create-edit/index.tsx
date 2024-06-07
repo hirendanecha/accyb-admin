@@ -28,12 +28,12 @@ import {
   caseStudiesFormSchema,
 } from '@/utils/validators/create-caseStudies.schema';
 import FileUpload from '../../events/create-edit/file-upload';
-import { createNews, updateNews } from '@/redux/actions/newsActions';
 import { routes } from '@/config/routes';
 import { NumberInput, Switch, Text } from 'rizzui';
 import Image from 'next/image';
 import { MdFileUpload } from 'react-icons/md';
 import EditFileUpload from '../../events/create-edit/edit-file-upload';
+import { createCaseStudies, updateCaseStudies } from '@/redux/actions/caseStudiesAction';
 
 interface IndexProps {
   slug?: string;
@@ -58,7 +58,7 @@ export default function CreateEditProduct({
   //   defaultValues: defaultValues(event),
   // });
 
-  console.log(caseStudiesDetails, 'caseStudiesDetails');
+  console.log(  caseStudiesDetails,'caseStudiesDetails');
 
   const defaultValues = useMemo(
     () => ({
@@ -68,7 +68,7 @@ export default function CreateEditProduct({
         ? new Date(caseStudiesDetails.date)
         : new Date(),
       publishedBy: caseStudiesDetails?.publishedBy || '',
-      image: caseStudiesDetails?.image[0] || '',
+      image: caseStudiesDetails?.image || '',
     }),
     [caseStudiesDetails]
   );
@@ -100,7 +100,7 @@ export default function CreateEditProduct({
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      console.log('news_data', data);
+      console.log('caseStudies_data', data);
       const formData = new FormData() as any;
       formData.append('title', data.title);
       formData.append('description', data.description);
@@ -122,11 +122,11 @@ export default function CreateEditProduct({
       }
 
       if (slug) {
-        dispatch(updateNews({ id: slug, data: formData }))
+        dispatch(updateCaseStudies({ id: slug, data: formData }))
           .unwrap()
           .then((res) => {
             console.log('res', res);
-            router.push(routes.news);
+            router.push(routes.caseStudies);
             toast.success(
               <Text as="b">
                 Case Study successfully {slug ? 'updated' : 'created'}
@@ -137,12 +137,12 @@ export default function CreateEditProduct({
             console.log('err', err);
           });
       } else {
-        dispatch(createNews(formData))
+        dispatch(createCaseStudies(formData))
           .unwrap()
           .then((res) => {
             console.log('res', res);
             // routes.module.event;
-            router.push(routes.news);
+            router.push(routes.caseStudies);
             toast.success(
               <Text as="b">
                 Case Study successfully {slug ? 'updated' : 'created'}
@@ -159,9 +159,9 @@ export default function CreateEditProduct({
   };
 
   useEffect(() => {
-    setFileUrl(caseStudiesDetails?.image[0] || '');
+    setFileUrl(caseStudiesDetails?.image || '');
     reset(defaultValues);
-  }, [reset, defaultValues, setFileUrl, caseStudiesDetails?.image[0]]);
+  }, [reset, defaultValues, setFileUrl, caseStudiesDetails?.image]);
 
   return (
     <div className="flex items-center justify-center @container">
@@ -171,7 +171,6 @@ export default function CreateEditProduct({
         style={{ width: '70%' }}
       >
         <FormGroup title="" description="" className={cn(className)}>
-
           <Input
             label="Title"
             placeholder="Title"
@@ -195,12 +194,9 @@ export default function CreateEditProduct({
 
           <Input
             label="Published By"
-            placeholder="Rate"
-            {...register('publishedBy', {
-              valueAsNumber: true,
-            })}
+            placeholder="Published By"
+            {...register('publishedBy')}
             error={errors.publishedBy?.message as string}
-            type="number"
           />
 
           <Controller
@@ -243,7 +239,7 @@ export default function CreateEditProduct({
         </FormGroup>
         <FormFooter
           isLoading={isLoading}
-          submitBtnText={slug ? 'Update News' : 'Create News'}
+          submitBtnText={slug ? 'Update Case Study' : 'Create Case Study'}
         />
       </form>
     </div>
