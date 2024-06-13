@@ -16,50 +16,55 @@ import { routes } from '@/config/routes';
 import authAPI from '@/services/api/auth';
 import toast from 'react-hot-toast';
 import { Text } from 'rizzui';
-const initialValues: LoginSchema = {
-  email: 'admin@gmail.com',
-  password: 'password@123',
-};
+import EnterOTP from './enterOTP';
+// const initialValues: LoginSchema = {
+//   email: 'admin@gmail.com',
+//   password: 'password@123',
+// };
 
 export default function SignInForm() {
   const [reset, setReset] = useState({});
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
+  const [showOTP, setShowOTP] = useState(false);
+  const [email,setEmail]=useState('');
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data: LoginSchema) => {
     setLoading(true);
+    setShowOTP(true);
+
+    dispatch(logIn({ email: data.email, password: data.password })).unwrap().then((res) => {
+      console.log('res', res);
+      setEmail(res.data.data.email);
+      
+    });
+
     const result = await signIn('credentials', {
       ...data,
       redirect: false,
       // callbackUrl: routes.signIn,
     });
-    if (result?.ok) {
-      console.log(result, 'ele');
-      
-      // router.push(routes.module.event);
-      window.location.replace(routes.event);
-      toast.success(
-        <Text as="b">
-          LogIn successfull
-        </Text>
-      );
-      setLoading(false);
-    }
-    console.log("this is result", result);
+    // if (result?.ok) {
+    //   console.log(result, 'ele');
+    //   setLoading(false);
+    //   setShowOTP(true);
+    // // }
+    // console.log("this is result", result);
 
-    if (result?.error) {
-      toast.error(
-        <Text as="b">Please enter valid credentials</Text>
-      )
-      setLoading(false);
-    } 
+    // if (result?.error) {
+    //   toast.error(
+    //     <Text as="b">Please enter valid credentials</Text>
+    //   )
+    //   setLoading(false);
+    // } 
   };
 
   return (
     <>
-
-      <Form<LoginSchema>
+    {!showOTP ? (
+      <>
+         <Form<LoginSchema>
         validationSchema={loginSchema}
         // resetValues={reset}
         onSubmit={(s) => {
@@ -96,13 +101,21 @@ export default function SignInForm() {
               {...register('password')}
               error={errors.password?.message}
             />
-            <Button className="w-full" type="submit" size="lg" color="info" isLoading={isLoading}>
+            <Button className="w-full" type="submit" size="lg" color="info" isLoading={isLoading} >
               <span>Log in</span>{' '}
               <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
             </Button>
           </div>
         )}
       </Form>
+      </>
+    ) : (
+      <>
+        <EnterOTP email={email} />
+      </>
+    )}
+
+     
     </>
   );
 }

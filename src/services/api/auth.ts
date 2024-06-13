@@ -23,3 +23,5 @@ const authAPI =  ( data: { email: string; password: string }) => {
 //   },
 };
 export default authAPI;
+
+

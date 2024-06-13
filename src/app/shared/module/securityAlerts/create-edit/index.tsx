@@ -57,7 +57,7 @@ export default function CreateEditProduct({
       description: alertDetails?.description || '',
       date: alertDetails?.date ? new Date(alertDetails.date) : new Date(),
       Heading: alertDetails?.Heading || [],
-      document: alertDetails?.document || [],
+      document: alertDetails?.document[0] || [],
     }),
     [alertDetails]
   );
@@ -158,7 +158,7 @@ export default function CreateEditProduct({
 
   useEffect(() => {
     reset(defaultValues);
-    setDocUrl(alertDetails?.document || '');
+    setDocUrl(alertDetails?.document[0] || '');
   }, [reset, defaultValues]);
 
   return (

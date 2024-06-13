@@ -106,23 +106,23 @@ export default function FileUpload({
             {files?.map((file: File, index: number) => (
               <div
                 className="flexflex-col min-h-[58px] w-full items-center rounded-xl border px-3 py-3 dark:border-gray-300"
-                key={file.name}
+                key={file?.name}
               >
                 <div className="flex-shrink- relative flex h-52 w-full items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 object-cover px-2 py-1.5 dark:bg-transparent">
-                  {file.type.includes('image') ? (
+                  {file?.type?.includes('image') ? (
                     <Image
                       src={URL.createObjectURL(file)}
                       fill
                       priority
-                      alt={file.name}
+                      alt={file?.name}
                       sizes="(max-width: 768px) 100vw"
                     />
                   ) : (
-                    <>{fileType[file.type]}</>
+                    <>{fileType[file?.type]}</>
                   )}
                 </div>
                 <div className="flex flex-col items-center gap-4 w-full align-middle">
-                  <div className="mt-2 truncate px-2.5">{file.name}</div>
+                  <div className="mt-2 truncate px-2.5">{file?.name}</div>
                   <ActionIcon
                     onClick={() => handleImageDelete(index)}
                     size="sm"

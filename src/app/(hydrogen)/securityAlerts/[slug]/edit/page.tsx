@@ -40,8 +40,8 @@ export default function EditProductPage({
 }: {
   params: { slug: string };
 }) {
-  const  alertDetails= useSelector((state: any) =>state.securityAlerts.securityAlert);
-  console.log(alertDetails, 'alertDetails');
+  const  {securityAlertByID}= useSelector((state: any) =>state.securityAlerts);
+  console.log(securityAlertByID, 'securityAlertByID');
   
   // const  alertDetails= useSelector((state: any) =>{
   //   console.log(state.securityAlerts.securityAlert, 'state');
@@ -49,6 +49,7 @@ export default function EditProductPage({
   // })
   
   const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     dispatch(getAlertById(params.slug))
       .unwrap()
@@ -73,7 +74,7 @@ export default function EditProductPage({
         </Link>
       </PageHeader>
 
-      <CreateEditProduct slug={params.slug} alertDetails={alertDetails} />
+      <CreateEditProduct slug={params.slug} alertDetails={securityAlertByID} />
     </>
   );
 }

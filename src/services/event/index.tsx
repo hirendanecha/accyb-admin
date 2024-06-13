@@ -153,7 +153,7 @@ export const createSecurityAlertAPI = async (data: any) => {
 export const getAlertByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/securityAlerts/getById/${id}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/securityAlerts/${id}`
     );
     return response.data;
   } catch (error) {

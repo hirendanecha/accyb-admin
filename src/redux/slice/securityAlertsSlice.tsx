@@ -9,6 +9,7 @@ import { deleteAlertByIdAPI } from '../actions/newsActions';
 
 interface UserState {
   securityAlert: any;
+  securityAlertByID: any;
   userNews: any;
   newsDetails: any;
   eventsDetails: any;
@@ -19,6 +20,7 @@ interface UserState {
 
 const initialState: UserState = {
     securityAlert: null,
+    securityAlertByID: null,
   userNews: null,
   newsDetails: null,
   eventsDetails: null,
@@ -82,7 +84,7 @@ const securityAlertSlice = createSlice({
       .addCase(
         getAlertById.fulfilled,
         (state: any, { payload }: PayloadAction<any>) => {
-          state.securityAlert = payload;
+          state.securityAlertByID = payload;
           state.loading = false;
           state.error = null;
         }
