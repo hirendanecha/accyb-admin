@@ -45,8 +45,8 @@ console.log(token, 'token');
       } else {
         // handle successful sign-in
         localStorage.setItem('adminToken', token);
-        // router.push('/events');
-        window.location.replace('/events');
+        router.push('/events');
+        // window.location.replace('/events');
       }
     } catch (err) {
       toast.error(<Text as="b">Invalid OTP!!</Text>);
@@ -76,7 +76,7 @@ console.log(token, 'token');
 
   return (
     <>
-      <div className="space-y-5">
+      <div className="min-h-screen w-full display flex flex-col gap-4">
         <Input
           name="otp"
           type="number"
