@@ -15,7 +15,7 @@ const authAPI =  ( data: { email: string; password: string }) => {
 //   loginApi(    
 //     data: { email: string; password: string }
 //   ) {
-    return instance.post('/api/auth/login', data, {
+    return instance.post(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/login`, data, {
       headers: {
         'Content-Type': 'application/json',
       },

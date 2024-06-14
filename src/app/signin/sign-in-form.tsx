@@ -40,24 +40,24 @@ export default function SignInForm() {
       
     });
 
-    const result = await signIn('credentials', {
-      ...data,
-      redirect: false,
-      // callbackUrl: routes.signIn,
-    });
-    // if (result?.ok) {
-    //   console.log(result, 'ele');
-    //   setLoading(false);
-    //   setShowOTP(true);
-    // // }
-    // console.log("this is result", result);
+    // const result = await signIn('credentials', {
+    //   ...data,
+    //   redirect: false,
+    //   // callbackUrl: routes.signIn,
+    // });
+    // // if (result?.ok) {
+    // //   console.log(result, 'ele');
+    // //   setLoading(false);
+    // //   setShowOTP(true);
+    // // // }
+    // // console.log("this is result", result);
 
-    // if (result?.error) {
-    //   toast.error(
-    //     <Text as="b">Please enter valid credentials</Text>
-    //   )
-    //   setLoading(false);
-    // } 
+    // // if (result?.error) {
+    // //   toast.error(
+    // //     <Text as="b">Please enter valid credentials</Text>
+    // //   )
+    // //   setLoading(false);
+    // // } 
   };
 
   return (

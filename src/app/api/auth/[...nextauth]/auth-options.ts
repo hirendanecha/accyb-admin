@@ -8,6 +8,7 @@ import { pagesOptions } from './pages-options';
 import axios from 'axios';
 import authAPI from '@/services/api/auth';
 import { headers } from 'next/headers';
+import otpAPI from '@/services/api/enterOtp';
 export const authOptions: NextAuthOptions = {
   // debug: true,
   pages: {
@@ -71,26 +72,26 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        otp: { label: 'Otp', type: 'text' },
       },
       async authorize(credentials: any) {
         try {
-          console.log('auth-options.ts', credentials);
+          // console.log('auth-options.ts', credentials);
 
-          const response = await authAPI({
+          const response = await otpAPI({
             email: credentials?.email,
-            password: credentials?.password,
+            otp: credentials?.otp,
           });
 
-          console.log('response', response.data);
+          // console.log('response', response.data);
 
           // // Below Condition is unnecessary
-          if (!response?.data?.success) {
-            // console.log('is called here');
+          if (!response?.success) {
+            console.log('no token');
             throw new Error(response?.data?.message);
           }
 
-          const jwt = response.data.token;
+          const jwt = response.token;
           // const session_id = response.data.session_id;
           return {
             ...credentials,

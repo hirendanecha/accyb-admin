@@ -3,7 +3,7 @@ import axios from 'axios';
 export const createEventAPI = async (data: any) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/add`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/event/add`,
       data.data
     );
     return response.data;
@@ -15,9 +15,9 @@ export const createEventAPI = async (data: any) => {
 export const getAllEventsAPI = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/event`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/events`
     );
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error('Failed to create event...');
   }
@@ -26,7 +26,7 @@ export const getAllEventsAPI = async () => {
 export const updateEventAPI = async ({ id, data }: { id: any; data: any }) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/update/${id}`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/event/update/${id}`,
       data
     );
     return response.data;
@@ -38,7 +38,7 @@ export const updateEventAPI = async ({ id, data }: { id: any; data: any }) => {
 export const getEventByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/event/${id}`
     );
     return response.data;
   } catch (error) {
@@ -49,7 +49,7 @@ export const getEventByIdAPI = async (id: any) => {
 export const deleteEventAPI = async (id: any) => {
   try {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/delete/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/event/delete/${id}`
     );
     return response.data;
   } catch (error) {
@@ -61,7 +61,7 @@ export const deleteEventAPI = async (id: any) => {
 export const createNewsAPI = async (data: any) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news/add`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/news/add`,
       data.data
     );
     return response.data;
@@ -73,7 +73,7 @@ export const createNewsAPI = async (data: any) => {
 export const getAllNewsAPI = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/news`
     );
     return response.data;
   } catch (error) {
@@ -84,7 +84,7 @@ export const getAllNewsAPI = async () => {
 export const getNewsByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/news/${id}`
     );
     return response.data;
   } catch (error) {
@@ -95,7 +95,7 @@ export const getNewsByIdAPI = async (id: any) => {
 export const deleteNewsAPI = async (id: any) => {
   try {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news/delete/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/news/delete/${id}`
     );
     return response.data;
   } catch (error) {
@@ -106,7 +106,7 @@ export const deleteNewsAPI = async (id: any) => {
 export const updateNewsAPI = async ({ id, data }: { id: any; data: any }) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/news/update/${id}`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/news/update/${id}`,
       data
     );
     return response.data;
@@ -119,7 +119,7 @@ export const updateNewsAPI = async ({ id, data }: { id: any; data: any }) => {
 export const getAllSecurityAlerts = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/securityAlerts`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/securityAlerts`
     );
     return response.data;
   } catch (error) {
@@ -130,7 +130,7 @@ export const getAllSecurityAlerts = async () => {
 export const deleteAlertAPI = async (id: any) => {
   try {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/securityAlerts/delete/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/securityAlerts/delete/${id}`
     );
     return response.data;
   } catch (error) {
@@ -141,7 +141,7 @@ export const deleteAlertAPI = async (id: any) => {
 export const createSecurityAlertAPI = async (data: any) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/securityAlerts/add`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/securityAlerts/add`,
       data.data
     );
     return response.data;
@@ -153,7 +153,7 @@ export const createSecurityAlertAPI = async (data: any) => {
 export const getAlertByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/securityAlerts/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/securityAlerts/${id}`
     );
     return response.data;
   } catch (error) {
@@ -164,7 +164,7 @@ export const getAlertByIdAPI = async (id: any) => {
 export const updateSecurityAlertAPI = async ({ id, data }: { id: any; data: any }) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/securityAlerts/update/${id}`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/securityAlerts/update/${id}`,
       data
     );
     return response.data;

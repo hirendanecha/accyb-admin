@@ -33,7 +33,7 @@ const pageHeader = {
 };
 
 export default function ProductsPage() {
-  const { userEvents } = useSelector((state: any) => state.event);
+  const {userEvents} = useSelector((state: any) => state.event);
   console.log(userEvents, 'userEvents');
 
   const dispatch = useDispatch<AppDispatch>();
@@ -41,7 +41,7 @@ export default function ProductsPage() {
     dispatch(getAllEvents())
       .unwrap()
       .then((res) => {
-        console.log('res', res);
+        console.log('resEvent', res);
       });
   }, []);
 

@@ -13,22 +13,64 @@ export default function EnterOTP({ email }: any) {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const [otp, setOtp] = useState(0);
+  const[data,setData]=useState(null);
+  console.log(data, 'data');
+  
+  const [token,setToken]=useState('');
+console.log(token, 'token');
+
+  const [otp, setOtp] = useState(null);
   console.log(otp, 'otp');
 
-  const handleSubmit = (otp: number) => {
-    const result = dispatch(enterOtp({ email, otp }))
-      .unwrap()
-      .then((res) => {
-        console.log(res, 'res');
-        window.location.replace('/events');
-      })
-      .catch((err) => {
-        toast.error(
-          <Text as="b">Invalid OTP!!</Text>
-        );
+  const handleSubmit = async(otp: number) => {
+    console.log(otp, 'otp11');
+    try {
+      const response = await dispatch(enterOtp({ email, otp })).unwrap();
+      
+      console.log(response, 'response');
+      const { data, token } = response;
+      setData(data);
+      setToken(token);
+  
+      const signInResponse = await signIn('credentials', {
+       email: data.email,
+        otp: otp,
+        redirect: false,
       });
-
+  
+      console.log("signInResponse",signInResponse);
+      
+      if (signInResponse?.error) {
+        toast.error(<Text as="b">Invalid credentials!!</Text>);
+      } else {
+        // handle successful sign-in
+        localStorage.setItem('adminToken', token);
+        // router.push('/events');
+        window.location.replace('/events');
+      }
+    } catch (err) {
+      toast.error(<Text as="b">Invalid OTP!!</Text>);
+    }
+      // const result = await signIn('credentials', {
+      //   ...data,
+      //   token,
+      //   redirect: false,
+      //   // callbackUrl: routes.signIn,
+      // });
+      // if (result?.ok) {
+      //   console.log(result, 'ele');
+      //   window.location.replace('/events');
+      //   // setLoading(false);
+      //   // setShowOTP(true);
+      // }
+      // console.log("this is result", result);
+  
+      // if (result?.error) {
+      //   toast.error(
+      //     <Text as="b">Please enter valid OTP</Text>
+      //   )
+      //   // setLoading(false);
+      // } 
       
   };
 

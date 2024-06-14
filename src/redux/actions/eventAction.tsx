@@ -29,7 +29,7 @@ export const getAllEvents = createAsyncThunk('user/getAllEvent', async () => {
     const eventData = await getAllEventsAPI();
     console.log('eventData', eventData);
 
-    return eventData.data;
+    return eventData.data.data.events;
   } catch (error) {
     // If authentication fails, throw an error
     throw new Error('Failed to Get Event');

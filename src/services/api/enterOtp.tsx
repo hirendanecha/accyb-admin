@@ -3,7 +3,7 @@ import axios from "axios";
 const otpAPI = async (data: any) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/enterOtp`,
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/enterOtp`,
         { ...data },
       );
       return response.data;

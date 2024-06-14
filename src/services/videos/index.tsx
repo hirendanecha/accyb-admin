@@ -3,7 +3,7 @@ import axios from "axios";
 export const createVideoAPI = async (data: any) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/video/add`,
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/video/add`,
         data.data
       );
       return response.data;
@@ -15,7 +15,7 @@ export const createVideoAPI = async (data: any) => {
 export const getAllVideosAPI = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/videos`
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/videos`
       );
       return response.data;
     } catch (error) {
@@ -26,7 +26,7 @@ export const getAllVideosAPI = async () => {
 export const deleteVideoAPI = async (id: any) => {
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/video/delete/${id}`
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/video/delete/${id}`
       );
       return response.data;
     } catch (error) {
@@ -37,7 +37,7 @@ export const deleteVideoAPI = async (id: any) => {
   export const updateVideoAPI = async ({ id, data }: { id: any; data: any }) => {
     try {
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/video/update/${id}`,
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/video/update/${id}`,
         data
       );
       return response.data;
@@ -49,7 +49,7 @@ export const deleteVideoAPI = async (id: any) => {
   export const getVideoByIdAPI = async (id: any) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/video/getById/${id}`
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/video/getById/${id}`
       );
       return response.data;
     } catch (error) {

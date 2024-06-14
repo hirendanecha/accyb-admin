@@ -26,10 +26,10 @@ export const createNews = createAsyncThunk(
 
 export const getAllNews = createAsyncThunk('user/getAllNews', async () => {
   try {
-    const eventData = await getAllNewsAPI();
-    console.log('eventData', eventData);
+    const newsData = await getAllNewsAPI();
+    console.log('newsData', newsData);
 
-    return eventData.data;
+    return newsData.data;
   } catch (error) {
     // If authentication fails, throw an error
     throw new Error('Failed to Get Event');

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { signOut } from 'next-auth/react';
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || '';
+const baseURL = process.env.NEXT_PUBLIC_API_SERVER || '';
 
 axios.defaults.baseURL = baseURL;
 

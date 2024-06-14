@@ -3,7 +3,7 @@ import axios from 'axios';
 export const createFormationAPI = async (data: any) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/formation/add`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/formation/add`,
       data.data
     );
     return response.data;
@@ -15,7 +15,7 @@ export const createFormationAPI = async (data: any) => {
 export const getAllFormationsAPI = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/formations`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/formations`
     );
     return response.data;
   } catch (error) {
@@ -26,7 +26,7 @@ export const getAllFormationsAPI = async () => {
 export const getFormationByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/web/formation/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/formation/${id}`
     );
     return response.data;
   } catch (error) {
@@ -38,7 +38,7 @@ export const getFormationByIdAPI = async (id: any) => {
 export const updateFormationAPI = async ({ id, data }: { id: any; data: any }) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/formation/update/${id}`,
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/formation/update/${id}`,
       data
     );
     return response.data;
@@ -51,7 +51,7 @@ export const updateFormationAPI = async ({ id, data }: { id: any; data: any }) =
 export const deleteFormationAPI = async (id: any) => {
   try {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/formation/delete/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/formation/delete/${id}`
     );
     return response.data;
   } catch (error) {
