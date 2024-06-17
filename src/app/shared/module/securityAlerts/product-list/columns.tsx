@@ -30,6 +30,7 @@ type ProductType = {
   description: string;
   Heading: String;
   Date: String;
+  document: any[],
 };
 
 export const getColumns = ({
@@ -83,12 +84,37 @@ export const getColumns = ({
     //     />
     //   ),
     // },
+    // {
+    //   title: <HeaderCell title="document" />,
+    //   dataIndex: 'document',
+    //   key: 'document',
+    //   width: 100,
+    //   render: (document: string) => <img src={document} alt="document" style={{ width: '50px', height: '50px',borderRadius: '10px' }} />,
+    // },
+    // {
+    //   title: <HeaderCell title="Title" />,
+    //   dataIndex: 'title',
+    //   key: 'title',
+    //   width: 150,
+    //   render: (title: string) => <Text className="text-sm">{title}</Text>,
+    // },
     {
       title: <HeaderCell title="Title" />,
-      dataIndex: 'title',
-      key: 'title',
-      width: 150,
-      render: (title: string) => <Text className="text-sm">{title}</Text>,
+      dataIndex: 'document',
+      key: 'document',
+      width: 300,
+      hidden: 'customer',
+      render: (_: string, row: any) => (
+        <AvatarCard
+          src={row?.document[0]}
+          name={row?.title}
+          avatarProps={{
+            name: row?.document[0],
+            size: 'lg',
+            className: 'rounded-lg',
+          }}
+        />
+      ),
     },
     // {
     //   title: <HeaderCell title="Published Date" />,
@@ -168,12 +194,12 @@ export const getColumns = ({
           </Tooltip>
           <Tooltip
             size="sm"
-            content={() => 'View News'}
+            content={() => 'View Security Alert'}
             placement="top"
             color="invert"
           >
             <Link href={routes.viewSecurityAlerts(row?._id)}>
-              <ActionIcon size="sm" variant="outline" aria-label={'View News'}>
+              <ActionIcon size="sm" variant="outline" aria-label={'View Security Alert'}>
                 <EyeIcon className="h-4 w-4" />
               </ActionIcon>
             </Link>

@@ -83,19 +83,37 @@ export const getColumns = ({
     //     />
     //   ),
     // },
-    {
-      title: <HeaderCell title="Thumbnail" />,
-      dataIndex: 'thumbnail',
-      key: 'thumbnail',
-      width: 150,
-      render: (thumbnail: string) => <img className="text-sm" src={thumbnail} alt={''} style={{ width: '80px', height: '80px',borderRadius: '50%' }}>{}</img>,
-    },
+    // {
+    //   title: <HeaderCell title="Thumbnail" />,
+    //   dataIndex: 'thumbnail',
+    //   key: 'thumbnail',
+    //   width: 150,
+    //   render: (thumbnail: string) => <img className="text-sm" src={thumbnail} alt={''} style={{ width: '80px', height: '80px',borderRadius: '10px' }}>{}</img>,
+    // },
+    // {
+    //   title: <HeaderCell title="Name" />,
+    //   dataIndex: 'name',
+    //   key: 'name',
+    //   width: 150,
+    //   render: (title: string) => <Text className="text-sm">{title}</Text>,
+    // },
     {
       title: <HeaderCell title="Name" />,
-      dataIndex: 'name',
-      key: 'name',
-      width: 150,
-      render: (title: string) => <Text className="text-sm">{title}</Text>,
+      dataIndex: 'thumbnail',
+      key: 'thumbnail',
+      width: 300,
+      hidden: 'customer',
+      render: (_: string, row: any) => (
+        <AvatarCard
+          src={row?.thumbnail}
+          name={row?.name}
+          avatarProps={{
+            name: row?.thumbnail,
+            size: 'lg',
+            className: 'rounded-lg',
+          }}
+        />
+      ),
     },
     // {
     //   title: <HeaderCell title="Published Date" />,
@@ -175,7 +193,7 @@ export const getColumns = ({
           </Tooltip>
           <Tooltip
             size="sm"
-            content={() => 'View News'}
+            content={() => 'View Video Details'}
             placement="top"
             color="invert"
           >

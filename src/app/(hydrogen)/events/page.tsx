@@ -20,7 +20,7 @@ interface IndexProps {
 }
 
 const pageHeader = {
-  title: 'Event',
+  title: 'Events',
   breadcrumb: [
     {
       href: routes.createEvents,

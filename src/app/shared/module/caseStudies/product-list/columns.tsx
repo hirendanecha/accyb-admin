@@ -102,7 +102,7 @@ export const getColumns = ({
         .slice(0, 4)
         .map((line, index) => {
           if (index === 0) {
-            return line.substring(0, 150) + "...";
+            return line.substring(0, 100) + "...";
           } else {
             return line;
           }

@@ -171,7 +171,7 @@ export default function CreateEditProduct({
             router.push(routes.formations);
             toast.success(
               <Text as="b">
-                News successfully {slug ? 'updated' : 'created'}
+                Formation successfully {slug ? 'updated' : 'created'}
               </Text>
             );
           })
@@ -187,7 +187,7 @@ export default function CreateEditProduct({
             router.push(routes.formations);
             toast.success(
               <Text as="b">
-                News successfully {slug ? 'updated' : 'created'}
+                Formation successfully {slug ? 'updated' : 'created'}
               </Text>
             );
           })
