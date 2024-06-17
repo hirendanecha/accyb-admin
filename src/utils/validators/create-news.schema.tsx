@@ -7,7 +7,7 @@ export const newsFormSchema = z.object({
   targetAudience: z.string().min(1, { message: 'Tergeted audience required' }),
   source: z.string().min(1, { message: 'Source required' }),
   isPublished: z.boolean().optional(),
-  rate: z.number().int().min(1, { message: 'rate should be minimum 1' }).max(5, { message: 'rate should be maximum 5' }),
+  // rate: z.number().int().min(1, { message: 'rate should be minimum 1' }).max(5, { message: 'rate should be maximum 5' }),
   publishedDate: z.date().min(new Date('1900-01-01')).optional(),
   endDate: z.date().min(new Date('1900-01-02')).optional(),
 });

@@ -55,12 +55,12 @@ export default function ProductDetailsRelatedProducts({ newsDetails }: any) {
           value={newsDetails?.isPublished}
           readOnly
         />
-        <Input
+        {/* <Input
           label="Rate"
           placeholder="Rate"
           value={newsDetails?.rate}
           readOnly
-        />
+        /> */}
         <Input
           label="Target Audience"
           placeholder="target Audience"

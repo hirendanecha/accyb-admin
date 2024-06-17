@@ -69,7 +69,7 @@ export default function CreateEditProduct({
         ? new Date(newsDetails.publishedDate)
         : new Date(),
       isPublished: newsDetails?.isPublished || '',
-      rate: newsDetails?.rate || '',
+      // rate: newsDetails?.rate || '',
       targetAudience: newsDetails?.targetAudience[0] || '',
       attachment: newsDetails?.attachment[0] || '',
     }),
@@ -110,7 +110,7 @@ export default function CreateEditProduct({
       formData.append('description', data.description);
       formData.append('publishedDate', data.publishedDate);
       formData.append('isPublished', data.isPublished);
-      formData.append('rate', data.rate);
+      // formData.append('rate', data.rate);
       formData.append('targetAudience', data.targetAudience);
 
       if (!slug && !files[0]) {
@@ -211,7 +211,7 @@ export default function CreateEditProduct({
             // error={errors.isPublished?.message as string}
           />
 
-          <Input
+          {/* <Input
             label="Rate"
             placeholder="Rate"
             {...register('rate', {
@@ -219,7 +219,7 @@ export default function CreateEditProduct({
             })}
             error={errors.rate?.message as string}
             type="number"
-          />
+          /> */}
 
           <Input
             label="Targeted Audience"
