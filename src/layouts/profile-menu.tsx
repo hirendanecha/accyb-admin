@@ -9,7 +9,7 @@ import cn from '@/utils/class-names';
 import { getServerSession } from 'next-auth';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // const menuItems = [
@@ -32,6 +32,8 @@ import { useEffect, useState } from 'react';
 function DropdownMenu() {
   const { data: session, status } = useSession();
   console.log("user",session);
+
+  const router= useRouter();
 
   
 const regex = /^([^@]+)/;
@@ -66,6 +68,18 @@ const name = session?.user.email?.match(regex)?.[1]?.replace(/\./g, " ") ?? "";
           </Link>
         ))}
       </div> */}
+      <div className="border-t border-gray-300 px-6 pb-6 pt-5">
+        <Button
+          className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
+          variant="text"
+          onClick={ () => {
+            router.push('/change-password');
+           
+          }}
+        >
+          Change Password
+        </Button>
+      </div>
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
         <Button
           className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
