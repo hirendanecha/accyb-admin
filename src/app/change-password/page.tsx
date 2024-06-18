@@ -41,23 +41,30 @@ export default function ChangePassword() {
   const onSubmit: SubmitHandler<ChangePasswordInput> = async (data) => {
     console.log(data, 'data');
 
-    dispatch(changePassword(data))
-      .unwrap()
-      .then((res) => {
-        console.log(res, 'res');
-        toast.success(<Text as="b">Password changed successfully</Text>);
-        router.push('/events');
-
-      }).catch((err) => {
-        console.log(err, 'err');
-        toast.error(<Text as="b">Please enter corect password</Text>);
-      });
+    if (data.oldPassword === data.newPassword) {
+      toast.error(
+        <Text as="b">New password should not be same as old password</Text>
+      );
+      return;
+    } else {
+      dispatch(changePassword(data))
+        .unwrap()
+        .then((res) => {
+          console.log(res, 'res');
+          toast.success(<Text as="b">Password changed successfully</Text>);
+          router.push('/events');
+        })
+        .catch((err) => {
+          console.log(err, 'err');
+          toast.error(<Text as="b">Please enter corect password</Text>);
+        });
+    }
   };
 
   return (
     <>
       <div className="display my-36 flex min-h-screen w-full flex-col items-center gap-4">
-        <div >
+        <div>
           <Link href={'/'} className="mb-6 inline-flex max-w-[168px] xl:mb-8">
             <Logo className="max-w-[155px]" />
           </Link>
