@@ -111,26 +111,26 @@ export const getColumns = ({
         <Text className="text-sm">{isPublished ? 'Yes' : 'No'}</Text>
       ),
     },
-    {
-      title: (
-        <HeaderCell
-          title="Rating"
-          sortable
-          ascending={
-            sortConfig?.direction === 'asc' && sortConfig?.key === 'rate'
-          }
-        />
-      ),
-      dataIndex: 'rate',
-      key: 'rate',
-      width: 120,
-      render: (rate: any) => (
-        <div className="inline-flex items-center rounded-full border border-gray-300 px-2.5 py-1">
-          <span className="me-1 shrink-0">{rate}</span>
-          <PiStarFill className="-mt-px w-4 fill-orange text-orange" />
-        </div>
-      ),
-    },
+    // {
+    //   title: (
+    //     <HeaderCell
+    //       title="Rating"
+    //       sortable
+    //       ascending={
+    //         sortConfig?.direction === 'asc' && sortConfig?.key === 'rate'
+    //       }
+    //     />
+    //   ),
+    //   dataIndex: 'rate',
+    //   key: 'rate',
+    //   width: 120,
+    //   render: (rate: any) => (
+    //     <div className="inline-flex items-center rounded-full border border-gray-300 px-2.5 py-1">
+    //       <span className="me-1 shrink-0">{rate}</span>
+    //       <PiStarFill className="-mt-px w-4 fill-orange text-orange" />
+    //     </div>
+    //   ),
+    // },
     {
       // Need to avoid this issue -> <td> elements in a large <table> do not have table headers.
       title: <HeaderCell title="Actions" className="opacity-0" />,
