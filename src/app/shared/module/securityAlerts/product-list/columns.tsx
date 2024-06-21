@@ -28,8 +28,8 @@ type ProductType = {
   _id: string;
   title: string;
   description: string;
-  Heading: String;
-  Date: String;
+  Heading: [];
+  date: String;
   document: any[],
 };
 
@@ -139,17 +139,21 @@ export const getColumns = ({
       dataIndex: 'Heading',
       key: 'Heading',
       width: 150,
-      render: (Heading: String) => 
-        <Text className="text-sm">{Heading}</Text>
+      render: (Heading: []) => 
+        <div className='inline-flex'>
+          {Heading.map((heading: string, index: number) => (
+            <Text key={index} className="text-sm">{heading}&nbsp;</Text>
+          ))}
+        </div>
       ,
     },
     {
       title: <HeaderCell title="Date" />,
-      dataIndex: 'Date',
-      key: 'Date',
+      dataIndex: 'date',
+      key: 'date',
       width: 150,
-      render: (Date: Date) => 
-        <Text className="text-sm">{dayjs(Date).format('DD/MM/YYYY')}</Text>
+      render: (date: Date) => 
+        <Text className="text-sm">{dayjs(date).format('DD/MM/YYYY')}</Text>
       ,
     },
     // {

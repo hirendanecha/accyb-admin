@@ -155,6 +155,8 @@ export const getAlertByIdAPI = async (id: any) => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/securityAlerts/${id}`
     );
+    console.log('response.data', response.data);
+    
     return response.data;
   } catch (error) {
     throw new Error('Failed to get security alert by ID...');

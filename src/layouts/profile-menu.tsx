@@ -5,12 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Popover } from '@/components/ui/popover';
 import { Title, Text } from '@/components/ui/text';
 import { routes } from '@/config/routes';
+import { meAction } from '@/redux/actions/userAction';
+import { AppDispatch } from '@/redux/store';
 import cn from '@/utils/class-names';
 import { getServerSession } from 'next-auth';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // const menuItems = [
 //   {
@@ -31,9 +34,19 @@ import { useEffect, useState } from 'react';
 
 function DropdownMenu() {
   const { data: session, status } = useSession();
-  console.log("user",session);
+  // console.log("user",session);
 
   const router= useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const {userMe}=useSelector((state: any) => state.user);
+  console.log("userMe",userMe);
+  
+
+  useEffect(() => {
+    dispatch(meAction()).unwrap().then((res) => {
+      console.log("res",res);
+    });
+  }, []);
 
   
 const regex = /^([^@]+)/;
@@ -52,7 +65,7 @@ const name = session?.user.email?.match(regex)?.[1]?.replace(/\./g, " ") ?? "";
         />
         <div className="ms-3">
           <Title as="h6" className="font-semibold">
-            {name}
+            {userMe?.firstName || name}
           </Title>
           <Text className="text-gray-600">{session?.user.email}</Text>
         </div>

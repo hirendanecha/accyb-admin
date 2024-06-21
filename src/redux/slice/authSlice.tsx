@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { changePassword, logIn } from '../actions/authAction';
+import { meAction } from '../actions/userAction';
 
 interface UserState {
   user: any;
   changepassword: any;
+  userMe: any;
   loading: boolean;
   error: any;
 }
@@ -11,6 +13,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   changepassword: null,
+  userMe: null,
   loading: false,
   error: null,
 };
@@ -45,6 +48,20 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(changePassword.rejected, (state: any, {payload}: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = payload;
+      })
+
+      .addCase(meAction.pending, (state: any) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(meAction.fulfilled, (state: any, {payload}: PayloadAction<any>) => {
+        state.userMe = payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(meAction.rejected, (state: any, {payload}: PayloadAction<any>) => {
         state.loading = false;
         state.error = payload;
       })

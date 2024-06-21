@@ -20,7 +20,7 @@ export default function ProductDetailsPage({ params }: any) {
       },
     ],
   };
-  const  securityAlerts  = useSelector((state: any) => state.securityAlerts.securityAlert);
+  const  securityAlerts  = useSelector((state: any) => state.securityAlerts.securityAlertByID);
   console.log(securityAlerts, 'securityAlerts');
   
 

@@ -55,7 +55,7 @@ export default function TablePagination({
             className="ms-1 [&_button]:font-medium"
           />
         </div>
-      )}s
+      )}
       <Pagination
         total={total}
         pageSize={pageSize}

@@ -50,11 +50,11 @@ export const getAlertById = createAsyncThunk(
   async (id: any) => {
     try {
       const alertData = await getAlertByIdAPI(id);
-      console.log('eventData', alertData);
+      console.log('alertData', alertData);
       return alertData.data;
     } catch (error) {
       // If authentication fails, throw an error
-      throw new Error('Failed to Get Event');
+      throw new Error('Failed to Get security alert');
     }
   }
 );
