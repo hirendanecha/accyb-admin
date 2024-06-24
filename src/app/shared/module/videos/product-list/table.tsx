@@ -32,18 +32,14 @@ const filterState = {
 };
 
 export default function ProductsTable({
-  data: initialData = [],
+  data = [],
 }: {
   data: any[];
 }) {
   const [pageSize, setPageSize] = useState(5);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [data, setData] = useState(initialData);
-  useEffect(() => {
-    setData(initialData);
-  }, [initialData]);
-
+  
 
   const onDeleteItem = useCallback((id: string) => {
     handleDelete(id);
@@ -69,7 +65,7 @@ export default function ProductsTable({
     selectedRowKeys,
     setSelectedRowKeys,
     handleDelete,
-  } = useTable(initialData, pageSize, filterState);
+  } = useTable(data, pageSize, filterState);
 
   const columns = useMemo(
     () =>
@@ -110,7 +106,7 @@ export default function ProductsTable({
     <>
       <ControlledTable
       isLoading={isLoading}
-      data={tableData}
+      data={data}
       columns={visibleColumns}
       paginatorOptions={{
         pageSize,
@@ -119,19 +115,19 @@ export default function ProductsTable({
         current: currentPage,
         onChange: handlePaginate,
       }}
-      tableFooter={
-        <TableFooter
-          checkedItems={selectedRowKeys}
-          handleDelete={(ids: string[]) => {
-            setSelectedRowKeys([]);
-            handleDelete(ids);
-          }}
-        >
-          <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
-            Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
-          </Button>
-        </TableFooter>
-      }
+      // tableFooter={
+      //   <TableFooter
+      //     checkedItems={selectedRowKeys}
+      //     handleDelete={(ids: string[]) => {
+      //       setSelectedRowKeys([]);
+      //       handleDelete(ids);
+      //     }}
+      //   >
+      //     <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
+      //       Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
+      //     </Button>
+      //   </TableFooter>
+      // }
     />
     </>
   );

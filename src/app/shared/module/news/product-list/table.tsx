@@ -24,16 +24,11 @@ const filterState = {
   status: '',
 };
 
-export default function ProductsTable({ data:initialData = [] }: { data: any[] }) {
-  console.log(initialData, 'initialData');
+export default function ProductsTable({ data = [] }: { data: any[] }) {
   
   const [pageSize, setPageSize] = useState(5);
   const dispatch = useDispatch<AppDispatch>();
  
-  const [data,setData]=useState(initialData); 
-  useEffect(()=>{
-    setData(initialData);
-  },[initialData])
 
   const {
     isLoading,
@@ -46,7 +41,7 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
     selectedRowKeys,
     setSelectedRowKeys,
     handleDelete,
-  } = useTable(initialData, pageSize, filterState);
+  } = useTable(data, pageSize, filterState);
 
   const onDeleteItem = useCallback((id: string) => {
     handleDelete(id);
@@ -99,7 +94,7 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
     <>
       <ControlledTable
       isLoading={isLoading}
-      data={tableData}
+      data={data}
       columns={visibleColumns}
       paginatorOptions={{
         pageSize,

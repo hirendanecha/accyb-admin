@@ -7,12 +7,17 @@ import { useColumn } from '@/hooks/use-column';
 import { Button } from '@/components/ui/button';
 import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/shared/module/securityAlerts/product-list/columns';
-import { deleteAlertByIdAPI, deleteNewsByIdAPI, getAllNews } from '@/redux/actions/newsActions';
+import {
+  deleteAlertByIdAPI,
+  deleteNewsByIdAPI,
+  getAllNews,
+} from '@/redux/actions/newsActions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { getAllSecurityAlert } from '@/redux/actions/securityAlertsAction';
 const FilterElement = dynamic(
-  () => import('@/app/shared/module/securityAlerts/product-list/filter-element'),
+  () =>
+    import('@/app/shared/module/securityAlerts/product-list/filter-element'),
   { ssr: false }
 );
 const TableFooter = dynamic(() => import('@/app/shared/table-footer'), {
@@ -25,14 +30,9 @@ const filterState = {
   status: '',
 };
 
-export default function ProductsTable({ data:initialData = [] }: { data: any[] }) {
+export default function ProductsTable({ data = [] }: { data: any[] }) {
   const [pageSize, setPageSize] = useState(5);
   const dispatch = useDispatch<AppDispatch>();
-  const [data,setData]=useState(initialData);
-
-  useEffect(()=>{
-    setData(initialData);
-  },[initialData])
 
   const onHeaderCellClick = (value: string) => ({
     onClick: () => {
@@ -64,12 +64,12 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
     selectedRowKeys,
     setSelectedRowKeys,
     handleDelete,
-  } = useTable(initialData, pageSize, filterState);
+  } = useTable(data, pageSize, filterState);
 
   const columns = useMemo(
     () =>
       getColumns({
-        data:tableData,
+        data: tableData,
         sortConfig,
         checkedItems: selectedRowKeys,
         onHeaderCellClick: (value: string) => ({
@@ -99,36 +99,35 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
     ]
   );
 
-  const { visibleColumns, checkedColumns, setCheckedColumns } =
-    useColumn(columns);
+  const { visibleColumns } = useColumn(columns);
 
   return (
     <>
       <ControlledTable
-      isLoading={isLoading}
-      data={tableData}
-      columns={visibleColumns}
-      paginatorOptions={{
-        pageSize,
-        setPageSize,
-        total: totalItems,
-        current: currentPage,
-        onChange: handlePaginate,
-      }}
-      tableFooter={
-        <TableFooter
-          checkedItems={selectedRowKeys}
-          handleDelete={(ids: string[]) => {
-            setSelectedRowKeys([]);
-            handleDelete(ids);
-          }}
-        >
-          <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
-            Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
-          </Button>
-        </TableFooter>
-      }
-    />
+        isLoading={isLoading}
+        data={data}
+        columns={visibleColumns}
+        paginatorOptions={{
+          pageSize,
+          setPageSize,
+          total: totalItems,
+          current: currentPage,
+          onChange: handlePaginate,
+        }}
+        // tableFooter={
+        //   <TableFooter
+        //     checkedItems={selectedRowKeys}
+        //     handleDelete={(ids: string[]) => {
+        //       setSelectedRowKeys([]);
+        //       handleDelete(ids);
+        //     }}
+        //   >
+        //     <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
+        //       Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
+        //     </Button>
+        //   </TableFooter>
+        // }
+      />
     </>
   );
 }

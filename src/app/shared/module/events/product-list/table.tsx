@@ -24,18 +24,17 @@ const filterState = {
   status: '',
 };
 
-export default function ProductsTable({ data:initialData = [] }: { data: any[] }) {
-  console.log(initialData, 'initialData');
+export default function ProductsTable({ data = [] }: { data: any[] }) {
   
-  const [pageSize, setPageSize] = useState(5);
-  const [data,setData]=useState(initialData);
+  const [pageSize, setPageSize] = useState(10);
+  // const [data,setData]=useState(initialData);
   // console.log(data,'data');
   
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(()=>{
-    setData(initialData);
-  },[initialData])
+  // useEffect(()=>{
+  //   setData(initialData);
+  // },[initialData])
  
 
   
@@ -51,7 +50,7 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
     selectedRowKeys,
     setSelectedRowKeys,
     handleDelete,
-  } = useTable(initialData, pageSize, filterState);
+  } = useTable(data, pageSize, filterState);
 
   const onDeleteItem = useCallback((id: string) => {
     console.log(id, 'id');
@@ -70,7 +69,7 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
   const columns = useMemo(
     () =>
       getColumns({
-        data:tableData,
+        data:data,
         sortConfig,
         checkedItems: selectedRowKeys,
         onHeaderCellClick: (value: string) => ({
@@ -90,7 +89,7 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
           }
         },
       }),
-    [tableData, sortConfig, selectedRowKeys, handleSort, onDeleteItem, setSelectedRowKeys]
+    [data, sortConfig, selectedRowKeys, handleSort, onDeleteItem, setSelectedRowKeys]
   );
 
   const { visibleColumns} = useColumn(columns);
@@ -102,7 +101,7 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
     <>
       <ControlledTable
       isLoading={isLoading}
-      data={tableData}
+      data={data}
       columns={visibleColumns}
       paginatorOptions={{
         pageSize,
@@ -111,19 +110,19 @@ export default function ProductsTable({ data:initialData = [] }: { data: any[] }
         current: currentPage,
         onChange: handlePaginate,
       }}
-      tableFooter={
-        <TableFooter
-          checkedItems={selectedRowKeys}
-          handleDelete={(ids: string[]) => {
-            setSelectedRowKeys([]);
-            handleDelete(ids);
-          }}
-        >
-          <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
-            Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
-          </Button>
-        </TableFooter>
-      }
+      // tableFooter={
+      //   <TableFooter
+      //     checkedItems={selectedRowKeys}
+      //     handleDelete={(ids: string[]) => {
+      //       setSelectedRowKeys([]);
+      //       handleDelete(ids);
+      //     }}
+      //   >
+      //     <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
+      //       Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
+      //     </Button>
+      //   </TableFooter>
+      // }
     />
     </>
   );
