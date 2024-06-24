@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTable } from '@/hooks/use-table';
 import { useColumn } from '@/hooks/use-column';
@@ -24,14 +24,34 @@ const filterState = {
   status: '',
 };
 
-export default function ProductsTable({ data = [] }: { data: any[] }) {
-  const [pageSize, setPageSize] = useState(10);
+export default function ProductsTable({ data:initialData = [] }: { data: any[] }) {
+  console.log(initialData, 'initialData');
+  
+  const [pageSize, setPageSize] = useState(5);
+  const [data,setData]=useState(initialData);
+  // console.log(data,'data');
+  
   const dispatch = useDispatch<AppDispatch>();
-  const onHeaderCellClick = (value: string) => ({
-    onClick: () => {
-      handleSort(value);
-    },
-  });
+
+  useEffect(()=>{
+    setData(initialData);
+  },[initialData])
+ 
+
+  
+
+  const {
+    isLoading,
+    currentPage,
+    totalItems,
+    tableData,
+    handlePaginate,
+    sortConfig,
+    handleSort,
+    selectedRowKeys,
+    setSelectedRowKeys,
+    handleDelete,
+  } = useTable(initialData, pageSize, filterState);
 
   const onDeleteItem = useCallback((id: string) => {
     console.log(id, 'id');
@@ -45,103 +65,66 @@ export default function ProductsTable({ data = [] }: { data: any[] }) {
           dispatch(getAllEvents());
         }
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const {
-    isLoading,
-    isFiltered,
-    tableData,
-    currentPage,
-    totalItems,
-    handlePaginate,
-    filters,
-    updateFilter,
-    searchTerm,
-    handleSearch,
-    sortConfig,
-    handleSort,
-    selectedRowKeys,
-    setSelectedRowKeys,
-    handleRowSelect,
-    handleSelectAll,
-    handleDelete,
-    handleReset,
-  } = useTable(data, pageSize, filterState);
+  }, [dispatch, handleDelete]);
 
   const columns = useMemo(
     () =>
       getColumns({
-        data,
+        data:tableData,
         sortConfig,
         checkedItems: selectedRowKeys,
-        onHeaderCellClick,
+        onHeaderCellClick: (value: string) => ({
+          onClick: () => {
+            handleSort(value);
+          },
+        }),
         onDeleteItem,
-        onChecked: handleRowSelect,
-        handleSelectAll,
+        onChecked: (id: string) => {
+          setSelectedRowKeys((keys) => [...keys, id]);
+        },
+        handleSelectAll: (checked: boolean) => {
+          if (checked) {
+            setSelectedRowKeys(tableData.map((item) => item.id));
+          } else {
+            setSelectedRowKeys([]);
+          }
+        },
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      selectedRowKeys,
-      onHeaderCellClick,
-      sortConfig.key,
-      sortConfig.direction,
-      onDeleteItem,
-      handleRowSelect,
-      handleSelectAll,
-    ]
+    [tableData, sortConfig, selectedRowKeys, handleSort, onDeleteItem, setSelectedRowKeys]
   );
 
-  const { visibleColumns, checkedColumns, setCheckedColumns } =
-    useColumn(columns);
+  const { visibleColumns} = useColumn(columns);
+
+  console.log(tableData,'tableData');
+  
 
   return (
     <>
       <ControlledTable
-        variant="modern"
-        isLoading={isLoading}
-        showLoadingText={true}
-        data={data}
-        // @ts-ignore
-        columns={visibleColumns}
-        paginatorOptions={{
-          pageSize,
-          setPageSize,
-          total: totalItems,
-          current: currentPage,
-          onChange: (page: number) => handlePaginate(page),
-        }}
-        // filterOptions={{
-        //   searchTerm,
-        //   onSearchClear: () => {
-        //     handleSearch('');
-        //   },
-        //   onSearchChange: (event) => {
-        //     handleSearch(event.target.value);
-        //   },
-        //   hasSearched: isFiltered,
-        //   hideIndex: 1,
-        //   columns,
-        //   checkedColumns,
-        //   setCheckedColumns,
-        //   enableDrawerFilter: true,
-        // }}
-        tableFooter={
-          <TableFooter
-            checkedItems={selectedRowKeys}
-            handleDelete={(ids: string[]) => {
-              setSelectedRowKeys([]);
-              handleDelete(ids);
-            }}
-          >
-            <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
-              Download {selectedRowKeys.length}{' '}
-              {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
-            </Button>
-          </TableFooter>
-        }
-        className="overflow-hidden rounded-md border border-gray-200 text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
-      />
+      isLoading={isLoading}
+      data={tableData}
+      columns={visibleColumns}
+      paginatorOptions={{
+        pageSize,
+        setPageSize,
+        total: totalItems,
+        current: currentPage,
+        onChange: handlePaginate,
+      }}
+      tableFooter={
+        <TableFooter
+          checkedItems={selectedRowKeys}
+          handleDelete={(ids: string[]) => {
+            setSelectedRowKeys([]);
+            handleDelete(ids);
+          }}
+        >
+          <Button size="sm" className="dark:bg-gray-300 dark:text-gray-800">
+            Download {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'Products' : 'Product'}
+          </Button>
+        </TableFooter>
+      }
+    />
     </>
   );
 }

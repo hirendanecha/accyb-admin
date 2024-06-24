@@ -21,22 +21,18 @@ const TablePagination = dynamic(
 type ControlledTableProps = {
   isLoading?: boolean;
   showLoadingText?: boolean;
-  filterElement?: React.ReactElement;
   filterOptions?: TableFilterProps;
   paginatorOptions?: TablePaginationProps;
   tableFooter?: React.ReactNode;
   className?: string;
-  paginatorClassName?: string;
 } & TableProps;
 
 export default function ControlledTable({
   isLoading,
-  filterElement,
+  showLoadingText = true,
   filterOptions,
   paginatorOptions,
   tableFooter,
-  showLoadingText,
-  paginatorClassName,
   className,
   ...tableProps
 }: ControlledTableProps) {
@@ -56,7 +52,7 @@ export default function ControlledTable({
   return (
     <>
       {!isEmpty(filterOptions) && (
-        <TableFilter {...filterOptions}>{filterElement}</TableFilter>
+        <TableFilter {...filterOptions} />
       )}
 
       <div className="relative">
@@ -71,12 +67,8 @@ export default function ControlledTable({
       </div>
 
       {!isEmpty(paginatorOptions) && (
-        <TablePagination
-          paginatorClassName={paginatorClassName}
-          {...paginatorOptions}
-        />
+        <TablePagination {...paginatorOptions} />
       )}
     </>
   );
 }
-

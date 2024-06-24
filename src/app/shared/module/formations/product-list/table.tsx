@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTable } from '@/hooks/use-table';
 import { useColumn } from '@/hooks/use-column';
@@ -10,7 +10,10 @@ import { getColumns } from '@/app/shared/module/formations/product-list/columns'
 import { deleteNewsByIdAPI, getAllNews } from '@/redux/actions/newsActions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
-import { deleteFormationById, getAllFormations } from '@/redux/actions/formationAction';
+import {
+  deleteFormationById,
+  getAllFormations,
+} from '@/redux/actions/formationAction';
 const FilterElement = dynamic(
   () => import('@/app/shared/module/formations/product-list/filter-element'),
   { ssr: false }
@@ -25,15 +28,18 @@ const filterState = {
   status: '',
 };
 
-export default function ProductsTable({ data = [] }: { data: any[] }) {
-  const [pageSize, setPageSize] = useState(10);
+export default function ProductsTable({
+  data: initialData = [],
+}: {
+  data: any[];
+}) {
+  const [pageSize, setPageSize] = useState(5);
   const dispatch = useDispatch<AppDispatch>();
 
-  const onHeaderCellClick = (value: string) => ({
-    onClick: () => {
-      handleSort(value);
-    },
-  });
+  const [data, setData] = useState(initialData);
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
   const onDeleteItem = useCallback((id: string) => {
     handleDelete(id);
@@ -45,71 +51,68 @@ export default function ProductsTable({ data = [] }: { data: any[] }) {
           dispatch(getAllFormations());
         }
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
     isLoading,
-    isFiltered,
-    tableData,
     currentPage,
     totalItems,
+    tableData,
     handlePaginate,
-    filters,
-    updateFilter,
-    searchTerm,
-    handleSearch,
     sortConfig,
     handleSort,
     selectedRowKeys,
     setSelectedRowKeys,
-    handleRowSelect,
-    handleSelectAll,
     handleDelete,
-    handleReset,
-  } = useTable(data, pageSize, filterState);
+  } = useTable(initialData, pageSize, filterState);
 
   const columns = useMemo(
     () =>
       getColumns({
-        data,
+        data: tableData,
         sortConfig,
         checkedItems: selectedRowKeys,
-        onHeaderCellClick,
+        onHeaderCellClick: (value: string) => ({
+          onClick: () => {
+            handleSort(value);
+          },
+        }),
         onDeleteItem,
-        onChecked: handleRowSelect,
-        handleSelectAll,
+        onChecked: (id: string) => {
+          setSelectedRowKeys((keys) => [...keys, id]);
+        },
+        handleSelectAll: (checked: boolean) => {
+          if (checked) {
+            setSelectedRowKeys(tableData.map((item) => item.id));
+          } else {
+            setSelectedRowKeys([]);
+          }
+        },
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
+      tableData,
+      sortConfig,
       selectedRowKeys,
-      onHeaderCellClick,
-      sortConfig.key,
-      sortConfig.direction,
+      handleSort,
       onDeleteItem,
-      handleRowSelect,
-      handleSelectAll,
+      setSelectedRowKeys,
     ]
   );
 
-  const { visibleColumns, checkedColumns, setCheckedColumns } =
-    useColumn(columns);
+  const { visibleColumns } = useColumn(columns);
 
   return (
     <>
       <ControlledTable
-        variant="modern"
         isLoading={isLoading}
-        showLoadingText={true}
-        data={data}
-        // @ts-ignore
+        data={tableData}
         columns={visibleColumns}
         paginatorOptions={{
           pageSize,
           setPageSize,
           total: totalItems,
           current: currentPage,
-          onChange: (page: number) => handlePaginate(page),
+          onChange: handlePaginate,
         }}
         tableFooter={
           <TableFooter
@@ -125,7 +128,6 @@ export default function ProductsTable({ data = [] }: { data: any[] }) {
             </Button>
           </TableFooter>
         }
-        className="overflow-hidden rounded-md border border-gray-200 text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
       />
     </>
   );

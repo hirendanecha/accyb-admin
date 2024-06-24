@@ -45,6 +45,7 @@ console.log(token, 'token');
       } else {
         // handle successful sign-in
         localStorage.setItem('adminToken', token);
+        toast.success(<Text as="b">OTP verified successfully!!</Text>);
         router.push('/events');
         // window.location.replace('/events');
       }
@@ -82,7 +83,7 @@ console.log(token, 'token');
           type="number"
           label="OTP"
           placeholder="Enter your OTP"
-          onChange={(e) => setOtp(e.target.value)}
+          onChange={(e) => setOtp(e?.target?.value)}
         />
         <Button
           className="w-full"
