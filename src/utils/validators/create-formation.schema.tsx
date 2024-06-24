@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { fileSchema } from '@/utils/validators/common-rules';
 
 export const formationSchema = z.object({
-  title: z.string().min(1, { message: 'news title is required' }),
-  description: z.string().min(1, { message: 'news description is required' }),
+  title: z.string().min(1, { message: 'Title is required' }),
+  description: z.string().min(1, { message: 'Description is required' }),
   heading: z.array(z.string()).min(1, { message: 'Heading is required' }),
   cost: z.number().int().min(1, { message: 'Cost is required' }),
   duration: z.string().min(1, { message: 'Duration is required' }),

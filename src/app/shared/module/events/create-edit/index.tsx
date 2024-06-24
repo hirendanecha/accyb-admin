@@ -315,9 +315,8 @@ export default function CreateEditEvent({
 
           <Input
             label="Location"
-            // inputClassName="w-24 h-9"
             placeholder="location"
-            // type="number"
+            type="text"
             {...register('location')}
             error={errors.location?.message as string}
           />

@@ -103,9 +103,9 @@ export default function CreateEditProduct({
         formData.append('thumbnail', file);
       }
     }
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1],'formdata'); 
-  }
+  //   for (var pair of formData.entries()) {
+  //     console.log(pair[0]+ ', ' + pair[1],'formdata'); 
+  // }
 
     if (slug) {
       await dispatch(updateVideo({ id: slug, data: formData }))

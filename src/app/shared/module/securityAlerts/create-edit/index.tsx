@@ -123,9 +123,9 @@ export default function CreateEditProduct({
         formData.append('document', file);
       }
     }
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1],'formdata'); 
-  }
+  //   for (var pair of formData.entries()) {
+  //     console.log(pair[0]+ ', ' + pair[1],'formdata'); 
+  // }
 
     if (slug) {
       await dispatch(updateSecurityAlert({ id: slug, data: formData }))
@@ -218,6 +218,8 @@ export default function CreateEditProduct({
                     value={heading}
                     className="flex-grow"
                     onChange={(e) => handleHeadingChange(index, e.target.value)}
+                    // error={errors.Heading?.message as string}
+                    
                   />
                   {index > 0 && (
                     <Button

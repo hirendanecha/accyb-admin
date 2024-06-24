@@ -19,7 +19,7 @@ export const eventFormSchema = z.object({
   endDate: z.date().min(new Date('1900-01-02')).optional(),
   eventType: z.string().min(1, { message: 'Select event type' }),
   isFeatured: z.boolean({message:'required'}).optional(),
-  location:z.string({message:'required'}),
+  location:z.string().min(1,{message:'location is required'}),
   // otherDocument: z
   //   .instanceof(FileList)
   //   .refine((data) => data && data.length > 0, {

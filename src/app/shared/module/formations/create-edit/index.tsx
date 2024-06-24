@@ -219,8 +219,8 @@ export default function CreateEditProduct({
             error={errors.title?.message as string}
           />
 
-          <div>
-            {isArray(heading) &&
+          <div> 
+             {isArray(heading) &&
               heading.length > 0 &&
               heading.map((ele, index) => (
                 <div key={index} className="flex w-full flex-grow items-end ">
@@ -230,6 +230,7 @@ export default function CreateEditProduct({
                     value={ele}
                     className="flex-grow"
                     onChange={(e) => handleheadingChange(index, e.target.value)}
+                    // error={errors?.heading?.message as string}      
                   />
                   {index > 0 && (
                     <Button
@@ -246,6 +247,7 @@ export default function CreateEditProduct({
             <Button type="button" onClick={addheading} className="mt-4">
               Add Heading
             </Button>
+
           </div>
 
           <Controller
@@ -329,6 +331,7 @@ export default function CreateEditProduct({
                     value={ele}
                     className="flex-grow"
                     onChange={(e) => handletargetedProfessionsChange(index, e.target.value)}
+                    // error={errors?.targetedProfessions?.message as string}
                   />
                   {index > 0 && (
                     <Button
