@@ -9,8 +9,6 @@ import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/shared/module/securityAlerts/product-list/columns';
 import {
   deleteAlertByIdAPI,
-  deleteNewsByIdAPI,
-  getAllNews,
 } from '@/redux/actions/newsActions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
@@ -91,6 +89,7 @@ export default function ProductsTable({ data = [] }: { data: any[] }) {
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
+      tableData,
       selectedRowKeys,
       onHeaderCellClick,
       sortConfig.key,

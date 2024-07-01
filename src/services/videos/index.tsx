@@ -15,7 +15,7 @@ export const createVideoAPI = async (data: any) => {
 export const getAllVideosAPI = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/videos`
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/video/`
       );
       return response.data;
     } catch (error) {

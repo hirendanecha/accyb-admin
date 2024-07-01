@@ -15,7 +15,7 @@ export const createFormationAPI = async (data: any) => {
 export const getAllFormationsAPI = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/formations`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/formation/`
     );
     return response.data;
   } catch (error) {
@@ -26,7 +26,7 @@ export const getAllFormationsAPI = async () => {
 export const getFormationByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/formation/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/formation/${id}`
     );
     return response.data;
   } catch (error) {

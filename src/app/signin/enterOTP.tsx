@@ -22,8 +22,13 @@ console.log(token, 'token');
   const [otp, setOtp] = useState(null);
   console.log(otp, 'otp');
 
+  const [loading,setLoading]=useState(false);
+
   const handleSubmit = async(otp: number) => {
     console.log(otp, 'otp11');
+    setLoading(true);
+
+
     try {
       const response = await dispatch(enterOtp({ email, otp })).unwrap();
       
@@ -47,6 +52,7 @@ console.log(token, 'token');
         localStorage.setItem('adminToken', token);
         toast.success(<Text as="b">OTP verified successfully!!</Text>);
         router.push('/events');
+        setLoading(false);
         // window.location.replace('/events');
       }
     } catch (err) {
@@ -91,6 +97,7 @@ console.log(token, 'token');
           size="lg"
           color="info"
           onClick={() => handleSubmit(otp)}
+          isLoading={loading}
         >
           <span>Submit OTP</span>
         </Button>

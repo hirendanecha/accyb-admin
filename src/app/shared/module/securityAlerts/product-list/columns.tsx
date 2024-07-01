@@ -30,8 +30,10 @@ type ProductType = {
   description: string;
   Heading: [];
   date: String;
-  document: any[],
+  document: String,
 };
+
+
 
 export const getColumns = ({
   data,
@@ -106,10 +108,10 @@ export const getColumns = ({
       hidden: 'customer',
       render: (_: string, row: any) => (
         <AvatarCard
-          src={row?.document[0]}
-          name={row?.title}
+          src={row?.document || ''}
+          name={row?.title || ''}
           avatarProps={{
-            name: row?.document[0],
+            name: row?.document,
             size: 'lg',
             className: 'rounded-lg',
           }}
@@ -141,7 +143,7 @@ export const getColumns = ({
       width: 150,
       render: (Heading: []) => 
         <div className='inline-flex'>
-          {Heading.map((heading: string, index: number) => (
+          {Heading?.map((heading: string, index: number) => (
             <Text key={index} className="text-sm">{heading}&nbsp;</Text>
           ))}
         </div>

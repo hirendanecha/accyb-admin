@@ -14,6 +14,7 @@ export default function AuthProvider({
     if (session) {
       // console.log(session, 'session');
       localStorage.setItem('adminToken', session?.jwt);
+      
     } else {
       localStorage.removeItem('adminToken');
     }

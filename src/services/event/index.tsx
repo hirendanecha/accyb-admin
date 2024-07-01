@@ -15,7 +15,7 @@ export const createEventAPI = async (data: any) => {
 export const getAllEventsAPI = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/events`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/event/events/`
     );
     return response;
   } catch (error) {
@@ -38,7 +38,7 @@ export const updateEventAPI = async ({ id, data }: { id: any; data: any }) => {
 export const getEventByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/event/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/event/${id}`
     );
     return response.data;
   } catch (error) {
@@ -73,7 +73,7 @@ export const createNewsAPI = async (data: any) => {
 export const getAllNewsAPI = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/news`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/news/`
     );
     return response.data;
   } catch (error) {
@@ -84,7 +84,7 @@ export const getAllNewsAPI = async () => {
 export const getNewsByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/news/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/news/${id}`
     );
     return response.data;
   } catch (error) {
@@ -119,7 +119,7 @@ export const updateNewsAPI = async ({ id, data }: { id: any; data: any }) => {
 export const getAllSecurityAlerts = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/securityAlerts`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/securityAlerts/`
     );
     return response.data;
   } catch (error) {
@@ -153,7 +153,7 @@ export const createSecurityAlertAPI = async (data: any) => {
 export const getAlertByIdAPI = async (id: any) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/securityAlerts/${id}`
+      `${process.env.NEXT_PUBLIC_API_SERVER}/api/securityAlerts/${id}`
     );
     console.log('response.data', response.data);
     

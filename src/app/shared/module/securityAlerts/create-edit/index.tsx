@@ -17,7 +17,7 @@ import FormFooter from '@/components/form-footer';
 import {
   SecurityAlertInput,
   securityAlertFormSchema,
-} from '@/utils/validators/create-security-alerts.schema';
+} from '@/utils/validators/create-security-alerts.schema';  
 import {
   createSecurityAlert,
   updateSecurityAlert,
@@ -57,7 +57,7 @@ export default function CreateEditProduct({
       description: alertDetails?.description || '',
       date: alertDetails?.date ? new Date(alertDetails.date) : new Date(),
       Heading: alertDetails?.Heading || [],
-      document: alertDetails?.document[0] || [],
+      document: alertDetails?.document || '',
     }),
     [alertDetails]
   );
@@ -158,7 +158,7 @@ export default function CreateEditProduct({
 
   useEffect(() => {
     reset(defaultValues);
-    setDocUrl(alertDetails?.document[0] || '');
+    setDocUrl(alertDetails?.document || '');
   }, [reset, defaultValues]);
 
   return (

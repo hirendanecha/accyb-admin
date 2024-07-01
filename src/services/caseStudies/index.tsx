@@ -15,7 +15,7 @@ export const createCaseStudiesAPI = async (data: any) => {
   export const getAllCaseStudiesAPI = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/caseStudies`
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/caseStudies/`
       );
       return response.data;
     } catch (error) {
@@ -26,7 +26,7 @@ export const createCaseStudiesAPI = async (data: any) => {
   export const getCaseStudiesByIdAPI = async (id: any) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_SERVER}/api/web/caseStudies/${id}`
+        `${process.env.NEXT_PUBLIC_API_SERVER}/api/caseStudies/${id}`
       );
       return response.data;
     } catch (error) {
